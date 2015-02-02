@@ -66,3 +66,6 @@ Thumbs.db
 *.dll
 *.lib
 *.sbr
+bin/
+obj/
+*sln.ide/
