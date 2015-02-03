@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.22310.1
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Phystore.WebApi", "Phystore.WebApi\Phystore.WebApi.csproj", "{0EE639E4-E2C4-4DC0-B019-42F0EF57581A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Phystore.DAL", "Phystore.DAL\Phystore.DAL.csproj", "{CC7C575C-6D38-4C7F-936F-6A46EF2768EE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{0EE639E4-E2C4-4DC0-B019-42F0EF57581A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0EE639E4-E2C4-4DC0-B019-42F0EF57581A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0EE639E4-E2C4-4DC0-B019-42F0EF57581A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC7C575C-6D38-4C7F-936F-6A46EF2768EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC7C575C-6D38-4C7F-936F-6A46EF2768EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC7C575C-6D38-4C7F-936F-6A46EF2768EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC7C575C-6D38-4C7F-936F-6A46EF2768EE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
