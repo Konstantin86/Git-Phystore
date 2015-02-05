@@ -6,6 +6,7 @@ using Microsoft.AspNet.Identity;
 using Phystore.DAL.Entities;
 using Phystore.WebApi.Controllers.Base;
 using Phystore.WebApi.Models;
+using Phystore.WebApi.Models.Request;
 
 namespace Phystore.WebApi.Controllers
 {
@@ -65,7 +66,71 @@ namespace Phystore.WebApi.Controllers
 
       var location = new Uri(Url.Link("GetUserById", new { id = user.Id }));
 
+      string code = await this.AppUserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+
+      var callbackUrl = new Uri(Url.Link("ConfirmEmailRoute", new { userId = user.Id, code }));
+
+      await this.AppUserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
       return Created(location, TheModelFactory.Create(user));
+    }
+
+    [HttpGet]
+    [Route("ConfirmEmail", Name = "ConfirmEmailRoute")]
+    public async Task<IHttpActionResult> ConfirmEmail(string userId = "", string code = "")
+    {
+      if (string.IsNullOrWhiteSpace(userId) || string.IsNullOrWhiteSpace(code))
+      {
+        ModelState.AddModelError("", "User Id and Code are required");
+        return BadRequest(ModelState);
+      }
+
+      IdentityResult result = await this.AppUserManager.ConfirmEmailAsync(userId, code);
+
+      return result.Succeeded ? Ok() : GetErrorResult(result);
+    }
+
+    [Route("ChangePassword")]
+    public async Task<IHttpActionResult> ChangePassword(ChangePasswordRequestModel model)
+    {
+      if (!ModelState.IsValid)
+      {
+        return BadRequest(ModelState);
+      }
+
+      // TODO: The extension method “GetUserId” will not work because you are calling it as anonymous user and the system doesn’t know your identity, so hold on the testing until we implement authentication part.
+      IdentityResult result = await this.AppUserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
+
+      if (!result.Succeeded)
+      {
+        return GetErrorResult(result);
+      }
+
+      return Ok();
+    }
+
+    // To test this method we need to issue HTTP DELETE request to the end point “api/accounts/user/{id}”.
+    [Route("user/{id:guid}")]
+    public async Task<IHttpActionResult> DeleteUser(string id)
+    {
+      //Only SuperAdmin or Admin can delete users (Later when implement roles)
+
+      var appUser = await this.AppUserManager.FindByIdAsync(id);
+
+      if (appUser != null)
+      {
+        IdentityResult result = await this.AppUserManager.DeleteAsync(appUser);
+
+        if (!result.Succeeded)
+        {
+          return GetErrorResult(result);
+        }
+
+        return Ok();
+
+      }
+
+      return NotFound();
     }
   }
 }

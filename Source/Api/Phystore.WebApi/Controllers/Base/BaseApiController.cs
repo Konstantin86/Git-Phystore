@@ -45,7 +45,6 @@ namespace Phystore.WebApi.Controllers.Base
 
       if (ModelState.IsValid)
       {
-        // No ModelState errors are available to send, so just return an empty BadRequest.
         return BadRequest();
       }
 

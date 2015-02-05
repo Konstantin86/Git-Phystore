@@ -142,7 +142,8 @@
     <Compile Include="CompositionRoot\Bootstrapper.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Base\BaseApiController.cs" />
-    <Compile Include="Models\UserAddRequestModel.cs" />
+    <Compile Include="Models\Request\ChangePasswordRequestModel.cs" />
+    <Compile Include="Models\Request\UserAddRequestModel.cs" />
     <Compile Include="Models\Factory\ModelFactory.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
