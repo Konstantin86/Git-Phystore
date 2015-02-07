@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Phystore.DAL.Entities;
@@ -20,7 +21,15 @@ namespace Phystore.DAL.Migrations
     {
       //  This method will be called after migrating to the latest version.
 
-      var manager = new UserManager<User>(new UserStore<User>(new AppDbContext()));
+      var appDbContext = new AppDbContext();
+      var userManager = new UserManager<User>(new UserStore<User>(appDbContext));
+      var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(appDbContext));
+
+      IdentityRole userRole = new IdentityRole("user");
+      IdentityRole adminRole = new IdentityRole("admin");
+
+      roleManager.Create(userRole);
+      roleManager.Create(adminRole);
 
       var user = new User
       {
@@ -32,7 +41,10 @@ namespace Phystore.DAL.Migrations
         JoinDate = DateTime.Now.AddDays(-1)
       };
 
-      manager.Create(user, "mtecPass123");
+      //TODO create rolemanager and add two roles: user and admin
+
+      userManager.Create(user, "mtecPass123");
+      userManager.AddToRoles(user.Id, "user", "admin");
     }
   }
 }

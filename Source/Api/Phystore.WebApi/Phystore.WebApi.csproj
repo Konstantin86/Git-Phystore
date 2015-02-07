@@ -142,11 +142,13 @@
     <Compile Include="CompositionRoot\Bootstrapper.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Base\BaseApiController.cs" />
+    <Compile Include="Controllers\SecurityController.cs" />
     <Compile Include="Models\Request\ChangePasswordRequestModel.cs" />
     <Compile Include="Models\Request\UserAddRequestModel.cs" />
     <Compile Include="Models\Factory\ModelFactory.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Providers\AppAuthorizationServerProvider.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>

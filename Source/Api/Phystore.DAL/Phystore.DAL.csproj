@@ -73,6 +73,7 @@
   <ItemGroup>
     <Compile Include="AppDbContext.cs" />
     <Compile Include="Entities\User.cs" />
+    <Compile Include="Managers\AppRoleManager.cs" />
     <Compile Include="Managers\AppUserManager.cs" />
     <Compile Include="Migrations\201502032210191_Init.cs" />
     <Compile Include="Migrations\201502032210191_Init.Designer.cs">
