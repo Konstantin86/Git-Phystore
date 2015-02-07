@@ -5,7 +5,6 @@ using System.Web.Http;
 using Microsoft.AspNet.Identity;
 using Phystore.DAL.Entities;
 using Phystore.WebApi.Controllers.Base;
-using Phystore.WebApi.Models;
 using Phystore.WebApi.Models.Request;
 
 namespace Phystore.WebApi.Controllers
@@ -63,6 +62,10 @@ namespace Phystore.WebApi.Controllers
       IdentityResult addUserResult = await AppUserManager.CreateAsync(user, requestModel.Password);
 
       if (!addUserResult.Succeeded) return GetErrorResult(addUserResult);
+
+      IdentityResult addUserToRoleResult = await AppUserManager.AddToRoleAsync(user.Id, requestModel.RoleName);
+
+      if (!addUserToRoleResult.Succeeded) return GetErrorResult(addUserToRoleResult);
 
       var location = new Uri(Url.Link("GetUserById", new { id = user.Id }));
 

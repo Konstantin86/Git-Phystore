@@ -19,11 +19,25 @@ namespace Phystore.DAL.Migrations
 
     protected override void Seed(Phystore.DAL.AppDbContext context)
     {
+      //if (System.Diagnostics.Debugger.IsAttached == false)
+      //  System.Diagnostics.Debugger.Launch();
       //  This method will be called after migrating to the latest version.
 
       var appDbContext = new AppDbContext();
       var userManager = new UserManager<User>(new UserStore<User>(appDbContext));
       var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(appDbContext));
+
+      var existingRoles = roleManager.Roles.ToList();
+      foreach (var identityRole in existingRoles)
+      {
+        roleManager.Delete(identityRole);
+      }
+
+      var existingUsers = userManager.Users.ToList();
+      foreach (var usr in existingUsers)
+      {
+        userManager.Delete(usr);
+      }
 
       IdentityRole userRole = new IdentityRole("user");
       IdentityRole adminRole = new IdentityRole("admin");
@@ -34,7 +48,7 @@ namespace Phystore.DAL.Migrations
       var user = new User
       {
         UserName = "PowerUser",
-        Email = "kostyan22@gmail.com",
+        Email = "test@gmail.com",
         EmailConfirmed = true,
         FirstName = "Konstantin",
         LastName = "Lazurenko",
@@ -43,8 +57,15 @@ namespace Phystore.DAL.Migrations
 
       //TODO create rolemanager and add two roles: user and admin
 
-      userManager.Create(user, "mtecPass123");
-      userManager.AddToRoles(user.Id, "user", "admin");
+      IdentityResult ir = userManager.Create(user, "mtecPass123");
+      if (ir.Succeeded)
+      {
+        userManager.AddToRoles(user.Id, "user", "admin");
+      }
+      else
+      {
+        Console.WriteLine(string.Join(Environment.NewLine, ir.Errors));
+      }
     }
   }
 }

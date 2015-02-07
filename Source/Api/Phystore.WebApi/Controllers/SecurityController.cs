@@ -17,6 +17,20 @@ namespace Phystore.WebApi.Controllers
     {
       return Ok(new TestData());
     }
+
+    [Authorize(Roles = "admin")]
+    [Route("AdminAuth")]
+    public IHttpActionResult GetAdminAuth()
+    {
+      return Ok(new TestData());
+    }
+
+    [Authorize(Roles = "user, admin")]
+    [Route("UserAuth")]
+    public IHttpActionResult GetUserAuth()
+    {
+      return Ok(new TestData());
+    }
   }
 
   public class TestData

@@ -39,15 +39,14 @@ namespace Phystore.WebApi.Providers
       var identity = new ClaimsIdentity(context.Options.AuthenticationType);
       identity.AddClaim(new Claim("sub", context.UserName));
 
-      IList<string> roles = await userManager.GetRolesAsync(user.Id);
+      IList<string> userRoles = await userManager.GetRolesAsync(user.Id);
 
-      foreach (string role in roles)
+      foreach (string role in userRoles)
       {
         identity.AddClaim(new Claim(ClaimTypes.Role, role));
       }
 
       context.Validated(identity);
-
     }
   }
 }
