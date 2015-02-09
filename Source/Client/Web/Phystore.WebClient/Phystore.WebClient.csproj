@@ -49,15 +49,22 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\app.js" />
+    <Content Include="app\const\constMessage.js" />
+    <Content Include="app\controllers\confirmController.js" />
     <Content Include="app\controllers\homeController.js" />
     <Content Include="app\controllers\signupController.js" />
     <Content Include="app\services\authService.js" />
-    <Content Include="app\utils\shared\appConfig.js" />
+    <Content Include="app\utils\config\appConfig.js" />
+    <Content Include="app\utils\system\system-format.js" />
+    <Content Include="app\utils\system\system-json.js" />
+    <Content Include="app\utils\system\system-ns.js" />
+    <Content Include="app\utils\system\system-string.js" />
+    <Content Include="app\utils\system\system-time.js" />
+    <Content Include="app\views\confirm.html" />
     <Content Include="app\views\home.html" />
     <Content Include="app\views\signup.html" />
     <Content Include="content\css\angular-motion.min.css" />
-    <Content Include="content\css\bootstrap-theme.css" />
-    <Content Include="content\css\bootstrap-theme.min.css" />
+    <Content Include="content\css\bootstrap-form.css" />
     <Content Include="content\css\bootstrap.css" />
     <Content Include="content\css\bootstrap.min.css" />
     <Content Include="content\css\loading-bar.css" />
@@ -97,7 +104,6 @@
   <ItemGroup>
     <Content Include="scripts\angular-route.min.js.map" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Content Include="scripts\loading-bar.min.js" />
   </ItemGroup>

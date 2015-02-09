@@ -17,6 +17,11 @@ app.config(function ($routeProvider) {
         templateUrl: "/app/views/signup.html"
     });
 
+    $routeProvider.when("/confirm", {
+        controller: "confirmController",
+        templateUrl: "/app/views/confirm.html"
+    });
+
     $routeProvider.when("/workouts", {
         controller: "workoutsController",
         templateUrl: "/app/views/workouts.html"

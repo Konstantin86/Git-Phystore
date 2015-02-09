@@ -79,6 +79,10 @@
     <Compile Include="Migrations\201502032210191_Init.Designer.cs">
       <DependentUpon>201502032210191_Init.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201502091241318_ChangedRequiredFields.cs" />
+    <Compile Include="Migrations\201502091241318_ChangedRequiredFields.Designer.cs">
+      <DependentUpon>201502091241318_ChangedRequiredFields.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\EmailService.cs" />
@@ -90,6 +94,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201502032210191_Init.resx">
       <DependentUpon>201502032210191_Init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201502091241318_ChangedRequiredFields.resx">
+      <DependentUpon>201502091241318_ChangedRequiredFields.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

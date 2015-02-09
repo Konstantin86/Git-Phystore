@@ -2,17 +2,17 @@
 
     var serviceBaseUri = appConfig.getInstance().getServiceUri();
 
-    var _authData = { isAuth: false, userName: "" };
+    var authData = { isAuth: false, userName: "" };
 
-    var _register = function (registration) {
-        _logOut();
+    var register = function (registration) {
+        logOut();
 
-        return $http.post(serviceBaseUri + 'api/account/register', registration).then(function (response) {
+        return $http.post(serviceBaseUri + 'api/account/create', registration).then(function (response) {
             return response;
         });
     };
 
-    var _login = function (loginData) {
+    var login = function (loginData) {
 
         var data = "grant_type=password&username=" + loginData.userName + "&password=" + loginData.password;
 
@@ -21,38 +21,38 @@
         $http.post(serviceBaseUri + 'token', data, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }).success(function (response) {
             localStorageService.set('authorizationData', { token: response.access_token, userName: loginData.userName });
 
-            _authData.isAuth = true;
-            _authData.userName = loginData.userName;
+            authData.isAuth = true;
+            authData.userName = loginData.userName;
 
             deferred.resolve(response);
-        }).error(function (err, status) {
-            _logOut();
+        }).error(function (err) {
+            logOut();
             deferred.reject(err);
         });
 
         return deferred.promise;
     };
 
-    var _logOut = function () {
+    var logOut = function () {
         localStorageService.remove('authorizationData');
 
-        _authData.isAuth = false;
-        _authData.userName = "";
+        authData.isAuth = false;
+        authData.userName = "";
     };
 
-    var _init = function () {
+    var init = function () {
 
         var authorizationData = localStorageService.get('authorizationData');
         if (authorizationData) {
-            _authData.isAuth = true;
-            _authData.userName = authorizationData.userName;
+            authData.isAuth = true;
+            authData.userName = authorizationData.userName;
         }
 
     }
 
-    this.register = _register;
-    this.login = _login;
-    this.logOut = _logOut;
-    this.init = _init;
-    this.authData = _authData;
+    this.register = register;
+    this.login = login;
+    this.logOut = logOut;
+    this.init = init;
+    this.authData = authData;
 }]);

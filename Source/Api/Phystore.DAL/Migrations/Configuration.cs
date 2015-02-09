@@ -27,13 +27,23 @@ namespace Phystore.DAL.Migrations
       var userManager = new UserManager<User>(new UserStore<User>(appDbContext));
       var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(appDbContext));
 
-      var existingRoles = roleManager.Roles.ToList();
+      List<User> existingUsers = userManager.Users.ToList();
+
+      foreach (var usr in existingUsers)
+      {
+        var roles = userManager.GetRoles(usr.Id);
+        foreach (var roleName in roles)
+        {
+          userManager.RemoveFromRole(usr.Id, roleName);
+        }
+      }
+
+      List<IdentityRole> existingRoles = roleManager.Roles.ToList();
       foreach (var identityRole in existingRoles)
       {
         roleManager.Delete(identityRole);
       }
 
-      var existingUsers = userManager.Users.ToList();
       foreach (var usr in existingUsers)
       {
         userManager.Delete(usr);

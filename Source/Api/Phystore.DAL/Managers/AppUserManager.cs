@@ -47,7 +47,7 @@ namespace Phystore.DAL.Managers
       appUserManager.PasswordValidator = new PasswordValidator
       {
         RequiredLength = 6,
-        RequireNonLetterOrDigit = true,
+        // RequireNonLetterOrDigit = true,
         RequireDigit = false,
         RequireLowercase = true,
         RequireUppercase = true,

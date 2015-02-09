@@ -1,4 +1,4 @@
-﻿app.controller('homeController', function ($scope) {
-    $scope.welcomeText = 'Yet another fitness results tracker...';
-    $scope.welcomeHeader = 'Phystore';
+﻿app.controller('homeController', function ($scope, constMessage) {
+    $scope.welcomeText = constMessage.HOME_WELCOME;
+    $scope.welcomeHeader = constMessage.HOME_WELCOME_HEADER;
 });

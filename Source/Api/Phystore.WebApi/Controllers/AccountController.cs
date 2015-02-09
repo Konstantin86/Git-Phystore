@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -90,7 +91,9 @@ namespace Phystore.WebApi.Controllers
 
       IdentityResult result = await this.AppUserManager.ConfirmEmailAsync(userId, code);
 
-      return result.Succeeded ? Ok() : GetErrorResult(result);
+      return result.Succeeded 
+        ? Redirect(new Uri(ConfigurationManager.AppSettings["webClientHostBaseUri"] + @"#/confirm"))
+        : GetErrorResult(result);
     }
 
     [Route("ChangePassword")]
