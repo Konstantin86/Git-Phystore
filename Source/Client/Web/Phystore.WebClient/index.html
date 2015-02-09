@@ -1,13 +1,16 @@
 ﻿<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" ng-app="PhystoreApp">
+<html xmlns="http://www.w3.org/1999/xhtml" data-ng-app="PhystoreApp">
 <head>
     <title>Phystore</title>
     <!--Production-->
     <!--<link href="content/css/bootstrap.min.css" rel="stylesheet"/>-->
-    <!--<link href="content/css/angular-motion.min.css" rel="stylesheet" />-->
+    <!--<link href="content/css/themes/united/bootstrap-theme.min.css" rel="stylesheet" />-->
+    <!--<link href="content/css/loading-bar.min.css" rel="stylesheet" />-->
+
     <!--Development-->
     <link href="content/css/bootstrap.css" rel="stylesheet" />
     <link href="content/css/themes/united/bootstrap-theme.css" rel="stylesheet" />
+    <link href="content/css/loading-bar.css" rel="stylesheet" />
     <link href="content/css/angular-motion.min.css" rel="stylesheet" />
     <link href="content/css/site.css" rel="stylesheet" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
@@ -19,16 +22,39 @@
                 <button class="btn btn-success navbar-toggle">
                     <span class="glyphicon glyphicon-chevron-down"></span>
                 </button>
-                <a class="navbar-brand" href="#">Phystore</a>
+                <a class="navbar-brand" href="#/home">Phystore</a>
             </div>
-            <div class="collapse navbar-collapse">
+            <div class="collapse navbar-collapse" data-collapse="!navbarExpanded">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#">Login</a></li>
-                    <li><a href="#">Register</a></li>
+                    <li data-ng-hide="!authData.isAuth"><a href="#">Welcome {{authData.userName}}</a></li>
+                    <li data-ng-hide="!authData.isAuth"><a href="#/orders">My Orders</a></li>
+                    <li data-ng-hide="!authData.isAuth"><a href="" data-ng-click="logOut()">Logout</a></li>
+                    <li data-ng-hide="authData.isAuth"> <a href="#/login">Login</a></li>
+                    <li data-ng-hide="authData.isAuth"> <a href="#/signup">Sign Up</a></li>
                 </ul>
             </div>
         </div>
     </div>
+
+    <div class="container">
+        <div data-ng-view="">
+        </div>
+    </div>
+
+    <footer>
+        <div class="navbar navbar-default navbar-fixed-bottom">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5 style="color: white">Created by Konstantin Lazurenko</h5>
+                    </div>
+                    <div class="col-md-6">
+                        <h5 style="float: right; color: white">2015 KL</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
 
 </body>
 </html>
@@ -37,6 +63,7 @@
 <!--Production-->
 <!--<script type="text/javascript" src="scripts/angular.min.js"></script>
     <script type="text/javascript" src="scripts/angular-route.min.js"></script>
+    <script type="text/javascript" src="scripts/angular-local-storage.min.js"></script>
 <script type="text/javascript" src="scripts/angular-animate.min.js"></script>
 
 <script type="text/javascript" src="scripts/angular-strap.min.js"></script>
@@ -46,9 +73,12 @@
 
 <script type="text/javascript" src="scripts/bootstrap.min.js"></script>-->
 
+<!--<script type="text/javascript" src="scripts/loading-bar.min.js"></script>-->
+
 <!--Development-->
 <script type="text/javascript" src="scripts/angular.js"></script>
 <script type="text/javascript" src="scripts/angular-route.js"></script>
+<script type="text/javascript" src="scripts/angular-local-storage.js"></script>
 <script type="text/javascript" src="scripts/angular-animate.js"></script>
 
 <script type="text/javascript" src="scripts/angular-strap.js"></script>
@@ -57,5 +87,16 @@
 <script type="text/javascript" src="scripts/jquery.js"></script>
 <script type="text/javascript" src="scripts/bootstrap.js"></script>
 
+<script type="text/javascript" src="scripts/loading-bar.js"></script>
+
 <!--APPLICATION-->
+<!--Utils-->
+<script type="text/javascript" src="app/utils/shared/appConfig.js"></script>
+
+<!--Main app script-->
 <script type="text/javascript" src="app/app.js"></script>
+<!--Services-->
+<script type="text/javascript" src="app/services/authService.js"></script>
+<!--Controllers-->
+<script type="text/javascript" src="app/controllers/homeController.js"></script>
+<script type="text/javascript" src="app/controllers/signupController.js"></script>

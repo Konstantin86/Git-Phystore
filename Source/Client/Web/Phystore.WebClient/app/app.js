@@ -1,16 +1,30 @@
-﻿var app = angular.module('PhystoreApp', ['ngRoute', 'ngAnimate', 'mgcrea.ngStrap', 'mgcrea.ngStrap.modal']);
+﻿var app = angular.module('PhystoreApp', ['ngRoute', 'ngAnimate', 'LocalStorageModule', 'mgcrea.ngStrap', 'mgcrea.ngStrap.modal', 'angular-loading-bar']);
 
 app.config(function ($routeProvider) {
 
-    //$routeProvider.when("/progress", {
-    //    controller: "progressController",
-    //    templateUrl: "/app/views/progress.html"
-    //});
+    $routeProvider.when("/home", {
+        controller: "homeController",
+        templateUrl: "/app/views/home.html"
+    });
 
-    //$routeProvider.when("/home", {
-    //    controller: "homeController",
-    //    templateUrl: "/app/views/home.html"
-    //});
+    $routeProvider.when("/login", {
+        controller: "loginController",
+        templateUrl: "/app/views/login.html"
+    });
 
-    //$routeProvider.otherwise({ redirectTo: "/home" });
+    $routeProvider.when("/signup", {
+        controller: "signupController",
+        templateUrl: "/app/views/signup.html"
+    });
+
+    $routeProvider.when("/workouts", {
+        controller: "workoutsController",
+        templateUrl: "/app/views/workouts.html"
+    });
+
+    $routeProvider.otherwise({ redirectTo: "/home" });
 });
+
+app.run(['authService', function (authService) {
+    authService.init();
+}]);

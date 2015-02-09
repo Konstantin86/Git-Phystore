@@ -1,2 +1,4 @@
 ﻿body {
+    padding-top: 40px; /*This is intended to place body content under the nav bar which overlaps the content placed on the top*/
+    padding-bottom: 40px
 }
