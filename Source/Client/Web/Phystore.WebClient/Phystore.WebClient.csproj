@@ -52,8 +52,13 @@
     <Content Include="app\const\constMessage.js" />
     <Content Include="app\controllers\confirmController.js" />
     <Content Include="app\controllers\homeController.js" />
+    <Content Include="app\controllers\indexController.js" />
+    <Content Include="app\controllers\loginController.js" />
     <Content Include="app\controllers\signupController.js" />
+    <Content Include="app\controllers\workoutsController.js" />
     <Content Include="app\services\authService.js" />
+    <Content Include="app\services\interceptors\authInterceptorService.js" />
+    <Content Include="app\services\workoutService.js" />
     <Content Include="app\utils\config\appConfig.js" />
     <Content Include="app\utils\system\system-format.js" />
     <Content Include="app\utils\system\system-json.js" />
@@ -62,7 +67,9 @@
     <Content Include="app\utils\system\system-time.js" />
     <Content Include="app\views\confirm.html" />
     <Content Include="app\views\home.html" />
+    <Content Include="app\views\login.html" />
     <Content Include="app\views\signup.html" />
+    <Content Include="app\views\workouts.html" />
     <Content Include="content\css\angular-motion.min.css" />
     <Content Include="content\css\bootstrap-form.css" />
     <Content Include="content\css\bootstrap.css" />

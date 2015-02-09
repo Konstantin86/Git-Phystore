@@ -143,6 +143,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Base\BaseApiController.cs" />
     <Compile Include="Controllers\SecurityController.cs" />
+    <Compile Include="Controllers\WorkoutController.cs" />
     <Compile Include="Models\Request\ChangePasswordRequestModel.cs" />
     <Compile Include="Models\Request\UserAddRequestModel.cs" />
     <Compile Include="Models\Factory\ModelFactory.cs" />

@@ -5,7 +5,7 @@
 
     $scope.submitted = false;
 
-    $scope.registration = {
+    $scope.formData = {
         userName: "",
         email: "",
         password: "",
@@ -16,9 +16,9 @@
     $scope.signUp = function () {
         $scope.submitted = true;
 
-        authService.register($scope.registration).then(function (response) {
+        authService.register($scope.formData).then(function (response) {
             $scope.success = true;
-            $scope.confirmationMessage = system.string.format(constMessage.SIGNUP_SUCCESS_FORMAT, $scope.registration.userName, $scope.registration.email);
+            $scope.confirmationMessage = system.string.format(constMessage.SIGNUP_SUCCESS_FORMAT, $scope.formData.userName, $scope.formData.email);
         },
          function (response) {
              var errors = [];

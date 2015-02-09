@@ -1,0 +1,16 @@
+﻿<form class="form-signin" name="form">
+    <h2 class="form-signin-heading">Login</h2>
+
+    <div class="form-group" ng-class="{ 'has-error': form.userName.$invalid && (form.userName.$dirty || submitted) }">
+        <input type="text" class="form-control" name="userName" placeholder="Username" ng-model="formData.userName" required autofocus>
+    </div>
+    
+    <div class="form-group" ng-class="{ 'has-error': form.password.$invalid && (form.password.$dirty || submitted) }">
+        <input type="password" class="form-control" name="password" placeholder="Password" ng-model="formData.password" required>
+    </div>
+    
+    <button class="btn btn-lg btn-info btn-block" type="submit" ng-click="login()">Login</button>
+    <div ng-hide="message == ''" ng-class="(success) ? 'alert alert-success' : 'alert alert-danger'">
+        {{message}}
+    </div>
+</form>

@@ -17,7 +17,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 </head>
 <body>
-    <div class="navbar navbar-default navbar-fixed-top">
+    <div class="navbar navbar-default navbar-fixed-top" ng-controller="indexController">
         <div class="container">
             <div class="navbar-header">
                 <button class="btn btn-success navbar-toggle">
@@ -28,7 +28,7 @@
             <div class="collapse navbar-collapse" data-collapse="!navbarExpanded">
                 <ul class="nav navbar-nav navbar-right">
                     <li data-ng-hide="!authData.isAuth"><a href="#">Welcome {{authData.userName}}</a></li>
-                    <li data-ng-hide="!authData.isAuth"><a href="#/orders">My Orders</a></li>
+                    <li data-ng-hide="!authData.isAuth"><a href="#/workouts">Workouts</a></li>
                     <li data-ng-hide="!authData.isAuth"><a href="" data-ng-click="logOut()">Logout</a></li>
                     <li data-ng-hide="authData.isAuth"> <a href="#/login">Login</a></li>
                     <li data-ng-hide="authData.isAuth"> <a href="#/signup">Sign Up</a></li>
@@ -104,8 +104,13 @@
 <!--Constants-->
 <script type="text/javascript" src="app/const/constMessage.js"></script>
 <!--Services-->
+<script type="text/javascript" src="app/services/interceptors/authInterceptorService.js"></script>
 <script type="text/javascript" src="app/services/authService.js"></script>
+<script type="text/javascript" src="app/services/workoutService.js"></script>
 <!--Controllers-->
+<script type="text/javascript" src="app/controllers/indexController.js"></script>
 <script type="text/javascript" src="app/controllers/homeController.js"></script>
 <script type="text/javascript" src="app/controllers/signupController.js"></script>
+<script type="text/javascript" src="app/controllers/loginController.js"></script>
 <script type="text/javascript" src="app/controllers/confirmController.js"></script>
+<script type="text/javascript" src="app/controllers/workoutsController.js"></script>
