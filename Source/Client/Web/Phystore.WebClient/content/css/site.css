@@ -2,3 +2,19 @@
     padding-top: 60px; /*This is intended to place body content under the nav bar which overlaps the content placed on the top*/
     padding-bottom: 40px
 }
+
+#loading-bar .bar {
+    background: #ffffff;
+}
+
+#loading-bar-spinner .spinner-icon {
+    border-top-color: #ffffff;
+    border-left-color: #ffffff;
+}
+
+#loading-bar .peg {
+    -moz-box-shadow: #ffffff 1px 0 6px 1px;
+    -ms-box-shadow: #ffffff 1px 0 6px 1px;
+    -webkit-box-shadow: #ffffff 1px 0 6px 1px;
+    box-shadow: #ffffff 1px 0 6px 1px;
+}
