@@ -50,6 +50,7 @@
   <ItemGroup>
     <Content Include="app\app.js" />
     <Content Include="app\const\constMessage.js" />
+    <Content Include="app\controllers\accountController.js" />
     <Content Include="app\controllers\confirmController.js" />
     <Content Include="app\controllers\homeController.js" />
     <Content Include="app\controllers\indexController.js" />
@@ -65,11 +66,13 @@
     <Content Include="app\utils\system\system-ns.js" />
     <Content Include="app\utils\system\system-string.js" />
     <Content Include="app\utils\system\system-time.js" />
+    <Content Include="app\views\account.html" />
     <Content Include="app\views\confirm.html" />
     <Content Include="app\views\home.html" />
     <Content Include="app\views\login.html" />
     <Content Include="app\views\signup.html" />
     <Content Include="app\views\workouts.html" />
+    <Content Include="content\css\angular-motion.css" />
     <Content Include="content\css\angular-motion.min.css" />
     <Content Include="content\css\bootstrap-form.css" />
     <Content Include="content\css\bootstrap.css" />
@@ -87,6 +90,8 @@
     <Content Include="scripts\angular-local-storage.min.js" />
     <Content Include="scripts\angular-route.js" />
     <Content Include="scripts\angular-route.min.js" />
+    <Content Include="scripts\angular-sanitize.js" />
+    <Content Include="scripts\angular-sanitize.min.js" />
     <Content Include="scripts\angular-strap.js" />
     <Content Include="scripts\angular-strap.min.js" />
     <Content Include="scripts\angular-strap.tpl.js" />
@@ -113,6 +118,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="scripts\loading-bar.min.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="scripts\angular-sanitize.min.js.map" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />

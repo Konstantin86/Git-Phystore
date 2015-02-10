@@ -6,13 +6,14 @@
     <!--<link href="content/css/bootstrap.min.css" rel="stylesheet"/>-->
     <!--<link href="content/css/themes/united/bootstrap-theme.min.css" rel="stylesheet" />-->
     <!--<link href="content/css/loading-bar.min.css" rel="stylesheet" />-->
+    <!--<link href="content/css/angular-motion.min.css" rel="stylesheet" />-->
 
     <!--Development-->
     <link href="content/css/bootstrap.css" rel="stylesheet" />
     <link href="content/css/bootstrap-form.css" rel="stylesheet" />
     <link href="content/css/themes/united/bootstrap-theme.css" rel="stylesheet" />
     <link href="content/css/loading-bar.css" rel="stylesheet" />
-    <link href="content/css/angular-motion.min.css" rel="stylesheet" />
+    <link href="content/css/angular-motion.css" rel="stylesheet" />
     <link href="content/css/site.css" rel="stylesheet" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 </head>
@@ -27,7 +28,7 @@
             </div>
             <div class="collapse navbar-collapse" data-collapse="!navbarExpanded">
                 <ul class="nav navbar-nav navbar-right">
-                    <li data-ng-hide="!authData.isAuth"><a href="#">Welcome {{authData.userName}}</a></li>
+                    <li data-ng-hide="!authData.isAuth"><a href="#/account">Welcome {{authData.userName}}</a></li>
                     <li data-ng-hide="!authData.isAuth"><a href="#/workouts">Workouts</a></li>
                     <li data-ng-hide="!authData.isAuth"><a href="" data-ng-click="logOut()">Logout</a></li>
                     <li data-ng-hide="authData.isAuth"> <a href="#/login">Login</a></li>
@@ -65,6 +66,7 @@
 <!--<script type="text/javascript" src="scripts/angular.min.js"></script>
     <script type="text/javascript" src="scripts/angular-route.min.js"></script>
     <script type="text/javascript" src="scripts/angular-local-storage.min.js"></script>
+    <script type="text/javascript" src="scripts/angular-sanitize.min.js"></script>
     <script type="text/javascript" src="scripts/angular-animate.min.js"></script>
 
 <script type="text/javascript" src="scripts/angular-strap.min.js"></script>
@@ -80,6 +82,7 @@
 <script type="text/javascript" src="scripts/angular.js"></script>
 <script type="text/javascript" src="scripts/angular-route.js"></script>
 <script type="text/javascript" src="scripts/angular-local-storage.js"></script>
+<script type="text/javascript" src="scripts/angular-sanitize.js"></script>
 <script type="text/javascript" src="scripts/angular-animate.js"></script>
 
 <script type="text/javascript" src="scripts/angular-strap.js"></script>
@@ -112,5 +115,6 @@
 <script type="text/javascript" src="app/controllers/homeController.js"></script>
 <script type="text/javascript" src="app/controllers/signupController.js"></script>
 <script type="text/javascript" src="app/controllers/loginController.js"></script>
+<script type="text/javascript" src="app/controllers/accountController.js"></script>
 <script type="text/javascript" src="app/controllers/confirmController.js"></script>
 <script type="text/javascript" src="app/controllers/workoutsController.js"></script>

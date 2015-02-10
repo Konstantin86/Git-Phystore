@@ -1,4 +1,4 @@
-﻿var app = angular.module('PhystoreApp', ['ngRoute', 'ngAnimate', 'LocalStorageModule', 'mgcrea.ngStrap', 'mgcrea.ngStrap.modal', 'angular-loading-bar']);
+﻿var app = angular.module('PhystoreApp', ['ngRoute', 'ngAnimate', 'ngSanitize', 'LocalStorageModule', 'mgcrea.ngStrap', 'mgcrea.ngStrap.modal', 'mgcrea.ngStrap.tab', 'angular-loading-bar']);
 
 app.config(function ($routeProvider) {
 
@@ -20,6 +20,11 @@ app.config(function ($routeProvider) {
     $routeProvider.when("/confirm", {
         controller: "confirmController",
         templateUrl: "/app/views/confirm.html"
+    });
+
+    $routeProvider.when("/account", {
+        controller: "accountController",
+        templateUrl: "/app/views/account.html"
     });
 
     $routeProvider.when("/workouts", {
