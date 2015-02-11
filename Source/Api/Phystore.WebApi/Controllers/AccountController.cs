@@ -33,14 +33,28 @@ namespace Phystore.WebApi.Controllers
       return NotFound();
     }
 
-    [Route("user/{username}")]
-    public async Task<IHttpActionResult> GetUserByName(string username)
+    [Authorize]
+    [Route("user")]
+    public async Task<IHttpActionResult> GetCurrentUser()
     {
-      var user = await this.AppUserManager.FindByNameAsync(username);
+      var user = await AppUserManager.FindByNameAsync(User.Identity.Name);
 
       if (user != null)
       {
-        return Ok(this.TheModelFactory.Create(user));
+        return Ok(TheModelFactory.Create(user));
+      }
+
+      return NotFound();
+    }
+
+    [Route("user/{username}")]
+    public async Task<IHttpActionResult> GetUserByName(string username)
+    {
+      var user = await AppUserManager.FindByNameAsync(username);
+
+      if (user != null)
+      {
+        return Ok(TheModelFactory.Create(user));
       }
 
       return NotFound();
@@ -96,6 +110,7 @@ namespace Phystore.WebApi.Controllers
         : GetErrorResult(result);
     }
 
+    [Authorize]
     [Route("ChangePassword")]
     public async Task<IHttpActionResult> ChangePassword(ChangePasswordRequestModel model)
     {
@@ -104,7 +119,6 @@ namespace Phystore.WebApi.Controllers
         return BadRequest(ModelState);
       }
 
-      // TODO: The extension method “GetUserId” will not work because you are calling it as anonymous user and the system doesn’t know your identity, so hold on the testing until we implement authentication part.
       IdentityResult result = await this.AppUserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
 
       if (!result.Succeeded)
@@ -115,7 +129,36 @@ namespace Phystore.WebApi.Controllers
       return Ok();
     }
 
+    [Authorize]
+    [Route("update")]
+    public async Task<IHttpActionResult> Update(UserUpdateRequestModel model)
+    {
+      if (!ModelState.IsValid)
+      {
+        return BadRequest(ModelState);
+      }
+
+      var currentUser = await AppUserManager.FindByNameAsync(User.Identity.Name);
+
+      currentUser.FirstName = model.FirstName;
+      currentUser.LastName = model.LastName;
+      currentUser.Sex = model.Sex;
+      currentUser.BirthDate = model.BirthDate;
+      currentUser.Country = model.Country;
+      currentUser.City = model.City;
+
+      IdentityResult result = await AppUserManager.UpdateAsync(currentUser);
+
+      if (!result.Succeeded)
+      {
+        return GetErrorResult(result);
+      }
+
+      return Ok();
+    }
+
     // To test this method we need to issue HTTP DELETE request to the end point “api/accounts/user/{id}”.
+    [Authorize]
     [Route("user/{id:guid}")]
     public async Task<IHttpActionResult> DeleteUser(string id)
     {

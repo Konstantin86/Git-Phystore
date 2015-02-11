@@ -2,7 +2,17 @@
 
     var serviceBaseUri = appConfig.getInstance().getServiceUri();
 
-    var authData = { isAuth: false, userName: "" };
+    var authData = {
+            isAuth: false,
+            userName: "",
+            firstName: "",
+            lastName: "",
+            sex: "",
+            joinDate: null,
+            birthDate: null,
+            country: "",
+            city: "",
+        };
 
     var register = function (registration) {
         logOut();
@@ -19,10 +29,24 @@
         var deferred = $q.defer();
 
         $http.post(serviceBaseUri + 'token', data, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }).success(function (response) {
-            localStorageService.set('authorizationData', { token: response.access_token, userName: loginData.userName });
+            localStorageService.set('authorizationData',
+                {
+                    token: response.access_token,
+                    userName: loginData.userName
+                });
 
             authData.isAuth = true;
             authData.userName = loginData.userName;
+
+            var userProfileData = $http.get(serviceBaseUri + 'api/account/user').success(function (response) {
+                authData.firstName = response.firstName;
+                authData.lastName = response.lastName;
+                authData.sex = response.sex;
+                authData.birthDate = response.birthDate;
+                authData.joinDate = response.joinDate;
+                authData.country = response.country;
+                authData.city = response.city;
+            });
 
             deferred.resolve(response);
         }).error(function (err) {
@@ -41,16 +65,38 @@
     };
 
     var init = function () {
-
         var authorizationData = localStorageService.get('authorizationData');
         if (authorizationData) {
             authData.isAuth = true;
             authData.userName = authorizationData.userName;
-        }
 
-    }
+            var userProfileData = $http.get(serviceBaseUri + 'api/account/user').success(function (response) {
+                authData.firstName = response.firstName;
+                authData.lastName = response.lastName;
+                authData.sex = response.sex;
+                authData.birthDate = response.birthDate;
+                authData.joinDate = response.joinDate;
+                authData.country = response.country;
+                authData.city = response.city;
+            });
+        }
+    };
+
+    var update = function () {
+        var deferred = $q.defer();
+
+        return $http.post(serviceBaseUri + 'api/account/update', authData).success(function (response) {
+            deferred.resolve(response);
+        }).error(function (err) {
+            logOut();
+            deferred.reject(err);
+        });
+
+        return deferred.promise;
+    };
 
     this.register = register;
+    this.update = update;
     this.login = login;
     this.logOut = logOut;
     this.init = init;

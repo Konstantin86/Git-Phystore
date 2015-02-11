@@ -74,12 +74,15 @@
     <Content Include="app\views\workouts.html" />
     <Content Include="content\css\angular-motion.css" />
     <Content Include="content\css\angular-motion.min.css" />
+    <Content Include="content\css\bootstrap-additions.css" />
+    <Content Include="content\css\bootstrap-additions.min.css" />
     <Content Include="content\css\bootstrap-form.css" />
     <Content Include="content\css\bootstrap.css" />
     <Content Include="content\css\bootstrap.min.css" />
     <Content Include="content\css\loading-bar.css" />
     <Content Include="content\css\loading-bar.min.css" />
     <Content Include="content\css\site.css" />
+    <Content Include="content\css\themes\united\bootstrap-theme-adjustments.css" />
     <Content Include="content\css\themes\united\bootstrap-theme.css" />
     <Content Include="content\css\themes\united\bootstrap-theme.min.css" />
     <Content Include="content\fonts\glyphicons-halflings-regular.svg" />
@@ -100,6 +103,7 @@
     <Content Include="scripts\angular.min.js" />
     <Content Include="scripts\bootstrap.js" />
     <Content Include="scripts\bootstrap.min.js" />
+    <Content Include="scripts\data-parser.js" />
     <Content Include="scripts\jquery.js" />
     <Content Include="scripts\jquery.min.js" />
     <Content Include="scripts\loading-bar.js" />

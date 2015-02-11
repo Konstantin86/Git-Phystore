@@ -1,4 +1,4 @@
-﻿var app = angular.module('PhystoreApp', ['ngRoute', 'ngAnimate', 'ngSanitize', 'LocalStorageModule', 'mgcrea.ngStrap', 'mgcrea.ngStrap.modal', 'mgcrea.ngStrap.tab', 'mgcrea.ngStrap.tooltip', 'mgcrea.ngStrap.helpers.dateParser', 'angular-loading-bar']);
+﻿var app = angular.module('PhystoreApp', ['ngRoute', 'ngAnimate', 'ngSanitize', 'LocalStorageModule', 'mgcrea.ngStrap', 'mgcrea.ngStrap.helpers.dateParser', 'angular-loading-bar']);
 
 app.config(function ($routeProvider) {
 

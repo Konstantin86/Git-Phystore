@@ -4,7 +4,7 @@
         <div class="panel-heading">
             <h4 class="panel-title">
                 <a bs-collapse-toggle>
-                    {{ personalizationPanel.title }}
+                    {{ personalizationPanelTitle }}
                 </a>
             </h4>
         </div>
@@ -17,10 +17,15 @@
                         <input type="text" class="form-control" name="firstName" placeholder="First Name" ng-model="formData.firstName">
                     </div>
                     <div class="form-group">
-                        <input type="email" class="form-control" name="lastName" placeholder="Last Name" ng-model="formData.lastName" required>
+                        <input type="text" class="form-control" name="lastName" placeholder="Last Name" ng-model="formData.lastName">
                     </div>
-                    <div class="form-group col-xs-6">
-                        <input type="text" class="form-control" ng-model="formData.birthDate" placeholder="birthDate" bs-datepicker>
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="sex" placeholder="Gender" ng-model="formData.sex">
+                    </div>
+                    <div class="form-group" ng-class="{'has-error': form.birthDate.$invalid}">
+                        <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+                        <label class="control-label">Birth Date</label> 
+                        <input type="text" class="form-control" ng-model="formData.birthDate" data-date-format="yyyy-MM-dd" name="birthDate" data-autoclose="1" bs-datepicker>
                     </div>
                     <div class="form-group">
                         <input type="text" class="form-control" name="country" placeholder="Country" ng-model="formData.country">
@@ -28,15 +33,11 @@
                     <div class="form-group">
                         <input type="text" class="form-control" name="city" placeholder="City" ng-model="formData.city">
                     </div>
-                    <button class="btn btn-lg btn-primary btn-block" type="submit" ng-click="signUp()">Update</button>
-                    <div ng-hide="message == ''" ng-class="(success) ? 'alert alert-success' : 'alert alert-danger'">
-                        {{message}}
-                    </div>
+                    <button class="btn btn-lg btn-primary btn-block" type="submit" ng-click="update()">Update</button>
                 </form>
-                <div ng-hide="!success" class="alert alert-success">
-                    {{confirmationMessage}}
+                <div ng-hide="updateStatus == ''" ng-class="(updateSuccess) ? 'alert alert-success' : 'alert alert-danger'">
+                    {{updateStatus}}
                 </div>
-                {{ personalizationPanel.body }}
             </div>
         </div>
     </div>

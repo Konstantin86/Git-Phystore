@@ -23,6 +23,8 @@ namespace Phystore.WebApi.Models.Factory
         Url = _urlHelper.Link("GetUserById", new { id = user.Id }),
         Id = user.Id,
         UserName = user.UserName,
+        FirstName = user.FirstName,
+        LastName = user.LastName,
         FullName = string.Format("{0} {1}", user.FirstName, user.LastName),
         Email = user.Email,
         EmailConfirmed = user.EmailConfirmed,

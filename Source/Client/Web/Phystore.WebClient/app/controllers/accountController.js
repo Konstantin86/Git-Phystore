@@ -1,19 +1,9 @@
 ﻿app.controller('accountController', function ($scope, $location, authService, workoutService) {
 
-    $scope.formData = {
-        userName: authService.authData.userName,
-        firstName: "test",
-        birthDate: "2015-02-11T06:47:12.585Z",
-        country: "Ukraine",
-        city: "Kharkiv"
-    };
+    $scope.updateStatus = "";
+    $scope.formData = authService.authData;
 
-    //$scope.userName = authService.authData.userName;
-    //$scope.message = "This is gonna be your profile page...";
-    $scope.personalizationPanel = {
-        "title": "Personalization",
-        "body": "Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch."
-    };
+    $scope.personalizationPanelTitle = "Personalization";
 
     $scope.securityPanel = {
         "title": "Security",
@@ -28,4 +18,15 @@
             title: "Delete Confirmation",
             content: "Are you sure you want to delete account from system?"
         };
+
+    $scope.update = function () {
+        authService.update().then(function (response) {
+            $scope.updateSuccess = true;
+            $scope.updateStatus = "User profile is updated successfully";
+        },
+         function (err) {
+             $scope.updateSuccess = false;
+             $scope.updateStatus = err;
+         });
+    };
 });

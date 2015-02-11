@@ -3016,10 +3016,15 @@ fieldset[disabled] .btn {
   -webkit-box-shadow: none;
   box-shadow: none;
 }
-.btn-default {
+/*.btn-default {
   color: #ffffff;
   background-color: #aea79f;
   border-color: #aea79f;
+}*/
+.btn-default {
+  color: #333;
+  background-color: #fff;
+  border-color: #ccc;
 }
 .btn-default:hover,
 .btn-default:focus,
