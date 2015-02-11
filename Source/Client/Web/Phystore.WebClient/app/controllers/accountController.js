@@ -3,6 +3,9 @@
     $scope.formData = {
         userName: authService.authData.userName,
         firstName: "test",
+        birthDate: "2015-02-11T06:47:12.585Z",
+        country: "Ukraine",
+        city: "Kharkiv"
     };
 
     //$scope.userName = authService.authData.userName;
