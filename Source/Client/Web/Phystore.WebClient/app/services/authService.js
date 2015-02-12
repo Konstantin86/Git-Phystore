@@ -76,7 +76,7 @@
             authData.isAuth = true;
             authData.userName = authorizationData.userName;
 
-            var userProfileData = $http.get(serviceBaseUri + 'api/account/user').success(function (response) {
+            $http.get(serviceBaseUri + 'api/account/user').success(function (response) {
                 authData.firstName = response.firstName;
                 authData.lastName = response.lastName;
                 authData.sex = response.sex;
@@ -91,7 +91,7 @@
     var update = function () {
         var deferred = $q.defer();
 
-        return $http.post(serviceBaseUri + 'api/account/update', authData).success(function (response) {
+        $http.post(serviceBaseUri + 'api/account/update', authData).success(function (response) {
             deferred.resolve(response);
         }).error(function (err) {
             deferred.reject(err);
@@ -103,7 +103,20 @@
     var changePassword = function () {
         var deferred = $q.defer();
 
-        return $http.post(serviceBaseUri + 'api/account/changepassword', securityData).success(function (response) {
+        $http.post(serviceBaseUri + 'api/account/changepassword', securityData).success(function (response) {
+            deferred.resolve(response);
+        }).error(function (err) {
+            deferred.reject(err);
+        });
+
+        return deferred.promise;
+    };
+
+    var deleteUser = function () {
+        var deferred = $q.defer();
+
+        $http.delete(serviceBaseUri + 'api/account/user').success(function (response) {
+            logOut();
             deferred.resolve(response);
         }).error(function (err) {
             deferred.reject(err);
@@ -114,6 +127,7 @@
 
     this.register = register;
     this.update = update;
+    this.deleteUser = deleteUser;
     this.changePassword = changePassword;
     this.login = login;
     this.logOut = logOut;

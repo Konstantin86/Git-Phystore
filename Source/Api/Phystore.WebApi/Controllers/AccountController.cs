@@ -166,16 +166,18 @@ namespace Phystore.WebApi.Controllers
 
     // To test this method we need to issue HTTP DELETE request to the end point “api/accounts/user/{id}”.
     [Authorize]
-    [Route("user/{id:guid}")]
-    public async Task<IHttpActionResult> DeleteUser(string id)
+    [Route("user")]
+    public async Task<IHttpActionResult> DeleteUser()
     {
       //Only SuperAdmin or Admin can delete users (Later when implement roles)
+      //var user = string.IsNullOrEmpty(id)
+      //  ? await AppUserManager.FindByNameAsync(User.Identity.Name)
+      //  : await this.AppUserManager.FindByIdAsync(id);
+      var user = await AppUserManager.FindByNameAsync(User.Identity.Name);
 
-      var appUser = await this.AppUserManager.FindByIdAsync(id);
-
-      if (appUser != null)
+      if (user != null)
       {
-        IdentityResult result = await this.AppUserManager.DeleteAsync(appUser);
+        IdentityResult result = await AppUserManager.DeleteAsync(user);
 
         if (!result.Succeeded)
         {
