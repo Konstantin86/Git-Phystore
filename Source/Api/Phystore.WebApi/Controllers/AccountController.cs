@@ -119,7 +119,14 @@ namespace Phystore.WebApi.Controllers
         return BadRequest(ModelState);
       }
 
-      IdentityResult result = await this.AppUserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
+      var user = await AppUserManager.FindByNameAsync(User.Identity.Name);
+
+      if (user == null)
+      {
+        return BadRequest("Auth db corrupted");
+      }
+
+      IdentityResult result = await AppUserManager.ChangePasswordAsync(user.Id, model.OldPassword, model.Password);
 
       if (!result.Succeeded)
       {

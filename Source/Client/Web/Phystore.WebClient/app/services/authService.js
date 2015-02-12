@@ -12,7 +12,13 @@
             birthDate: null,
             country: "",
             city: "",
-        };
+    };
+
+    var securityData = {
+        oldPassword: "",
+        password: "",
+        confirmPassword: ""
+    }
 
     var register = function (registration) {
         logOut();
@@ -38,7 +44,7 @@
             authData.isAuth = true;
             authData.userName = loginData.userName;
 
-            var userProfileData = $http.get(serviceBaseUri + 'api/account/user').success(function (response) {
+            $http.get(serviceBaseUri + 'api/account/user').success(function (response) {
                 authData.firstName = response.firstName;
                 authData.lastName = response.lastName;
                 authData.sex = response.sex;
@@ -88,7 +94,18 @@
         return $http.post(serviceBaseUri + 'api/account/update', authData).success(function (response) {
             deferred.resolve(response);
         }).error(function (err) {
-            logOut();
+            deferred.reject(err);
+        });
+
+        return deferred.promise;
+    };
+
+    var changePassword = function () {
+        var deferred = $q.defer();
+
+        return $http.post(serviceBaseUri + 'api/account/changepassword', securityData).success(function (response) {
+            deferred.resolve(response);
+        }).error(function (err) {
             deferred.reject(err);
         });
 
@@ -97,8 +114,10 @@
 
     this.register = register;
     this.update = update;
+    this.changePassword = changePassword;
     this.login = login;
     this.logOut = logOut;
     this.init = init;
     this.authData = authData;
+    this.securityData = securityData;
 }]);

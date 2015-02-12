@@ -52,7 +52,22 @@
         </div>
         <div class="panel-collapse" bs-collapse-target>
             <div class="panel-body">
-                {{ securityPanel.body }}
+                <form class="form-signin" name="form" ng-hide="success">
+                    <h2 class="form-signin-heading">Change Password</h2>
+                    <div class="form-group" ng-class="{ 'has-error': form.oldPassword.$invalid && (form.oldPassword.$dirty || submitted) }">
+                        <input type="password" class="form-control" name="oldPassword" placeholder="Old Password" ng-model="securityFormData.oldPassword" required>
+                    </div>
+                    <div class="form-group" ng-class="{ 'has-error': form.password.$invalid && (form.password.$dirty || submitted) }">
+                        <input type="password" class="form-control" name="password" placeholder="New Password" ng-model="securityFormData.password" required>
+                    </div>
+                    <div class="form-group" ng-class="{ 'has-error': form.confirmPassword.$invalid && (form.confirmPassword.$dirty || submitted) }">
+                        <input type="password" class="form-control" name="confirmPassword" placeholder="Confirm Password" ng-model="securityFormData.confirmPassword" required>
+                    </div>
+                    <button class="btn btn-lg btn-primary btn-block" type="submit" ng-click="changePassword()">Change</button>
+                    <div ng-hide="changePasswordStatusMessage == ''" ng-class="(changePasswordSuccess) ? 'alert alert-success' : 'alert alert-danger'">
+                        {{changePasswordStatusMessage}}
+                    </div>
+                </form>
             </div>
         </div>
     </div>

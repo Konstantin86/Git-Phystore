@@ -1,7 +1,10 @@
 ﻿app.controller('accountController', function ($scope, $location, authService, workoutService) {
 
     $scope.updateStatus = "";
+    $scope.changePasswordStatusMessage = "";
     $scope.formData = authService.authData;
+
+    $scope.securityFormData = authService.securityData;
 
     $scope.personalizationPanelTitle = "Personalization";
 
@@ -27,6 +30,17 @@
          function (err) {
              $scope.updateSuccess = false;
              $scope.updateStatus = err;
+         });
+    };
+
+    $scope.changePassword = function () {
+        authService.changePassword().then(function (response) {
+            $scope.changePasswordSuccess = true;
+            $scope.changePasswordStatusMessage = "User password has been changed successfully";
+        },
+         function (err) {
+             $scope.changePasswordSuccess = false;
+             $scope.changePasswordStatusMessage = err;
          });
     };
 });
