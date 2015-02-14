@@ -11,7 +11,13 @@
             joinDate: null,
             birthDate: null,
             country: "",
-            city: "",
+            city: ""
+    };
+
+    var externalAuthData = {
+        provider: "",
+        userName: "",
+        externalAccessToken: ""
     };
 
     var securityData = {
@@ -125,8 +131,52 @@
         return deferred.promise;
     };
 
+    var registerExternal = function (registerExternalData) {
+
+        var deferred = $q.defer();
+
+        $http.post(serviceBaseUri + 'api/account/registerexternal', registerExternalData).success(function (response) {
+
+            localStorageService.set('authorizationData', { token: response.access_token, userName: response.userName });
+
+            authData.isAuth = true;
+            authData.userName = response.userName;
+
+            deferred.resolve(response);
+
+        }).error(function (err, status) {
+            logOut();
+            deferred.reject(err);
+        });
+
+        return deferred.promise;
+    };
+
+    var obtainAccessToken = function (externalData) {
+
+        var deferred = $q.defer();
+
+        $http.get(serviceBaseUri + 'api/account/ObtainLocalAccessToken', { params: { provider: externalData.provider, externalAccessToken: externalData.externalAccessToken } }).success(function (response) {
+
+            localStorageService.set('authorizationData', { token: response.access_token, userName: response.userName });
+
+            authData.isAuth = true;
+            authData.userName = response.userName;
+
+            deferred.resolve(response);
+
+        }).error(function (err, status) {
+            logOut();
+            deferred.reject(err);
+        });
+
+        return deferred.promise;
+
+    };
+
     this.register = register;
     this.update = update;
+    this.registerExternal = registerExternal;
     this.deleteUser = deleteUser;
     this.changePassword = changePassword;
     this.login = login;
@@ -134,4 +184,6 @@
     this.init = init;
     this.authData = authData;
     this.securityData = securityData;
+    this.externalAuthData = externalAuthData;
+    this.obtainAccessToken = obtainAccessToken;
 }]);

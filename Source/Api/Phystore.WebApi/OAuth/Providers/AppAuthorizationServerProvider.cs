@@ -6,7 +6,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security.OAuth;
 using Phystore.DAL.Managers;
 
-namespace Phystore.WebApi.Providers
+namespace Phystore.WebApi.OAuth.Providers
 {
   public class AppAuthorizationServerProvider : OAuthAuthorizationServerProvider
   {

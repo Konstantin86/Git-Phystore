@@ -32,6 +32,11 @@ app.config(function ($routeProvider) {
         templateUrl: "/app/views/workouts.html"
     });
 
+    $routeProvider.when("/associate", {
+        controller: "associateController",
+        templateUrl: "/app/views/associate.html"
+    });
+
     $routeProvider.otherwise({ redirectTo: "/home" });
 });
 

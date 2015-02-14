@@ -5,7 +5,7 @@
     function init() {
 
         //var serviceHostUri = 'http://jiraplexapi.azurewebsites.net/'
-        var serviceHostUri = 'http://localhost:62749/'
+        var serviceHostUri = 'http://localhost:62749/';
 
         var getServiceHostUri = function () {
             return serviceHostUri;
