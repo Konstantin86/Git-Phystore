@@ -8,6 +8,11 @@ namespace Phystore.WebApi.Models.Request
     public string UserName { get; set; }
 
     [Required]
+    [EmailAddress]
+    [Display(Name = "Email")]
+    public string Email { get; set; }
+
+    [Required]
     public string Provider { get; set; }
 
     [Required]

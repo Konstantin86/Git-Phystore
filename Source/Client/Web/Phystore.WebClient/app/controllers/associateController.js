@@ -3,14 +3,18 @@ app.controller('associateController', ['$scope', '$location', '$timeout', 'authS
 
     $scope.savedSuccessfully = false;
     $scope.message = "";
+    $scope.submitted = false;
 
     $scope.registerData = {
         userName: authService.externalAuthData.userName,
+        email: authService.externalAuthData.email,
         provider: authService.externalAuthData.provider,
         externalAccessToken: authService.externalAuthData.externalAccessToken
     };
 
     $scope.registerExternal = function () {
+
+        $scope.submitted = true;
 
         authService.registerExternal($scope.registerData).then(function (response) {
 

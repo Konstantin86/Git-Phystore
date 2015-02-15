@@ -17,6 +17,7 @@
     var externalAuthData = {
         provider: "",
         userName: "",
+        email: "",
         externalAccessToken: ""
     };
 

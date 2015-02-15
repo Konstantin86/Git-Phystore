@@ -248,12 +248,13 @@ namespace Phystore.WebApi.Controllers
 
       bool registered = user != null;
 
-      redirectUri = string.Format("{0}#external_access_token={1}&provider={2}&haslocalaccount={3}&external_user_name={4}",
+      redirectUri = string.Format("{0}#external_access_token={1}&provider={2}&haslocalaccount={3}&external_user_name={4}&email={5}",
                                       redirectUri,
                                       externalLogin.ExternalAccessToken,
                                       externalLogin.LoginProvider,
                                       registered.ToString(),
-                                      externalLogin.UserName);
+                                      externalLogin.UserName,
+                                      externalLogin.Email);
 
       return Redirect(redirectUri);
     }
@@ -283,10 +284,7 @@ namespace Phystore.WebApi.Controllers
         return BadRequest("External user is already registered");
       }
 
-      user = new User { UserName = model.UserName };
-      user.JoinDate = DateTime.Now;
-      user.Email = "kos_sml@mail.ru";
-      user.EmailConfirmed = true;
+      user = new User { UserName = model.UserName, Email = model.Email, EmailConfirmed = true, JoinDate = DateTime.Now };
 
       IdentityResult result = await AppUserManager.CreateAsync(user);
       if (!result.Succeeded) return GetErrorResult(result);
