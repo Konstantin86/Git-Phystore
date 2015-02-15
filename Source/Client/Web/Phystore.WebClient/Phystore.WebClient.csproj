@@ -58,6 +58,7 @@
     <Content Include="app\controllers\loginController.js" />
     <Content Include="app\controllers\signupController.js" />
     <Content Include="app\controllers\workoutsController.js" />
+    <Content Include="app\directives\disableAnimation.js" />
     <Content Include="app\services\authService.js" />
     <Content Include="app\services\interceptors\authInterceptorService.js" />
     <Content Include="app\services\workoutService.js" />
@@ -88,11 +89,14 @@
     <Content Include="content\css\loading-bar.min.css" />
     <Content Include="content\css\site.css" />
     <Content Include="content\css\social-buttons.css" />
-    <Content Include="content\css\themes\united\bootstrap-theme-adjustments.css" />
-    <Content Include="content\css\themes\united\bootstrap-theme.css" />
-    <Content Include="content\css\themes\united\bootstrap-theme.min.css" />
+    <Content Include="content\css\bootstrap-theme.css" />
+    <Content Include="content\css\bootstrap-theme.min.css" />
     <Content Include="content\fonts\fontawesome-webfont.svg" />
     <Content Include="content\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="content\images\0001.jpg" />
+    <Content Include="content\images\1.jpg" />
+    <Content Include="content\images\513087d59ac46.jpg" />
+    <Content Include="content\images\Aivazovsky_Park.jpg" />
     <Content Include="index.html" />
     <Content Include="scripts\angular-animate.js" />
     <Content Include="scripts\angular-animate.min.js" />
@@ -115,6 +119,8 @@
     <Content Include="scripts\jquery.js" />
     <Content Include="scripts\jquery.min.js" />
     <Content Include="scripts\loading-bar.js" />
+    <Content Include="scripts\ui-bootstrap-tpls-0.12.0.js" />
+    <Content Include="scripts\ui-bootstrap-tpls-0.12.0.min.js" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="content\css\bootstrap.css.map" />

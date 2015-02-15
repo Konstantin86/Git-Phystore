@@ -5,15 +5,15 @@
     <!--Production-->
     <!--<link href="content/css/bootstrap.min.css" rel="stylesheet"/>-->
     <!--<link href="content/css/bootstrap-additions.min.css" rel="stylesheet" />-->
-    <!--<link href="content/css/themes/united/bootstrap-theme.min.css" rel="stylesheet" />-->
+    <!--<link href="content/css/bootstrap-theme.min.css" rel="stylesheet" />-->
     <!--<link href="content/css/loading-bar.min.css" rel="stylesheet" />-->
     <!--<link href="content/css/angular-motion.min.css" rel="stylesheet" />-->
 
     <!--Development-->
     <link href="content/css/bootstrap.css" rel="stylesheet" />
     <link href="content/css/bootstrap-form.css" rel="stylesheet" />
-    <link href="content/css/bootstrap-additions.css" rel="stylesheet" />
-    <link href="content/css/themes/united/bootstrap-theme.css" rel="stylesheet" />
+    <link href="content/css/bootstrap-additions.css" rel="stylesheet"/>
+    <link href="content/css/bootstrap-theme.css" rel="stylesheet" /> <!--Bootstrap united theme-->
     <link href="content/css/loading-bar.css" rel="stylesheet" />
     <link href="content/css/angular-motion.css" rel="stylesheet" />
     <link href="content/css/social-buttons.css" rel="stylesheet" />
@@ -68,10 +68,11 @@
 <!--LIBRARIES-->
 <!--Production-->
 <!--<script type="text/javascript" src="scripts/angular.min.js"></script>
-    <script type="text/javascript" src="scripts/angular-route.min.js"></script>
-    <script type="text/javascript" src="scripts/angular-local-storage.min.js"></script>
-    <script type="text/javascript" src="scripts/angular-sanitize.min.js"></script>
-    <script type="text/javascript" src="scripts/angular-animate.min.js"></script>
+<script type="text/javascript" src="scripts/angular-route.min.js"></script>
+<script type="text/javascript" src="scripts/angular-local-storage.min.js"></script>
+<script type="text/javascript" src="scripts/angular-sanitize.min.js"></script>
+<script type="text/javascript" src="scripts/angular-animate.min.js"></script>
+    <script type="text/javascript" src="scripts/ui-bootstrap-tpls-0.12.0.min.js"></script>
 
 <script type="text/javascript" src="scripts/angular-strap.min.js"></script>
 <script type="text/javascript" src="scripts/angular-strap.tpl.min.js"></script>
@@ -88,6 +89,7 @@
 <script type="text/javascript" src="scripts/angular-local-storage.js"></script>
 <script type="text/javascript" src="scripts/angular-sanitize.js"></script>
 <script type="text/javascript" src="scripts/angular-animate.js"></script>
+<script type="text/javascript" src="scripts/ui-bootstrap-tpls-0.12.0.min.js"></script>
 
 <script type="text/javascript" src="scripts/angular-strap.js"></script>
 <script type="text/javascript" src="scripts/angular-strap.tpl.js"></script>
@@ -109,12 +111,18 @@
 
 <!--Main app script-->
 <script type="text/javascript" src="app/app.js"></script>
+
+<!--Directives-->
+<script type="text/javascript" src="app/directives/disableAnimation.js"></script>
+
 <!--Constants-->
 <script type="text/javascript" src="app/const/constMessage.js"></script>
+
 <!--Services-->
 <script type="text/javascript" src="app/services/interceptors/authInterceptorService.js"></script>
 <script type="text/javascript" src="app/services/authService.js"></script>
 <script type="text/javascript" src="app/services/workoutService.js"></script>
+
 <!--Controllers-->
 <script type="text/javascript" src="app/controllers/indexController.js"></script>
 <script type="text/javascript" src="app/controllers/homeController.js"></script>
