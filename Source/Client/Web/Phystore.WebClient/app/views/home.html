@@ -1,23 +1,15 @@
-﻿<div class="jumbotron">
+﻿<!--<div class="jumbotron">
     <div class="container">
         <div class="page-header text-center">
             <h1>{{welcomeHeader}}</h1>
         </div>
         <p>{{welcomeText}}</p>
     </div>
-    <!--<div class="row">
-        <div class="col-md-6">
-            <button type="button" class="btn btn-info" ng-click="addSlide()">Add Slide</button>
-        </div>
-        <div class="col-md-6">
-            Interval, in milliseconds: <input type="number" class="form-control" ng-model="myInterval">
-            <br/>Enter a negative number or 0 to stop the interval.
-        </div>
-    </div>-->
-</div>
+</div>-->
 
 
-<div style="height: 305px">
+<!--<div style="height: 305px; width: 300px">-->
+<div style="height: 564px; margin-top: -9px">
     <carousel interval="myInterval" disable-animation="true">
         <slide ng-repeat="slide in slides" active="slide.active">
             <img ng-src="{{slide.image}}" style="margin:auto;">
@@ -28,7 +20,7 @@
         </slide>
     </carousel>
 </div>
-<div class="row">
+<!--<div class="row">
     <div class="col-md-6">
         <button type="button" class="btn btn-info" ng-click="addSlide()">Add Slide</button>
     </div>
@@ -36,4 +28,4 @@
         Interval, in milliseconds: <input type="number" class="form-control" ng-model="myInterval">
         <br />Enter a negative number or 0 to stop the interval.
     </div>
-</div>
+</div>-->

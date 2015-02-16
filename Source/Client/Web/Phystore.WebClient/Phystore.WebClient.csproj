@@ -94,8 +94,16 @@
     <Content Include="content\fonts\fontawesome-webfont.svg" />
     <Content Include="content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="content\images\0001.jpg" />
+    <Content Include="content\images\1-set-your-goals.jpg" />
     <Content Include="content\images\1.jpg" />
+    <Content Include="content\images\2-create-workout-plan.jpg" />
+    <Content Include="content\images\3-work-hard.jpg" />
+    <Content Include="content\images\4-take-suggestions-from-community.jpg" />
+    <Content Include="content\images\5-do-something-every-day.jpg" />
     <Content Include="content\images\513087d59ac46.jpg" />
+    <Content Include="content\images\6-achieve-your-goals.jpg" />
+    <Content Include="content\images\7-share-your-success.jpg" />
+    <Content Include="content\images\8-observe-places.jpg" />
     <Content Include="content\images\Aivazovsky_Park.jpg" />
     <Content Include="index.html" />
     <Content Include="scripts\angular-animate.js" />
