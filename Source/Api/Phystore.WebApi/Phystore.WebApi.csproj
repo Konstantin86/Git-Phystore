@@ -149,6 +149,7 @@
     <Compile Include="CompositionRoot\Bootstrapper.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Base\BaseApiController.cs" />
+    <Compile Include="Controllers\ImageController.cs" />
     <Compile Include="Controllers\SecurityController.cs" />
     <Compile Include="Controllers\WorkoutController.cs" />
     <Compile Include="Models\Logins\ExternalLoginData.cs" />
