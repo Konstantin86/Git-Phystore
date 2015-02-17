@@ -127,6 +127,8 @@
     <Content Include="scripts\jquery.js" />
     <Content Include="scripts\jquery.min.js" />
     <Content Include="scripts\loading-bar.js" />
+    <Content Include="scripts\ng-flow-standalone.js" />
+    <Content Include="scripts\ng-flow-standalone.min.js" />
     <Content Include="scripts\ui-bootstrap-tpls-0.12.0.js" />
     <Content Include="scripts\ui-bootstrap-tpls-0.12.0.min.js" />
   </ItemGroup>

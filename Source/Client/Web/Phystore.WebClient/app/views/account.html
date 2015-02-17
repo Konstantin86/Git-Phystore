@@ -38,6 +38,26 @@
                 <div ng-hide="updateStatus == ''" ng-class="(updateSuccess) ? 'alert alert-success' : 'alert alert-danger'">
                     {{updateStatus}}
                 </div>
+                
+                <!--TODO full answer of how to upload image to web api: http://stackoverflow.com/questions/28142643/angularjs-angular-file-upload-cannot-upload-data-to-webapi-2-cors-->
+                <div flow-init="{target: '/upload'}"
+                     flow-files-submitted="$flow.upload()"
+                     flow-file-success="$file.msg = $message">
+
+                    <input type="file" flow-btn />
+                    Input OR Other element as upload button
+                    <span class="btn" flow-btn>Upload File</span>
+
+                    <table>
+                        <tr ng-repeat="file in $flow.files">
+                            <td>{{$index+1}}</td>
+                            <td>{{file.name}}</td>
+                            <td>{{file.msg}}</td>
+                            <td><img width="200" height="150" flow-img="$flow.files[0]" /></td>
+                        </tr>
+                    </table>
+                </div>
+
             </div>
         </div>
     </div>
