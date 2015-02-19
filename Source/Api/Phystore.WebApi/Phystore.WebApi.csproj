@@ -137,7 +137,9 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Images\test.jpg" />
     <Content Include="packages.config" />
+    <None Include="Properties\PublishProfiles\keep-fit.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
