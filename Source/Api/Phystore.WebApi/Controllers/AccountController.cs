@@ -412,7 +412,6 @@ namespace Phystore.WebApi.Controllers
 
     private JObject GenerateLocalAccessTokenResponse(string userName)
     {
-
       var tokenExpiration = TimeSpan.FromDays(1);
 
       ClaimsIdentity identity = new ClaimsIdentity(OAuthDefaults.AuthenticationType);
