@@ -28,7 +28,7 @@ namespace Phystore.WebApi.Controllers
 
       string root = HttpContext.Current.Server.MapPath("~/App_Data");
       var provider = new MultipartFormDataStreamProvider(root);
-
+      // TODO use this to implement chunk uploading http://stackoverflow.com/questions/24475890/how-to-upload-file-in-chunks-in-asp-net-using-ng-flow/25486943#25486943
       try
       {
         // Read the form data.

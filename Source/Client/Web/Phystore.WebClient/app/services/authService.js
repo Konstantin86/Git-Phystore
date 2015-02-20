@@ -172,7 +172,13 @@
         });
 
         return deferred.promise;
+    };
 
+    var getAuthHeader = function () {
+        var authHeaderData = localStorageService.get('authorizationData');
+        if (authHeaderData) {
+            return 'Bearer ' + authHeaderData.token;
+        }
     };
 
     this.register = register;
@@ -184,6 +190,7 @@
     this.logOut = logOut;
     this.init = init;
     this.authData = authData;
+    this.getAuthHeader = getAuthHeader;
     this.securityData = securityData;
     this.externalAuthData = externalAuthData;
     this.obtainAccessToken = obtainAccessToken;

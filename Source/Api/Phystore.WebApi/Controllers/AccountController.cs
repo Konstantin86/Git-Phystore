@@ -480,7 +480,7 @@ namespace Phystore.WebApi.Controllers
 
     [Authorize]
     [Route("photo", Name = "photo")]
-    //[HttpPost]
+    [HttpPost]
     [ResponseType(typeof(JObject))]
     public async Task<IHttpActionResult> PostPhoto()
     {
@@ -520,7 +520,8 @@ namespace Phystore.WebApi.Controllers
             throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
           }
 
-          var bloblPhotoName = photofileName + file.Headers.ContentDisposition.FileName.Split('.').Last();
+          string ext = file.Headers.ContentDisposition.FileName.Split('.').Last();
+          var bloblPhotoName = photofileName + "." + ext.Substring(0, ext.Length - 1);
           CloudBlockBlob blockBlob = container.GetBlockBlobReference(bloblPhotoName);
           blockBlob.Properties.ContentType = file.Headers.ContentType.MediaType;
           //blockBlob.SetProperties();

@@ -1,4 +1,4 @@
-﻿app.controller('accountController', function ($scope, $location, authService, workoutService) {
+﻿app.controller('accountController', function ($scope, $http, $location, authService, workoutService) {
 
     $scope.updateStatus = "";
     $scope.changePasswordStatusMessage = "";
@@ -14,6 +14,40 @@
     };
 
     $scope.activePanel = 0;
+
+    // TODO kb - ng-flow upload file by a click http://stackoverflow.com/questions/25740110/flow-js-upload-file-on-click (not automatically)
+    // TODO kb - angular $http customize headers
+    // TODO kb - js string contains var s = "foo"; alert(s.indexOf("oo") > -1);
+
+    $scope.onFileAdded = function (file, event) {
+        //event.preventDefault();
+        //$scope.testImg = file;
+        //var serviceBaseUri = appConfig.getInstance().getServiceUri();
+        //$http.post(serviceBaseUri + 'api/account/photo', file).then(function (response) {
+        //    return response;
+        //});
+    };
+
+    $scope.onFilesAdded = function (files, event) {
+        var flow = this.$flow;
+        $scope.testImg = files[0];
+        var authHeaderData = authService.getAuthHeader();
+        flow.defaults.headers.Authorization = authHeaderData;
+        flow.opts.headers.Authorization = authHeaderData;
+    };
+
+    $scope.onFilesSubmitted = function (files, event) {
+        //var flow = this.$flow;
+        //$scope.testImg = files[0];
+        //var authHeaderData = authService.getAuthHeader();
+        //flow.defaults.headers.Authorization = authHeaderData;
+        //flow.opts.headers.Authorization = authHeaderData;
+        //flow.upload();
+    };
+
+    //$scope.$on('flow::fileAdded', function (event, $flow, flowFile) {
+    //    event.preventDefault();//prevent file from uploading
+    //});
 
     // TODO implement yes/no buttons (yes will make xhr request for user deletion) 
     $scope.deleteUserModal =

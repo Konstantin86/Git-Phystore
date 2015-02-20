@@ -3,6 +3,8 @@ using System.Reflection;
 using Autofac;
 using Autofac.Integration.WebApi;
 
+using Phystore.WebApi.Blob;
+
 namespace Phystore.WebApi.CompositionRoot
 {
   public class Bootstrapper
@@ -59,6 +61,7 @@ namespace Phystore.WebApi.CompositionRoot
 
     private void RegisterManagers(bool webapi)
     {
+      RegisterDependency<AzureBlobStorageRepository, IBlobStorageRepository>(webapi);
       //RegisterDependency<StatisticsProvider, IStatisticsProvider>(webapi);
     }
 

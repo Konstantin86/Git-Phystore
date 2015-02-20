@@ -3,6 +3,10 @@
     var request = function (config) {
         config.headers = config.headers || {};
 
+        if (config.url.indexOf("photo") > -1) {
+            config.headers["Content-Type"] = "multipart/form-data";
+        }
+
         var authData = localStorageService.get('authorizationData');
         if (authData) {
             config.headers.Authorization = 'Bearer ' + authData.token;
