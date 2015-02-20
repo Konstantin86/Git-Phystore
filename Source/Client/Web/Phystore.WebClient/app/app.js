@@ -50,7 +50,7 @@ app.run(['authService', function (authService) {
 
 app.config(['flowFactoryProvider', function (flowFactoryProvider) {
     flowFactoryProvider.defaults = {
-        target: appConfig.getInstance().getServiceUri() + 'api/image/test',
+        target: appConfig.getInstance().getServiceUri() + 'api/account/photo',
         permanentErrors: [404, 500, 501],
         maxChunkRetries: 1,
         chunkRetryInterval: 5000,

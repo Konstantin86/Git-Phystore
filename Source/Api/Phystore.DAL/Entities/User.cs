@@ -22,5 +22,7 @@ namespace Phystore.DAL.Entities
     public string Country { get; set; }
 
     public string City { get; set; }
+
+    public string PhotoPath { get; set; }
   }
 }

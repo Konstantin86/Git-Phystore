@@ -83,6 +83,10 @@
     <Compile Include="Migrations\201502091241318_ChangedRequiredFields.Designer.cs">
       <DependentUpon>201502091241318_ChangedRequiredFields.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201502200653111_userAddPhotoPath.cs" />
+    <Compile Include="Migrations\201502200653111_userAddPhotoPath.Designer.cs">
+      <DependentUpon>201502200653111_userAddPhotoPath.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\EmailService.cs" />
@@ -97,6 +101,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201502091241318_ChangedRequiredFields.resx">
       <DependentUpon>201502091241318_ChangedRequiredFields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201502200653111_userAddPhotoPath.resx">
+      <DependentUpon>201502200653111_userAddPhotoPath.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
