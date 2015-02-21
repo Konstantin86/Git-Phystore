@@ -14,10 +14,4 @@
         <input type="password" class="form-control" name="confirmPassword" placeholder="Confirm Password" ng-model="formData.confirmPassword" required>
     </div>
     <button class="btn btn-lg btn-primary btn-block" type="submit" ng-click="signUp()">Submit</button>
-    <div ng-hide="message == ''" ng-class="(success) ? 'alert alert-success' : 'alert alert-danger'">
-        {{message}}
-    </div>
 </form>
-<div ng-hide="!success" class="alert alert-success">
-    {{confirmationMessage}}
-</div>

@@ -18,6 +18,7 @@ namespace Phystore.WebApi.Models
     public string City { get; set; }
     public DateTime? BirthDate { get; set; }
     public DateTime JoinDate { get; set; }
+    public string PhotoPath { get; set; }
     public IList<string> Roles { get; set; }
     public IList<System.Security.Claims.Claim> Claims { get; set; }
   }

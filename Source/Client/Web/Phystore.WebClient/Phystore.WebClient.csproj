@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\app.js" />
+    <Content Include="app\const\appConstants.js" />
     <Content Include="app\const\constMessage.js" />
     <Content Include="app\controllers\accountController.js" />
     <Content Include="app\controllers\associateController.js" />
@@ -61,6 +62,7 @@
     <Content Include="app\directives\disableAnimation.js" />
     <Content Include="app\services\authService.js" />
     <Content Include="app\services\interceptors\authInterceptorService.js" />
+    <Content Include="app\services\statusService.js" />
     <Content Include="app\services\workoutService.js" />
     <Content Include="app\utils\config\appConfig.js" />
     <Content Include="app\utils\system\system-format.js" />

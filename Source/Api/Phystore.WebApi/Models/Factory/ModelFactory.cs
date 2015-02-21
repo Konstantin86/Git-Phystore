@@ -33,6 +33,7 @@ namespace Phystore.WebApi.Models.Factory
         City = user.City,
         BirthDate = user.BirthDate,
         JoinDate = user.JoinDate,
+        PhotoPath = user.PhotoPath,
         Roles = _appUserManager.GetRolesAsync(user.Id).Result,
         Claims = _appUserManager.GetClaimsAsync(user.Id).Result
       };

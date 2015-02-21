@@ -1,4 +1,4 @@
-﻿app.service('authService', ['$http', '$q', 'localStorageService', function ($http, $q, localStorageService) {
+﻿app.service('authService', ['$http', '$q', 'localStorageService', 'appConstants', function ($http, $q, localStorageService, appConstants) {
 
     var serviceBaseUri = appConfig.getInstance().getServiceUri();
 
@@ -12,7 +12,7 @@
             birthDate: null,
             country: "",
             city: "",
-            photoPath: "http://az725561.vo.msecnd.net/media/default_avatar.png?width=360"
+            photoPath: ""
     };
 
     var externalAuthData = {
@@ -60,7 +60,7 @@
                 authData.joinDate = response.joinDate;
                 authData.country = response.country;
                 authData.city = response.city;
-                authData.photoPath = response.photoPath;
+                authData.photoPath = appConstants.cdnMediaBase + response.photoPath + "?width=" + appConstants.userAvatarWidth;
             });
 
             deferred.resolve(response);
@@ -93,7 +93,7 @@
                 authData.joinDate = response.joinDate;
                 authData.country = response.country;
                 authData.city = response.city;
-                authData.photoPath = response.photoPath;
+                authData.photoPath = appConstants.cdnMediaBase + response.photoPath + "?width=" + appConstants.userAvatarWidth;
             });
         }
     };
@@ -187,7 +187,7 @@
     };
 
     var setPhotoPath = function(photoPath) {
-        authData.photoPath = photoPath;
+        authData.photoPath = appConstants.cdnMediaBase + photoPath + "?width=" + appConstants.userAvatarWidth;
     };
 
     var getPhotoPath = function() {

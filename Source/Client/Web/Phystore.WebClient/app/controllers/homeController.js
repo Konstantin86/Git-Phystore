@@ -1,4 +1,7 @@
-﻿app.controller('homeController', function ($scope, constMessage) {
+﻿app.controller('homeController', function ($scope, constMessage, statusService) {
+
+    statusService.clear();
+
     $scope.welcomeText = constMessage.HOME_WELCOME;
     $scope.welcomeHeader = constMessage.HOME_WELCOME_HEADER;
 

@@ -1,8 +1,8 @@
-﻿app.controller('signupController', function ($scope, $location, $timeout, constMessage, authService) {
+﻿app.controller('signupController', function ($scope, $location, $timeout, constMessage, authService, statusService) {
+
+    statusService.clear();
 
     $scope.success = false;
-    $scope.message = "";
-
     $scope.submitted = false;
 
     $scope.formData = {
@@ -18,7 +18,7 @@
 
         authService.register($scope.formData).then(function (response) {
             $scope.success = true;
-            $scope.confirmationMessage = system.string.format(constMessage.SIGNUP_SUCCESS_FORMAT, $scope.formData.userName, $scope.formData.email);
+            statusService.success(system.string.format(constMessage.SIGNUP_SUCCESS_FORMAT, $scope.formData.userName, $scope.formData.email));
         },
          function (response) {
              var errors = [];
@@ -27,7 +27,8 @@
                      errors.push(response.data.modelState[key][i]);
                  }
              }
-             $scope.message = "Failed to register user due to:" + errors.join(' ');
+
+             statusService.error("Failed to register user due to:" + errors.join(' '));
          });
     };
 });

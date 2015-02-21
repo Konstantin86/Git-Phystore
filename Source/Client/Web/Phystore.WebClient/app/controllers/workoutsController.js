@@ -1,4 +1,7 @@
-﻿app.controller('workoutsController', function ($scope, $location, authService, workoutService) {
+﻿app.controller('workoutsController', function ($scope, $location, authService, workoutService, statusService) {
+
+    statusService.clear();
+
     $scope.userName = "testName";
     $scope.message = "This is gonna be your workouts list...";
 

@@ -19,6 +19,11 @@
     box-shadow: #ffffff 1px 0 6px 1px;
 }
 
+.alert {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
 html {
   height: 100%;
 }

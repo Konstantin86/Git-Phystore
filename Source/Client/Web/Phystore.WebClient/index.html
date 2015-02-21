@@ -22,25 +22,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 </head>
 <body>
-    <div class="navbar navbar-default navbar-fixed-top" ng-controller="indexController">
-        <div class="container">
-            <div class="navbar-header">
-                <button class="btn btn-success navbar-toggle">
-                    <span class="glyphicon glyphicon-chevron-down"></span>
-                </button>
-                <span class="glyphicon glyphicon-heart-empty" aria-hidden="true" style="font-size: 24pt; vertical-align: bottom"></span>
-                <a class="navbar-brand" href="#/home">KeepFit</a>
-            </div>
-            <div class="collapse navbar-collapse" data-collapse="!navbarExpanded">
-                <ul class="nav navbar-nav navbar-right">
-                    <li data-ng-hide="!authData.isAuth"><a href="#/account">Welcome {{authData.userName}}</a></li>
-                    <li data-ng-hide="!authData.isAuth"><a href="#/workouts">Workouts</a></li>
-                    <li data-ng-hide="!authData.isAuth"><a href="" data-ng-click="logOut()">Logout</a></li>
-                    <li data-ng-hide="authData.isAuth"> <a href="#/login">Login</a></li>
-                    <li data-ng-hide="authData.isAuth"> <a href="#/signup">Sign Up</a></li>
-                </ul>
+    <div ng-controller="indexController">
+        <div class="navbar navbar-default navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button class="btn btn-success navbar-toggle">
+                        <span class="glyphicon glyphicon-chevron-down"></span>
+                    </button>
+                    <span class="glyphicon glyphicon-heart-empty" aria-hidden="true" style="font-size: 24pt; vertical-align: bottom"></span>
+                    <a class="navbar-brand" href="#/home">KeepFit</a>
+                </div>
+                <div class="collapse navbar-collapse" data-collapse="!navbarExpanded">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li data-ng-hide="!authData.isAuth"><a href="#/account">Welcome {{authData.userName}}</a></li>
+                        <li data-ng-hide="!authData.isAuth"><a href="#/workouts">Workouts</a></li>
+                        <li data-ng-hide="!authData.isAuth"><a href="" data-ng-click="logOut()">Logout</a></li>
+                        <li data-ng-hide="authData.isAuth"> <a href="#/login">Login</a></li>
+                        <li data-ng-hide="authData.isAuth"> <a href="#/signup">Sign Up</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
+
+        <!--Look to the http://angular-ui.github.io/bootstrap/ example in order to implement array of alerts-->
+        <alert ng-hide="state.message === ''" type="{{state.status}}" close="closeAlert()">{{state.message}}</alert>
     </div>
 
     <div class="container">
@@ -122,9 +127,11 @@
 
 <!--Constants-->
 <script type="text/javascript" src="app/const/constMessage.js"></script>
+<script type="text/javascript" src="app/const/appConstants.js"></script>
 
 <!--Services-->
 <script type="text/javascript" src="app/services/interceptors/authInterceptorService.js"></script>
+<script type="text/javascript" src="app/services/statusService.js"></script>
 <script type="text/javascript" src="app/services/authService.js"></script>
 <script type="text/javascript" src="app/services/workoutService.js"></script>
 

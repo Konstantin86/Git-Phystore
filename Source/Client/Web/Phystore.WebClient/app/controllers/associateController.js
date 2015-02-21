@@ -1,8 +1,7 @@
 ﻿'use strict';
-app.controller('associateController', ['$scope', '$location', '$timeout', 'authService', function ($scope, $location, $timeout, authService) {
+app.controller('associateController', ['$scope', '$location', '$timeout', 'authService', function ($scope, $location, $timeout, authService, statusService) {
 
-    $scope.savedSuccessfully = false;
-    $scope.message = "";
+    statusService.clear();
     $scope.submitted = false;
 
     $scope.registerData = {
@@ -13,22 +12,17 @@ app.controller('associateController', ['$scope', '$location', '$timeout', 'authS
     };
 
     $scope.registerExternal = function () {
-
         $scope.submitted = true;
 
         authService.registerExternal($scope.registerData).then(function (response) {
-
-            $scope.savedSuccessfully = true;
-            $scope.message = "User has been registered successfully, you will be redicted to workouts page in 2 seconds.";
+            statusService.success("User has been registered successfully, you will be redicted to workouts page in 2 seconds.");
             startTimer();
-
-        },
-          function (response) {
+        }, function (response) {
               var errors = [];
               for (var key in response.modelState) {
                   errors.push(response.modelState[key]);
               }
-              $scope.message = "Failed to register user due to:" + errors.join(' ');
+              statusService.error("Failed to register user due to:" + errors.join(' '));
           });
     };
 
@@ -38,5 +32,4 @@ app.controller('associateController', ['$scope', '$location', '$timeout', 'authS
             $location.path('/workouts');
         }, 2000);
     }
-
 }]);

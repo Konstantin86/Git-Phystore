@@ -1,17 +1,17 @@
-﻿app.controller('loginController', function ($scope, $location, authService) {
+﻿app.controller('loginController', function ($scope, $location, authService, statusService) {
+
+    statusService.clear();
+
     $scope.formData = {
         userName: "",
         password: ""
     };
 
-    $scope.message = "";
-
     $scope.login = function () {
         authService.login($scope.formData).then(function (response) {
             $location.path('/workouts');
-        },
-         function (err) {
-             $scope.message = err.error_description;
+        }, function (err) {
+             statusService.error(err.error_description);
          });
     };
 
@@ -51,12 +51,9 @@
                 //Obtain access token and redirect to orders
                 var externalData = { provider: fragment.provider, externalAccessToken: fragment.external_access_token };
                 authService.obtainAccessToken(externalData).then(function (response) {
-
                     $location.path('/workouts');
-
-                },
-             function (err) {
-                 $scope.message = err.error_description;
+                }, function (err) {
+                 statusService.error(err.error_description);
              });
             }
 

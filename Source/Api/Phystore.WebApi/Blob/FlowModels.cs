@@ -62,7 +62,7 @@ namespace Phystore.WebApi.Blob
       if (rules.MaxFileSize.HasValue && TotalSize > rules.MaxFileSize.Value)
         errorMessages.Add(rules.MaxFileSizeMessage ?? "size");
 
-      if (rules.AcceptedExtensions.Count > 0 && rules.AcceptedExtensions.SingleOrDefault(x => x == FileName.Split('.').Last()) == null)
+      if (rules.AcceptedExtensions.Count > 0 && rules.AcceptedExtensions.SingleOrDefault(x => x.ToUpperInvariant() == FileName.Split('.').Last().ToUpperInvariant()) == null)
         errorMessages.Add(rules.AcceptedExtensionsMessage ?? "type");
 
       return errorMessages.Count == 0;
