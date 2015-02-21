@@ -83,6 +83,7 @@
     <Content Include="content\css\angular-motion.min.css" />
     <Content Include="content\css\bootstrap-additions.css" />
     <Content Include="content\css\bootstrap-additions.min.css" />
+    <Content Include="content\css\bootstrap-custom-alerts.css" />
     <Content Include="content\css\bootstrap-form.css" />
     <Content Include="content\css\bootstrap.css" />
     <Content Include="content\css\bootstrap.min.css" />

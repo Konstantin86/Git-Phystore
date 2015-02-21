@@ -11,8 +11,10 @@
         authService.login($scope.formData).then(function (response) {
             $location.path('/workouts');
         }, function (err) {
-             statusService.error(err.error_description);
-         });
+            //TODO put it to js kb, gets the righmost non-falsy value
+            var error = "" && err && err.error_description;
+            statusService.error(error);
+        });
     };
 
     $scope.authExternalProvider = function (provider) {
@@ -53,8 +55,8 @@
                 authService.obtainAccessToken(externalData).then(function (response) {
                     $location.path('/workouts');
                 }, function (err) {
-                 statusService.error(err.error_description);
-             });
+                    statusService.error(err.error_description);
+                });
             }
 
         });

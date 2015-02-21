@@ -21,6 +21,10 @@
     };
 
     var error = function (msg) {
+        if (!msg) {
+            msg = "Unable to connect to service";
+        }
+
         set(msg, "danger");
     };
 

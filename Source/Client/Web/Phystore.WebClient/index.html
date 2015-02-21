@@ -18,6 +18,7 @@
     <link href="content/css/angular-motion.css" rel="stylesheet" />
     <link href="content/css/social-buttons.css" rel="stylesheet" />
     <link href="content/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="content/css/bootstrap-custom-alerts.css" rel="stylesheet" />
     <link href="content/css/site.css" rel="stylesheet" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 </head>
@@ -29,7 +30,7 @@
                     <button class="btn btn-success navbar-toggle">
                         <span class="glyphicon glyphicon-chevron-down"></span>
                     </button>
-                    <span class="glyphicon glyphicon-heart-empty" aria-hidden="true" style="font-size: 24pt; vertical-align: bottom"></span>
+                    <span class="glyphicon glyphicon-heart-empty" aria-hidden="true" style="font-size: 24pt; margin-top: 9px; color: white"></span>
                     <a class="navbar-brand" href="#/home">KeepFit</a>
                 </div>
                 <div class="collapse navbar-collapse" data-collapse="!navbarExpanded">
@@ -45,7 +46,7 @@
         </div>
 
         <!--Look to the http://angular-ui.github.io/bootstrap/ example in order to implement array of alerts-->
-        <alert ng-hide="state.message === ''" type="{{state.status}}" close="closeAlert()">{{state.message}}</alert>
+        <alert class="oaerror {{state.status}}" ng-hide="state.message === ''" type="{{state.status}}" close="closeAlert()">{{state.message}}</alert>
     </div>
 
     <div class="container">
@@ -53,17 +54,17 @@
         </div>
     </div>
 
-    <footer>
-        <div class="navbar navbar-default navbar-fixed-bottom">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6">
-                        <h5 style="color: white">Created by Konstantin Lazurenko</h5>
-                    </div>
-                    <div class="col-md-6">
-                        <h5 style="float: right; color: white">2015 KL</h5>
-                    </div>
-                </div>
+    <hr />
+
+    <footer class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <p>Created by Konstantin Lazurenko. VK: <a target="_blank" href="http://vk.com/justkostyan">justkostyan</a></p>
+                <p>Mail: <a target="_blank" href="mailto:kos_sml@mail.ru">kos_sml@mail.ru</a></p>
+                <p>Skype: just_kostyan</p>
+            </div>
+            <div class="col-md-6">
+                <h5 style="float: right">2015 KL</h5>
             </div>
         </div>
     </footer>

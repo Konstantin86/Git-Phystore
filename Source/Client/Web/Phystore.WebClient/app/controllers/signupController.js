@@ -21,14 +21,21 @@
             statusService.success(system.string.format(constMessage.SIGNUP_SUCCESS_FORMAT, $scope.formData.userName, $scope.formData.email));
         },
          function (response) {
-             var errors = [];
-             for (var key in response.data.modelState) {
-                 for (var i = 0; i < response.data.modelState[key].length; i++) {
-                     errors.push(response.data.modelState[key][i]);
+
+             var error = "";
+
+             if (response.data && response.data.modelState) {
+                 var errors = [];
+                 for (var key in response.data.modelState) {
+                     for (var i = 0; i < response.data.modelState[key].length; i++) {
+                         errors.push(response.data.modelState[key][i]);
+                     }
                  }
+
+                 error = "Failed to register user due to: " + errors.join(' ');
              }
 
-             statusService.error("Failed to register user due to:" + errors.join(' '));
+             statusService.error(error);
          });
     };
 });
