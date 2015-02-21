@@ -1,5 +1,42 @@
 ﻿<div class="panel-group" ng-model="activePanel" bs-collapse>
 
+    <div class="row">
+        <div class="col-md-2">
+            &nbsp;
+        </div>
+        <div class="col-md-4">
+            <div class="form-group"
+                 flow-init
+                 flow-file-added="onFileAdded($file, $event)"
+                 flow-files-added="onFilesAdded($files, $event)"
+                 flow-files-submitted="$flow.upload()"
+                 flow-file-success="onUploadSuccess($file, $message)">
+
+                <!--flow-file-progress=" ... property '$file' can be accessed ... "-->
+
+                <div class="form-group">
+                    <img width="{{photoWidth}}" src="{{photoPath}}"/>
+                </div>
+
+                <button class="btn btn-lg btn-primary btn-block" flow-btn>Update Photo</button>
+                <!--<span class="btn-success" flow-btn>Upload Image</span>-->
+                <!--<img width="200" height="150" flow-img="testImg"/>-->
+            </div>
+        </div>
+        <div class="col-md-4">
+            <h2 class="form-login-heading">Social Logins</h2>
+            <p>Or you can login using one of the social logins bleow</p>
+            <button class="btn btn-large btn-facebook btn-block" type="button" data-ng-click="authExternalProvider('Facebook')"><i class="fa fa-facebook"></i> | Connect with Facebook</button>
+            <button class="btn btn-large btn-google-plus btn-block" type="button" data-ng-click="authExternalProvider('Google')"><i class="fa fa-google-plus"></i> | Connect with Google+</button>
+        </div>
+        <div class="col-md-2">
+            &nbsp;
+        </div>
+    </div>
+
+
+
+
     <div class="panel panel-default">
         <div class="panel-heading">
             <h4 class="panel-title">

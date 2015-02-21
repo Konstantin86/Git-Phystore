@@ -3,6 +3,7 @@
     $scope.updateStatus = "";
     $scope.changePasswordStatusMessage = "";
     $scope.formData = authService.authData;
+    $scope.photoPath = authService.getPhotoPath();
 
     $scope.securityFormData = authService.securityData;
 
@@ -12,6 +13,8 @@
         "title": "Security",
         "body": "Change password."
     };
+
+    $scope.photoWidth = 360;
 
     $scope.activePanel = 0;
 
@@ -44,6 +47,13 @@
         //flow.opts.headers.Authorization = authHeaderData;
         //flow.upload();
     };
+
+    $scope.onUploadSuccess = function (file, message) {
+        var path = "http://az725561.vo.msecnd.net/media/" + message.split('"').join('') + "?width=360";
+        authService.setPhotoPath(path);
+        $scope.photoPath = authService.getPhotoPath();
+        var s = 5;
+    }
 
     //$scope.$on('flow::fileAdded', function (event, $flow, flowFile) {
     //    event.preventDefault();//prevent file from uploading

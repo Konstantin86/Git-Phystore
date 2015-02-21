@@ -11,7 +11,8 @@
             joinDate: null,
             birthDate: null,
             country: "",
-            city: ""
+            city: "",
+            photoPath: "http://az725561.vo.msecnd.net/media/default_avatar.png?width=360"
     };
 
     var externalAuthData = {
@@ -59,6 +60,7 @@
                 authData.joinDate = response.joinDate;
                 authData.country = response.country;
                 authData.city = response.city;
+                authData.photoPath = response.photoPath;
             });
 
             deferred.resolve(response);
@@ -91,6 +93,7 @@
                 authData.joinDate = response.joinDate;
                 authData.country = response.country;
                 authData.city = response.city;
+                authData.photoPath = response.photoPath;
             });
         }
     };
@@ -179,6 +182,16 @@
         if (authHeaderData) {
             return 'Bearer ' + authHeaderData.token;
         }
+
+        return null;
+    };
+
+    var setPhotoPath = function(photoPath) {
+        authData.photoPath = photoPath;
+    };
+
+    var getPhotoPath = function() {
+        return authData.photoPath;
     };
 
     this.register = register;
@@ -190,6 +203,8 @@
     this.logOut = logOut;
     this.init = init;
     this.authData = authData;
+    this.setPhotoPath = setPhotoPath;
+    this.getPhotoPath = getPhotoPath;
     this.getAuthHeader = getAuthHeader;
     this.securityData = securityData;
     this.externalAuthData = externalAuthData;

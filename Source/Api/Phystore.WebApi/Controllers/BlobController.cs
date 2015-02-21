@@ -8,7 +8,6 @@ using System.Web.Http;
 
 using Microsoft.AspNet.Identity;
 
-using Phystore.DAL.Managers;
 using Phystore.WebApi.Blob;
 using Phystore.WebApi.Controllers.Base;
 
@@ -50,8 +49,7 @@ namespace Phystore.WebApi.Controllers
 
         var validationRules = new FlowValidationRules();
         validationRules.AcceptedExtensions.AddRange(new List<string> { "jpeg", "jpg", "png", "bmp" });
-        validationRules.MaxFileSize = 15000000;
-        //validationRules.MaxFileSize = 5000000;
+        validationRules.MaxFileSize = 50000000;
 
         try
         {
@@ -60,20 +58,19 @@ namespace Phystore.WebApi.Controllers
           if (status.Status == PostChunkStatus.Done)
           {
             var filePath = Path.Combine(_folder, status.FileName);
-            //  byte[] file = File.ReadAllBytes(filePath);
 
-            string bloblPhotoName = Guid.NewGuid() + "." + status.FileName.Split('.').Last();
+            string fileName = Guid.NewGuid() + "." + status.FileName.Split('.').Last();
 
             using (var fileStream = File.OpenRead(filePath))
             {
-              _blobRepository.UploadPhotoFromStream(fileStream, bloblPhotoName);
+              _blobRepository.UploadPhotoFromStream(fileStream, fileName);
             }
 
             File.Delete(filePath);
 
             var user = await AppUserManager.FindByNameAsync(User.Identity.Name);
 
-            user.PhotoPath = bloblPhotoName;
+            user.PhotoPath = fileName;
 
             IdentityResult result = await AppUserManager.UpdateAsync(user);
 
@@ -82,7 +79,7 @@ namespace Phystore.WebApi.Controllers
               return GetErrorResult(result);
             }
 
-            return Ok();
+            return Ok(fileName);
           }
 
           if (status.Status == PostChunkStatus.PartlyDone)
