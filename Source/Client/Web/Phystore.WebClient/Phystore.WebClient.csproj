@@ -57,11 +57,14 @@
     <Content Include="app\controllers\homeController.js" />
     <Content Include="app\controllers\indexController.js" />
     <Content Include="app\controllers\loginController.js" />
+    <Content Include="app\controllers\placesController.js" />
     <Content Include="app\controllers\signupController.js" />
     <Content Include="app\controllers\workoutsController.js" />
     <Content Include="app\directives\disableAnimation.js" />
+    <Content Include="app\filters\placeNameCategoryFilter.js" />
     <Content Include="app\services\authService.js" />
     <Content Include="app\services\interceptors\authInterceptorService.js" />
+    <Content Include="app\services\placeService.js" />
     <Content Include="app\services\statusService.js" />
     <Content Include="app\services\workoutService.js" />
     <Content Include="app\utils\config\appConfig.js" />
@@ -76,6 +79,7 @@
     <Content Include="app\views\home.html" />
     <Content Include="app\views\login.html" />
     <Content Include="app\views\modal\yes-no-dialog.html" />
+    <Content Include="app\views\places.html" />
     <Content Include="app\views\signup.html" />
     <Content Include="app\views\workouts.html" />
     <Content Include="authComplete.html" />
@@ -110,6 +114,8 @@
     <Content Include="scripts\angular-animate.min.js" />
     <Content Include="scripts\angular-local-storage.js" />
     <Content Include="scripts\angular-local-storage.min.js" />
+    <Content Include="scripts\angular-resource.js" />
+    <Content Include="scripts\angular-resource.min.js" />
     <Content Include="scripts\angular-route.js" />
     <Content Include="scripts\angular-route.min.js" />
     <Content Include="scripts\angular-sanitize.js" />
@@ -158,6 +164,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Web.config" />
+    <Content Include="scripts\angular-resource.min.js.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

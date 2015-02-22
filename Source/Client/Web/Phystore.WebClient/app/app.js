@@ -1,4 +1,4 @@
-﻿var app = angular.module('PhystoreApp', ['ngRoute', 'ngAnimate', 'ngSanitize', 'ui.bootstrap', 'ui.bootstrap.tpls', 'flow', 'LocalStorageModule', 'mgcrea.ngStrap', 'mgcrea.ngStrap.helpers.dateParser', 'angular-loading-bar']);
+﻿var app = angular.module('PhystoreApp', ['ngRoute', 'ngResource', 'ngAnimate', 'ngSanitize', 'ui.bootstrap', 'ui.bootstrap.tpls', 'flow', 'LocalStorageModule', 'mgcrea.ngStrap', 'mgcrea.ngStrap.helpers.dateParser', 'angular-loading-bar']);
 
 app.config(function ($routeProvider) {
     // TODO create directive for disabling ng animation (used for carousel) https://github.com/angular-ui/bootstrap/issues/1350
@@ -35,6 +35,11 @@ app.config(function ($routeProvider) {
     $routeProvider.when("/associate", {
         controller: "associateController",
         templateUrl: "/app/views/associate.html"
+    });
+
+    $routeProvider.when("/places", {
+        controller: "placesController",
+        templateUrl: "/app/views/places.html"
     });
 
     $routeProvider.otherwise({ redirectTo: "/home" });
