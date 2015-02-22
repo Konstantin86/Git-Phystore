@@ -132,8 +132,8 @@ namespace Phystore.WebApi.Controllers
     }
 
         [HttpGet]
-        [Route("ResetEmail", Name = "ResetEmailRoute")]
-        public async Task<IHttpActionResult> ResetEmail(string userId = "", string code = "", string password = "")
+        [Route("ResetPassword", Name = "ResetPasswordRoute")]
+        public async Task<IHttpActionResult> ResetPassword(string userId = "", string code = "", string password = "")
         {
             if (string.IsNullOrWhiteSpace(userId) || string.IsNullOrWhiteSpace(code) || string.IsNullOrWhiteSpace(password))
             {
@@ -192,7 +192,7 @@ namespace Phystore.WebApi.Controllers
             
             string code = await this.AppUserManager.GeneratePasswordResetTokenAsync(user.Id);
             
-            var callbackUrl = new Uri(Url.Link("ResetEmailRoute", new { userId = user.Id, code = code, password = password }));
+            var callbackUrl = new Uri(Url.Link("ResetPasswordRoute", new { userId = user.Id, code = code, password = password }));
 
             await this.AppUserManager.SendEmailAsync(user.Id, "KeetFit Password Recovery", "Please follow <a href=\"" + callbackUrl + "\">this</a> link to reset your password. Then you'll be able to use new generated password: '" + password + "' for login.");
 

@@ -26,7 +26,7 @@
             var modal = this;
             authService.sendPassword(modal.input).then(function (response) {
                 modal.$hide();
-                statusService.success("Password recovery link has been just sent to {0}.", model.input);
+                statusService.success(system.string.format("Password recovery link has been just sent to {0}.", modal.input));
             }, function (err) {
                 modal.$hide();
              statusService.error(err);
