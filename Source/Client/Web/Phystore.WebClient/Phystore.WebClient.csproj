@@ -75,7 +75,7 @@
     <Content Include="app\views\confirm.html" />
     <Content Include="app\views\home.html" />
     <Content Include="app\views\login.html" />
-    <Content Include="app\views\modal\deleteUser.html" />
+    <Content Include="app\views\modal\yes-no-dialog.html" />
     <Content Include="app\views\signup.html" />
     <Content Include="app\views\workouts.html" />
     <Content Include="authComplete.html" />

@@ -11,10 +11,28 @@
         authService.login($scope.formData).then(function (response) {
             $location.path('/workouts');
         }, function (err) {
-            //TODO put it to js kb, gets the righmost non-falsy value
-            var error = "" && err && err.error_description;
+            var error = err ? err.error_description : "";
             statusService.error(error);
         });
+    };
+
+    $scope.forgotPasswordModal =
+    {
+        title: "Password recovery",
+        editable: true,
+        input: "",
+        content: "Provide your e-mail address below and click 'Yes'",
+        yes: function () {
+            var modal = this;
+            authService.sendPassword(modal.input).then(function (response) {
+                modal.$hide();
+                statusService.success("Password recovery link has been just sent to {0}.", model.input);
+            }, function (err) {
+                modal.$hide();
+             statusService.error(err);
+         });
+
+        }
     };
 
     $scope.authExternalProvider = function (provider) {

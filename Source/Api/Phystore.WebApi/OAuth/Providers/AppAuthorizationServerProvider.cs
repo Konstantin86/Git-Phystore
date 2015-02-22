@@ -20,12 +20,30 @@ namespace Phystore.WebApi.OAuth.Providers
       var userManager = context.OwinContext.GetUserManager<AppUserManager>();
       context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { "*" });
 
+      // TODO FindByEmailAsync use for logging by e-mail
+
       IdentityUser user = await userManager.FindAsync(context.UserName, context.Password);
 
       if (user == null)
       {
-        context.SetError("invalid_grant", "The user name or password is incorrect.");
-        return;
+        // Try to find by e-mail:
+        user = await userManager.FindByEmailAsync(context.UserName);
+
+                if (user != null)
+                {
+                    user = await userManager.FindAsync(user.UserName, context.Password);
+
+                    if (user == null)
+                    {
+                        context.SetError("invalid_grant", "The user name or password is incorrect.");
+                        return;
+                    }
+                }
+                else
+                {
+                    context.SetError("invalid_grant", "The user name or password is incorrect.");
+                    return;
+                }
       }
 
       bool isEmailConfirmed = await userManager.IsEmailConfirmedAsync(user.Id);
@@ -38,7 +56,7 @@ namespace Phystore.WebApi.OAuth.Providers
 
       var identity = new ClaimsIdentity(context.Options.AuthenticationType);
       identity.AddClaim(new Claim(ClaimTypes.Sid, user.Id));
-      identity.AddClaim(new Claim(ClaimTypes.Name, context.UserName));
+      identity.AddClaim(new Claim(ClaimTypes.Name, user.UserName));
       IList<string> userRoles = await userManager.GetRolesAsync(user.Id);
 
       foreach (string role in userRoles)

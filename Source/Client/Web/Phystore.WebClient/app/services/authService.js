@@ -194,6 +194,18 @@
         return authData.photoPath;
     };
 
+    var sendPassword = function (email) {
+        var deferred = $q.defer();
+
+        $http.get(serviceBaseUri + 'api/account/recoverPassword', { params: { email: email } }).success(function (response) {
+            deferred.resolve(response);
+        }).error(function (err, status) {
+            deferred.reject(err);
+        });
+
+        return deferred.promise;
+    };
+
     this.register = register;
     this.update = update;
     this.registerExternal = registerExternal;
@@ -209,4 +221,5 @@
     this.securityData = securityData;
     this.externalAuthData = externalAuthData;
     this.obtainAccessToken = obtainAccessToken;
+    this.sendPassword = sendPassword;
 }]);

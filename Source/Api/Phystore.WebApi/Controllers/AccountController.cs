@@ -131,7 +131,24 @@ namespace Phystore.WebApi.Controllers
         : GetErrorResult(result);
     }
 
-    [Authorize]
+        [HttpGet]
+        [Route("ResetEmail", Name = "ResetEmailRoute")]
+        public async Task<IHttpActionResult> ResetEmail(string userId = "", string code = "", string password = "")
+        {
+            if (string.IsNullOrWhiteSpace(userId) || string.IsNullOrWhiteSpace(code) || string.IsNullOrWhiteSpace(password))
+            {
+                ModelState.AddModelError("", "User Id, Code and Password are required");
+                return BadRequest(ModelState);
+            }
+
+            IdentityResult result = await AppUserManager.ResetPasswordAsync(userId, code, password);
+
+            return result.Succeeded
+              ? Redirect(new Uri(ConfigurationManager.AppSettings["webClientHostBaseUri"] + @"#/login"))
+              : GetErrorResult(result);
+        }
+
+        [Authorize]
     [Route("ChangePassword")]
     public async Task<IHttpActionResult> ChangePassword(ChangePasswordRequestModel model)
     {
@@ -157,7 +174,35 @@ namespace Phystore.WebApi.Controllers
       return Ok();
     }
 
-    [Authorize]
+        [HttpGet]
+        [Route("RecoverPassword")]
+        public async Task<IHttpActionResult> RecoverPassword(string email)
+        {
+            //TODO how to reset password: http://stackoverflow.com/questions/19524111/asp-net-identity-reset-password
+            var user = await AppUserManager.FindByEmailAsync(email);
+
+            if (user == null)
+            {
+                return BadRequest("E-mail is not registered");
+            }
+
+            // TODO implement the botton option (the right way) http://stackoverflow.com/questions/22516818/how-to-reset-password-with-usermanager-of-asp-net-mvc-5
+
+            string password = GetAutoGenPwd();
+            
+            string code = await this.AppUserManager.GeneratePasswordResetTokenAsync(user.Id);
+            
+            var callbackUrl = new Uri(Url.Link("ResetEmailRoute", new { userId = user.Id, code = code, password = password }));
+
+            await this.AppUserManager.SendEmailAsync(user.Id, "KeetFit Password Recovery", "Please follow <a href=\"" + callbackUrl + "\">this</a> link to reset your password. Then you'll be able to use new generated password: '" + password + "' for login.");
+
+            //AppUserManager.RemovePassword(user.Id);
+            //AppUserManager.AddPassword(user.Id, newPassword);
+
+            return Ok();
+        }
+
+        [Authorize]
     [Route("update")]
     public async Task<IHttpActionResult> Update(UserUpdateRequestModel model)
     {
@@ -477,5 +522,27 @@ namespace Phystore.WebApi.Controllers
 
       return Ok(accessTokenResponse);
     }
+
+        private string GetAutoGenPwd()
+        {
+            string allowedChars = "";
+            allowedChars = "a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z,";
+            allowedChars += "1,2,3,4,5,6,7,8,9,0,!,@,#,$,%,&,?";
+            allowedChars += "A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,";
+            char[] sep = { ',' };
+
+            string[] arr = allowedChars.Split(sep);
+            string passwordString = "";
+            string temp1 = "";
+            Random rand = new Random();
+            passwordString += arr[0];
+            passwordString += arr[arr.Length-1];
+            for (int i = 0; i < 8; i++)
+            {
+                passwordString += arr[rand.Next(0, arr.Length)];
+            }
+
+            return passwordString;
+        }
   }
 }

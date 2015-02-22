@@ -49,7 +49,7 @@
     {
         title: "Delete Confirmation",
         content: "Are you sure you want to delete your account from system?",
-        deleteUser: function () {
+        yes: function () {
             var modal = this;
             authService.deleteUser().then(function (response) {
                 modal.$hide();
