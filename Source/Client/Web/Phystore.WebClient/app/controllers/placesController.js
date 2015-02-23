@@ -11,7 +11,7 @@
     //paging
     $scope.totalRecordsCount = 0;
     $scope.pageSize = 10;
-    $scope.currentPage = 1;
+    $scope.page = 1;
 
     init();
 
@@ -22,7 +22,7 @@
 
     function getPlaces() {
 
-        var offset = ($scope.pageSize) * ($scope.currentPage - 1);
+        var offset = ($scope.pageSize) * ($scope.page - 1);
 
         placeService.resource.get({ near: $scope.exploreNearby, query: $scope.exploreQuery, limit: $scope.pageSize, offset: offset }, function (placesResult) {
 
@@ -52,13 +52,13 @@
 
     $scope.doSearch = function () {
 
-        $scope.currentPage = 1;
+        $scope.page = 1;
         getPlaces();
     };
 
     $scope.pageChanged = function (page) {
 
-        $scope.currentPage = page;
+        $scope.page = page;
         getPlaces();
     };
 

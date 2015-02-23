@@ -63,20 +63,34 @@
             </ul>
         </div>
 
+
+        <!--TODO insert correct implementation of ui.bootstrap pagination http://angular-ui.github.io/bootstrap/#/pagination-->
         <div class="row">
+            <div class="col-md-offset-2 col-md-8 col-md-offset-2 text-center">
+                <pagination class="pagination-sm"
+                            ng-model="page"
+                            ng-change="pageChanged(page)"
+                            boundary-links="true"
+                            items-per-page="10"
+                            max-size="5"
+                            total-items="totalRecordsCount">
+                </pagination>
+            </div>
+        </div>
+        <!--<div class="row">
 
             <div class="col-md-offset-2 col-md-8 col-md-offset-2 text-center">
                 <div data-ng-show="totalRecordsCount > 0">
                     <div>
-                        <div data-pagination="" data-previous-text="<" data-next-text=">" data-first-text="<<" data-last-text=">>"
-                             data-on-select-page="pageChanged(page)" data-total-items="totalRecordsCount" data-page="currentPage"
-                             data-boundary-links="true" class="pagination pagination-sm" data-max-size="5" data-rotate="false" data-items-per-page="10">
-                        </div>
+                        <pagination previous-text="<" next-text=">" first-text="<<" last-text=">>" page="page"
+                                    on-select-page="pageChanged(page)" total-items="totalRecordsCount"
+                                    boundary-links="true" class="pagination pagination-sm" max-size="5" rotate="false" items-per-page="10">
+                        </pagination>
                     </div>
                 </div>
             </div>
 
-        </div>
+        </div>-->
 
 
     </form>
