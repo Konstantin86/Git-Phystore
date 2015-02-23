@@ -1,4 +1,4 @@
-﻿var app = angular.module('PhystoreApp', ['ngRoute', 'ngResource', 'ngAnimate', 'ngSanitize', 'ui.bootstrap', 'ui.bootstrap.tpls', 'flow', 'LocalStorageModule', 'mgcrea.ngStrap', 'mgcrea.ngStrap.helpers.dateParser', 'angular-loading-bar']);
+﻿var app = angular.module('PhystoreApp', ['ngRoute', 'ngResource', 'ngAnimate', 'ngSanitize', 'ui.bootstrap', 'ui.bootstrap.tpls', 'flow', 'LocalStorageModule', 'mgcrea.ngStrap', 'mgcrea.ngStrap.helpers.dateParser', 'angular-loading-bar', 'infinite-scroll']);
 
 app.config(function ($routeProvider) {
     // TODO create directive for disabling ng animation (used for carousel) https://github.com/angular-ui/bootstrap/issues/1350
