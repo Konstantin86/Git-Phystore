@@ -1,4 +1,4 @@
-﻿app.controller('placesController', function ($scope, placeService, $filter) {
+﻿app.controller('placesController', function ($scope, placeService, placePhotosService, $uimodal, $filter) {
 
     $scope.exploreNearby = "New York";
     $scope.exploreQuery = "";
@@ -70,5 +70,31 @@
     $scope.buildVenueThumbnail = function (photo) {
 
         return photo.items[0].prefix + '128x128' + photo.items[0].suffix;
+    };
+
+    $scope.showVenuePhotos = function (venueId, venueName) {
+
+        placePhotosService.resource.get({ venueId: venueId }, function (photosResult) {
+
+            var modalInstance = $uimodal.open({
+                templateUrl: 'app/views/modal/placePhotos.html',
+                controller: 'placePhotosController',
+                resolve: {
+                    venueName: function () {
+                        return venueName;
+                    },
+                    venuePhotos: function () {
+                        return photosResult.response.photos.items;
+                    }
+                }
+            });
+
+            modalInstance.result.then(function () {
+                //$scope.selected = selectedItem;
+            }, function () {
+                //alert('Modal dismissed at: ' + new Date());
+            });
+
+        });
     };
 });

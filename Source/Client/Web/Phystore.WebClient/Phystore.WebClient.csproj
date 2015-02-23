@@ -57,6 +57,7 @@
     <Content Include="app\controllers\homeController.js" />
     <Content Include="app\controllers\indexController.js" />
     <Content Include="app\controllers\loginController.js" />
+    <Content Include="app\controllers\placePhotosController.js" />
     <Content Include="app\controllers\placesController.js" />
     <Content Include="app\controllers\signupController.js" />
     <Content Include="app\controllers\workoutsController.js" />
@@ -64,6 +65,7 @@
     <Content Include="app\filters\placeNameCategoryFilter.js" />
     <Content Include="app\services\authService.js" />
     <Content Include="app\services\interceptors\authInterceptorService.js" />
+    <Content Include="app\services\placePhotoService.js" />
     <Content Include="app\services\placeService.js" />
     <Content Include="app\services\statusService.js" />
     <Content Include="app\services\workoutService.js" />
@@ -78,6 +80,7 @@
     <Content Include="app\views\confirm.html" />
     <Content Include="app\views\home.html" />
     <Content Include="app\views\login.html" />
+    <Content Include="app\views\modal\placePhotos.html" />
     <Content Include="app\views\modal\yes-no-dialog.html" />
     <Content Include="app\views\places.html" />
     <Content Include="app\views\signup.html" />

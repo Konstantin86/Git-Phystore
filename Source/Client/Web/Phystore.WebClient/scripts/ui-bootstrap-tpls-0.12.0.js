@@ -2091,7 +2091,7 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.transition'])
       return $modalStack;
     }])
 
-  .provider('$modal', function () {
+  .provider('$uimodal', function () {
 
     var $modalProvider = {
       options: {
