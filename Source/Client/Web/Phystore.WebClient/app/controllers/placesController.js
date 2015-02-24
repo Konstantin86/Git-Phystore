@@ -1,6 +1,6 @@
 ﻿app.controller('placesController', function ($scope, placeService, placePhotosService, $uimodal, $filter) {
 
-    $scope.exploreNearby = "New York";
+    $scope.exploreNearby = "Харьков";
     $scope.exploreQuery = "";
     $scope.filterValue = "";
 
@@ -12,6 +12,18 @@
     $scope.totalRecordsCount = 0;
     $scope.pageSize = 10;
     $scope.page = 0;
+
+
+    //placeService.catResource.get({ }, function (placesResult) {
+    //    // go over all placesResult.response.categories and subcategories to get actual ids
+    //});
+
+    // Up-to-date categories id's are obtained from https://developer.foursquare.com/categorytree
+
+    // Main sports-related categories are:
+    // - Athletics & Sports
+    // - Sporting Goods Shop
+    // - Sport Bars
 
     $scope.busy = false;
 
@@ -40,7 +52,7 @@
 
         var offset = ($scope.pageSize) * ($scope.page - 1);
 
-        placeService.resource.get({ near: $scope.exploreNearby, query: $scope.exploreQuery, limit: $scope.pageSize, offset: offset }, function (placesResult) {
+        placeService.resource.get({ near: $scope.exploreNearby, categoryId: '4f4528bc4b90abdf24c9de85,4bf58dd8d48988d11d941735,4bf58dd8d48988d1f2941735', query: $scope.exploreQuery, limit: $scope.pageSize, offset: offset }, function (placesResult) {
 
             if (placesResult.response.groups) {
                 $scope.places = $scope.places.concat(placesResult.response.groups[0].items);
@@ -57,8 +69,10 @@
     };
 
     $scope.doSearch = function () {
-
         $scope.page = 1;
+        $scope.places = [];
+        $scope.filteredPlaces = [];
+        $scope.filteredPlacesCount = 0;
         getPlaces();
     };
 

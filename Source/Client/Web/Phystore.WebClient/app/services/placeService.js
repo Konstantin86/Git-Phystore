@@ -8,6 +8,15 @@
 
     var apiUri = 'https://api.foursquare.com/v2/venues/:action';
 
+    var catApi = 'https://api.foursquare.com/v2/venues/categories';
+
+    var catResource = $resource(catApi,
+    {
+        client_id: requestParms.clientId,
+        client_secret: requestParms.clientSecret,
+        v: requestParms.version
+    });
+
     var resource = $resource(apiUri,
     {
         action: 'explore',
@@ -22,4 +31,5 @@
     });
 
     this.resource = resource;
+    this.catResource = catResource;
 });
