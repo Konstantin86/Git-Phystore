@@ -42,6 +42,11 @@ app.config(function ($routeProvider) {
         templateUrl: "/app/views/places.html"
     });
 
+    $routeProvider.when("/exercises", {
+        controller: "exercisesController",
+        templateUrl: "/app/views/exercises.html"
+    });
+
     $routeProvider.otherwise({ redirectTo: "/home" });
 });
 
