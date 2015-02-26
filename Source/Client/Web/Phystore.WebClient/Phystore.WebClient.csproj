@@ -54,6 +54,7 @@
     <Content Include="app\controllers\accountController.js" />
     <Content Include="app\controllers\associateController.js" />
     <Content Include="app\controllers\confirmController.js" />
+    <Content Include="app\controllers\exerciseController.js" />
     <Content Include="app\controllers\exercisesController.js" />
     <Content Include="app\controllers\homeController.js" />
     <Content Include="app\controllers\indexController.js" />
@@ -63,6 +64,7 @@
     <Content Include="app\controllers\signupController.js" />
     <Content Include="app\controllers\workoutsController.js" />
     <Content Include="app\directives\disableAnimation.js" />
+    <Content Include="app\filters\exerciseNameDescriptionFilter.js" />
     <Content Include="app\filters\placeNameCategoryFilter.js" />
     <Content Include="app\services\authService.js" />
     <Content Include="app\services\exerciseService.js" />

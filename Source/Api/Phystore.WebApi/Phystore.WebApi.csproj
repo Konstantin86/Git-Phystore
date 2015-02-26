@@ -199,6 +199,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Base\BaseApiController.cs" />
     <Compile Include="Controllers\BlobController.cs" />
+    <Compile Include="Controllers\ExerciseController.cs" />
     <Compile Include="Controllers\SecurityController.cs" />
     <Compile Include="Controllers\WorkoutController.cs" />
     <Compile Include="Blob\FlowModels.cs" />
@@ -206,6 +207,8 @@
     <Compile Include="Models\Logins\ExternalLoginViewModel.cs" />
     <Compile Include="Models\ParsedExternalAccessToken.cs" />
     <Compile Include="Models\Request\ChangePasswordRequestModel.cs" />
+    <Compile Include="Models\Request\QueryExerciseRequest.cs" />
+    <Compile Include="Models\Request\QueryRequestBase.cs" />
     <Compile Include="Models\Request\RegisterExternalModel.cs" />
     <Compile Include="Models\Request\UserAddRequestModel.cs" />
     <Compile Include="Models\Factory\ModelFactory.cs" />

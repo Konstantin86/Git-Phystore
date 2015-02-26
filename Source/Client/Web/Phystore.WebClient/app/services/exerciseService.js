@@ -2,9 +2,9 @@
 
     var serviceBaseUri = appConfig.getInstance().getServiceUri();
 
-    var resource = $resource(serviceBaseUri + 'api/exercise:action',
+    var resource = $resource(serviceBaseUri + 'api/exercise',
     {
-        action: 'get'
+        //action: 'get'
     });
 
     this.resource = resource;

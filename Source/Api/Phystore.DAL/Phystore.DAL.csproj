@@ -72,6 +72,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppDbContext.cs" />
+    <Compile Include="Entities\Exercise.cs" />
     <Compile Include="Entities\User.cs" />
     <Compile Include="Managers\AppRoleManager.cs" />
     <Compile Include="Managers\AppUserManager.cs" />
