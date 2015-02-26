@@ -4,8 +4,7 @@ using Autofac;
 using Autofac.Integration.WebApi;
 
 using Phystore.WebApi.Blob;
-using Microsoft.AspNet.Identity;
-using Phystore.DAL.Services;
+using Phystore.DAL;
 
 namespace Phystore.WebApi.CompositionRoot
 {
@@ -61,18 +60,15 @@ namespace Phystore.WebApi.CompositionRoot
       }
     }
 
-        private void RegisterManagers(bool webapi)
-        {
-            RegisterDependency<AzureBlobStorageRepository, IBlobStorageRepository>(webapi);
-            //RegisterDependency<StatisticsProvider, IStatisticsProvider>(webapi);
-        }
-
-        private void RegisterDataAccessComponents(bool webapi)
+    private void RegisterManagers(bool webapi)
     {
-      //RegisterDependency<JiraInspirationIdentity, IJiraInspirationIdentity>(webapi);
-      //RegisterDependency<UnitOfWork, IUnitOfWork>(webapi);
-      //RegisterDependency<JiraInspirationIdentity, IJiraInspirationIdentity>(webapi);
-      //RegisterDependency<JiraInspirationDbContext>(webapi);
+      RegisterDependency<AzureBlobStorageRepository, IBlobStorageRepository>(webapi);
+    }
+
+    private void RegisterDataAccessComponents(bool webapi)
+    {
+      RegisterDependency<AppDbContext>(webapi);
+      RegisterDependency<UnitOfWork, IUnitOfWork>(webapi);
     }
 
     private void RegisterJiraClientComponents(bool webapi)
@@ -140,6 +136,6 @@ namespace Phystore.WebApi.CompositionRoot
     {
       _container = _builder.Build();
       return _container;
-    } 
+    }
   }
 }

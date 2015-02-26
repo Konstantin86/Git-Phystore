@@ -47,6 +47,16 @@ app.config(function ($routeProvider) {
         templateUrl: "/app/views/exercises.html"
     });
 
+    $routeProvider.when("/exercise", {
+        controller: "exerciseController",
+        templateUrl: "/app/views/exercise.html"
+    });
+
+    $routeProvider.when("/exercise:id", {
+        controller: "exerciseController",
+        templateUrl: "/app/views/exercise.html"
+    });
+
     $routeProvider.otherwise({ redirectTo: "/home" });
 });
 

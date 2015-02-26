@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNet.Identity.EntityFramework;
+﻿using System.Data.Entity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Phystore.DAL.Entities;
 
 namespace Phystore.DAL
 {
   public class AppDbContext : IdentityDbContext<User>
   {
+    public DbSet<Exercise> Exercises { get; set; }
+
     public AppDbContext() : base("DefaultConnection", throwIfV1Schema: false)
     {
       Configuration.ProxyCreationEnabled = false;

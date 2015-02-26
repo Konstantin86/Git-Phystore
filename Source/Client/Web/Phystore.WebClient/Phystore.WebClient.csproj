@@ -82,6 +82,7 @@
     <Content Include="app\views\account.html" />
     <Content Include="app\views\associate.html" />
     <Content Include="app\views\confirm.html" />
+    <Content Include="app\views\exercise.html" />
     <Content Include="app\views\exercises.html" />
     <Content Include="app\views\home.html" />
     <Content Include="app\views\login.html" />

@@ -1,4 +1,4 @@
-﻿app.controller('exercisesController', function ($scope, $filter, exerciseService) {
+﻿app.controller('exercisesController', function ($scope, $filter, $location, exerciseService) {
 
     $scope.filter = "";
 
@@ -58,5 +58,8 @@
     };
 
     $scope.edit = function (id) {
+        $location.path('/exercise').search({ id: id });
+
+        //$location.path('/exercise');
     };
 });

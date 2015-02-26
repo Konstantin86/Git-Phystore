@@ -1,0 +1,14 @@
+﻿<form class="form-signin" name="form">
+    <h2 class="form-signin-heading">Exercise</h2>
+
+    <div class="form-group" ng-class="{ 'has-error': form.name.$invalid && (form.name.$dirty || submitted) }">
+        <input type="text" class="form-control" name="name" placeholder="Name" ng-model="exercise.name" required autofocus>
+    </div>
+    <div class="form-group">
+        <input type="text" class="form-control" name="description" placeholder="Description" ng-model="exercise.description" required>
+    </div>
+    <div class="form-group">
+        <input type="text" class="form-control" name="category" placeholder="Category" ng-model="exercise.category" required>
+    </div>
+    <button class="btn btn-lg btn-primary btn-block" type="submit" ng-click="ok()">Ok</button>
+</form>

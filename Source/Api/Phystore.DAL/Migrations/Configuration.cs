@@ -6,7 +6,6 @@ using Phystore.DAL.Entities;
 namespace Phystore.DAL.Migrations
 {
   using System;
-  using System.Data.Entity;
   using System.Data.Entity.Migrations;
   using System.Linq;
 
@@ -76,6 +75,13 @@ namespace Phystore.DAL.Migrations
       {
         Console.WriteLine(string.Join(Environment.NewLine, ir.Errors));
       }
+
+      context.Exercises.Add(new Exercise
+      {
+        Name = "Test Exercise",
+        Description = "Test Description",
+        Category = "Loosing weight"
+      });
     }
   }
 }
