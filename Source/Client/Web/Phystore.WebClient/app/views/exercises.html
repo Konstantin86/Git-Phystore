@@ -13,9 +13,9 @@
                     <li class="list-group-item">
                         <div class="row">
                             <!--<div class="col-xs-2 col-md-1">
-                            <img ng-src="{{buildCategoryIcon(item.venue.categories[0].icon)}}"
-                                 title="{{item.venue.categories[0].shortName}}" class="venueIcon" />
-                        </div>-->
+                                    <img ng-src="{{buildCategoryIcon(item.venue.categories[0].icon)}}"
+                                         title="{{item.venue.categories[0].shortName}}" class="venueIcon" />
+                                </div>-->
                             <div class="col-xs-6 col-md-8">
                                 <a href="" ng-click="edit(item.id)">
                                     <h2>{{item.name}}</h2>
@@ -27,8 +27,8 @@
                         </div>
                         <div class="row">
                             <!--<div class="col-xs-2 col-md-1">
-                            <span class="badge">{{item.venue.rating | number:1}}</span>
-                        </div>-->
+                                    <span class="badge">{{item.venue.rating | number:1}}</span>
+                                </div>-->
                             <div class="col-xs-6 col-md-8">
                                 <p class="text-warning">
                                     <small>{{item.description}} - {{item.category}}</small>
@@ -39,8 +39,8 @@
                             </div>
                             <div class="col-xs-4 col-md-3">
                                 <!--<a href="" ng-click="showVenuePhotos(item.venue.id,item.venue.name)">
-                                <img ng-src="{{buildVenueThumbnail(item.venue.photos.groups[0])}}" class="img-thumbnail" />
-                            </a>-->
+                                        <img ng-src="{{buildVenueThumbnail(item.venue.photos.groups[0])}}" class="img-thumbnail" />
+                                    </a>-->
                             </div>
                         </div>
 
@@ -48,5 +48,7 @@
                 </ul>
             </div>
         </div>
+
+        <button class="btn btn-lg btn-primary btn-block" ng-click="add()">Add</button>
     </form>
 </div>

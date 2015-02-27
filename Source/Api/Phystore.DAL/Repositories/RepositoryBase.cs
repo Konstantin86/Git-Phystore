@@ -55,13 +55,8 @@ namespace Phystore.DAL.Repositories
     /// </summary>
     /// <param name="t">Entity</param>
     /// <param name="saveChanges">Parameter indicating whether changes should by applied to underlying storage</param>
-    public int? Update(T t, bool saveChanges = true)
+    public int Update(T t, bool saveChanges = true)
     {
-      if (t.Id == 0)
-      {
-        return Add(t, saveChanges);
-      }
-
       T entity = Get(t.Id);
 
       if (entity == null)

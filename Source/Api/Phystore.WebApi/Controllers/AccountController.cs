@@ -1,22 +1,15 @@
 ﻿using System;
 using System.Configuration;
-using System.IO;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Http;
-using System.Web.Http.Description;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.OAuth;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Storage;
-using Microsoft.WindowsAzure.Storage.Blob;
 using Newtonsoft.Json.Linq;
 using Phystore.DAL.Entities;
 using Phystore.WebApi.Controllers.Base;
@@ -38,20 +31,14 @@ namespace Phystore.WebApi.Controllers
     [Route("users")]
     public IHttpActionResult GetUsers()
     {
-      return Ok(AppUserManager.Users.ToList().Select(u => this.TheModelFactory.Create(u)));
+      return Ok(AppUserManager.Users.Select(u => this.TheModelFactory.Create(u)));
     }
 
     [Route("user/{id:guid}", Name = "GetUserById")]
     public async Task<IHttpActionResult> GetUser(string id)
     {
       var user = await AppUserManager.FindByIdAsync(id);
-
-      if (user != null)
-      {
-        return Ok(TheModelFactory.Create(user));
-      }
-
-      return NotFound();
+      return user != null ? (IHttpActionResult)Ok(TheModelFactory.Create(user)) : NotFound();
     }
 
     [Authorize]
@@ -59,26 +46,14 @@ namespace Phystore.WebApi.Controllers
     public async Task<IHttpActionResult> GetCurrentUser()
     {
       var user = await AppUserManager.FindByNameAsync(User.Identity.Name);
-
-      if (user != null)
-      {
-        return Ok(TheModelFactory.Create(user));
-      }
-
-      return NotFound();
+      return user != null ? (IHttpActionResult)Ok(TheModelFactory.Create(user)) : NotFound();
     }
 
     [Route("user/{username}")]
     public async Task<IHttpActionResult> GetUserByName(string username)
     {
       var user = await AppUserManager.FindByNameAsync(username);
-
-      if (user != null)
-      {
-        return Ok(TheModelFactory.Create(user));
-      }
-
-      return NotFound();
+      return user != null ? (IHttpActionResult)Ok(TheModelFactory.Create(user)) : NotFound();
     }
 
     [Route("create")]
@@ -95,15 +70,13 @@ namespace Phystore.WebApi.Controllers
         JoinDate = DateTime.Now.Date,
       };
 
-      IdentityResult addUserResult = await AppUserManager.CreateAsync(user, requestModel.Password);
+      IdentityResult result = await AppUserManager.CreateAsync(user, requestModel.Password);
 
-      if (!addUserResult.Succeeded) return GetErrorResult(addUserResult);
+      if (!result.Succeeded) return GetErrorResult(result);
 
-      IdentityResult addUserToRoleResult = await AppUserManager.AddToRoleAsync(user.Id, requestModel.RoleName);
+      result = await AppUserManager.AddToRoleAsync(user.Id, requestModel.RoleName);
 
-      if (!addUserToRoleResult.Succeeded) return GetErrorResult(addUserToRoleResult);
-
-      var location = new Uri(Url.Link("GetUserById", new { id = user.Id }));
+      if (!result.Succeeded) return GetErrorResult(result);
 
       string code = await this.AppUserManager.GenerateEmailConfirmationTokenAsync(user.Id);
 
@@ -111,7 +84,7 @@ namespace Phystore.WebApi.Controllers
 
       await this.AppUserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-      return Created(location, TheModelFactory.Create(user));
+      return Created(new Uri(Url.Link("GetUserById", new { id = user.Id })), TheModelFactory.Create(user));
     }
 
     [HttpGet]
@@ -131,24 +104,24 @@ namespace Phystore.WebApi.Controllers
         : GetErrorResult(result);
     }
 
-        [HttpGet]
-        [Route("ResetPassword", Name = "ResetPasswordRoute")]
-        public async Task<IHttpActionResult> ResetPassword(string userId = "", string code = "", string password = "")
-        {
-            if (string.IsNullOrWhiteSpace(userId) || string.IsNullOrWhiteSpace(code) || string.IsNullOrWhiteSpace(password))
-            {
-                ModelState.AddModelError("", "User Id, Code and Password are required");
-                return BadRequest(ModelState);
-            }
+    [HttpGet]
+    [Route("ResetPassword", Name = "ResetPasswordRoute")]
+    public async Task<IHttpActionResult> ResetPassword(string userId = "", string code = "", string password = "")
+    {
+      if (string.IsNullOrWhiteSpace(userId) || string.IsNullOrWhiteSpace(code) || string.IsNullOrWhiteSpace(password))
+      {
+        ModelState.AddModelError("", "User Id, Code and Password are required");
+        return BadRequest(ModelState);
+      }
 
-            IdentityResult result = await AppUserManager.ResetPasswordAsync(userId, code, password);
+      IdentityResult result = await AppUserManager.ResetPasswordAsync(userId, code, password);
 
-            return result.Succeeded
-              ? Redirect(new Uri(ConfigurationManager.AppSettings["webClientHostBaseUri"] + @"#/login"))
-              : GetErrorResult(result);
-        }
+      return result.Succeeded
+        ? Redirect(new Uri(ConfigurationManager.AppSettings["webClientHostBaseUri"] + @"#/login"))
+        : GetErrorResult(result);
+    }
 
-        [Authorize]
+    [Authorize]
     [Route("ChangePassword")]
     public async Task<IHttpActionResult> ChangePassword(ChangePasswordRequestModel model)
     {
@@ -174,35 +147,29 @@ namespace Phystore.WebApi.Controllers
       return Ok();
     }
 
-        [HttpGet]
-        [Route("RecoverPassword")]
-        public async Task<IHttpActionResult> RecoverPassword(string email)
-        {
-            //TODO how to reset password: http://stackoverflow.com/questions/19524111/asp-net-identity-reset-password
-            var user = await AppUserManager.FindByEmailAsync(email);
+    [HttpGet]
+    [Route("RecoverPassword")]
+    public async Task<IHttpActionResult> RecoverPassword(string email)
+    {
+      var user = await AppUserManager.FindByEmailAsync(email);
 
-            if (user == null)
-            {
-                return BadRequest("E-mail is not registered");
-            }
+      if (user == null)
+      {
+        return BadRequest("E-mail is not registered");
+      }
 
-            // TODO implement the botton option (the right way) http://stackoverflow.com/questions/22516818/how-to-reset-password-with-usermanager-of-asp-net-mvc-5
+      string password = GetAutoGenPwd();
 
-            string password = GetAutoGenPwd();
-            
-            string code = await this.AppUserManager.GeneratePasswordResetTokenAsync(user.Id);
-            
-            var callbackUrl = new Uri(Url.Link("ResetPasswordRoute", new { userId = user.Id, code = code, password = password }));
+      string code = await this.AppUserManager.GeneratePasswordResetTokenAsync(user.Id);
 
-            await this.AppUserManager.SendEmailAsync(user.Id, "KeetFit Password Recovery", "Please follow <a href=\"" + callbackUrl + "\">this</a> link to reset your password. Then you'll be able to use new generated password: '" + password + "' for login.");
+      var callbackUrl = new Uri(Url.Link("ResetPasswordRoute", new { userId = user.Id, code, password }));
 
-            //AppUserManager.RemovePassword(user.Id);
-            //AppUserManager.AddPassword(user.Id, newPassword);
+      await this.AppUserManager.SendEmailAsync(user.Id, "KeetFit Password Recovery", "Please follow <a href=\"" + callbackUrl + "\">this</a> link to reset your password. Then you'll be able to use new generated password: '" + password + "' for login.");
 
-            return Ok();
-        }
+      return Ok();
+    }
 
-        [Authorize]
+    [Authorize]
     [Route("update")]
     public async Task<IHttpActionResult> Update(UserUpdateRequestModel model)
     {
@@ -235,10 +202,6 @@ namespace Phystore.WebApi.Controllers
     [Route("user")]
     public async Task<IHttpActionResult> DeleteUser()
     {
-      //Only SuperAdmin or Admin can delete users (Later when implement roles)
-      //var user = string.IsNullOrEmpty(id)
-      //  ? await AppUserManager.FindByNameAsync(User.Identity.Name)
-      //  : await this.AppUserManager.FindByIdAsync(id);
       var user = await AppUserManager.FindByNameAsync(User.Identity.Name);
 
       if (user != null)
@@ -257,10 +220,8 @@ namespace Phystore.WebApi.Controllers
       return NotFound();
     }
 
-    // GET api/account/externalLogin
     [OverrideAuthentication]
     [HostAuthentication(DefaultAuthenticationTypes.ExternalCookie)]
-    [AllowAnonymous]
     [Route("externalLogin", Name = "externalLogin")]
     public async Task<IHttpActionResult> GetExternalLogin(string provider, string error = null)
     {
@@ -311,8 +272,6 @@ namespace Phystore.WebApi.Controllers
       return Redirect(redirectUri);
     }
 
-    // POST api/Account/RegisterExternal
-    [AllowAnonymous]
     [Route("RegisterExternal")]
     public async Task<IHttpActionResult> RegisterExternal(RegisterExternalModel model)
     {
@@ -357,7 +316,6 @@ namespace Phystore.WebApi.Controllers
         return GetErrorResult(result);
       }
 
-      //generate access token response
       var accessTokenResponse = GenerateLocalAccessTokenResponse(model.UserName);
 
       return Ok(accessTokenResponse);
@@ -404,15 +362,12 @@ namespace Phystore.WebApi.Controllers
     {
       ParsedExternalAccessToken parsedToken = null;
 
-      var verifyTokenEndPoint = "";
+      string verifyTokenEndPoint;
 
       if (provider == "Facebook")
       {
-        //You can get it from here: https://developers.facebook.com/tools/accesstoken/
-        //More about debug_tokn here: http://stackoverflow.com/questions/16641083/how-does-one-get-the-app-access-token-for-debug-token-inspection-on-facebook
-
-        var appToken = "1540544966219959|eATZ1vQ6TzVBWDE5SS4MGo_5ymw";
-        verifyTokenEndPoint = string.Format("https://graph.facebook.com/debug_token?input_token={0}&access_token={1}", accessToken, appToken);
+        var facebookAppToken = "1540544966219959|eATZ1vQ6TzVBWDE5SS4MGo_5ymw";
+        verifyTokenEndPoint = string.Format("https://graph.facebook.com/debug_token?input_token={0}&access_token={1}", accessToken, facebookAppToken);
       }
       else if (provider == "Google")
       {
@@ -454,9 +409,7 @@ namespace Phystore.WebApi.Controllers
           {
             return null;
           }
-
         }
-
       }
 
       return parsedToken;
@@ -466,12 +419,12 @@ namespace Phystore.WebApi.Controllers
     {
       var tokenExpiration = TimeSpan.FromDays(1);
 
-      ClaimsIdentity identity = new ClaimsIdentity(OAuthDefaults.AuthenticationType);
+      var identity = new ClaimsIdentity(OAuthDefaults.AuthenticationType);
 
       identity.AddClaim(new Claim(ClaimTypes.Name, userName));
       identity.AddClaim(new Claim(ClaimTypes.Role, "user"));
 
-      var props = new AuthenticationProperties()
+      var props = new AuthenticationProperties
       {
         IssuedUtc = DateTime.UtcNow,
         ExpiresUtc = DateTime.UtcNow.Add(tokenExpiration),
@@ -510,38 +463,30 @@ namespace Phystore.WebApi.Controllers
 
       IdentityUser user = await AppUserManager.FindAsync(new UserLoginInfo(provider, verifiedAccessToken.user_id));
 
-      bool hasRegistered = user != null;
-
-      if (!hasRegistered)
+      if (user == null)
       {
         return BadRequest("External user is not registered");
       }
 
-      //generate access token response
-      var accessTokenResponse = GenerateLocalAccessTokenResponse(user.UserName);
-
-      return Ok(accessTokenResponse);
+      return Ok(GenerateLocalAccessTokenResponse(user.UserName));
     }
 
-        private string GetAutoGenPwd()
-        {
-            string allowedChars = "a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z,";
-            allowedChars += "1,2,3,4,5,6,7,8,9,0,!,@,#,$,%,&,?";
-            allowedChars += "A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,";
-            char[] sep = { ',' };
+    private string GetAutoGenPwd()
+    {
+      string[] arr = "a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z,1,2,3,4,5,6,7,8,9,0,!,@,#,$,%,&,?,A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,".Split(',');
+      
+      string password = "";
+      
+      var rand = new Random();
+      password += arr[0];
+      password += arr[arr.Length - 1];
 
-            string[] arr = allowedChars.Split(sep);
-            string passwordString = "";
-            string temp1 = "";
-            Random rand = new Random();
-            passwordString += arr[0];
-            passwordString += arr[arr.Length-1];
-            for (int i = 0; i < 8; i++)
-            {
-                passwordString += arr[rand.Next(0, arr.Length)];
-            }
+      for (int i = 0; i < 8; i++)
+      {
+        password += arr[rand.Next(0, arr.Length)];
+      }
 
-            return passwordString;
-        }
+      return password;
+    }
   }
 }

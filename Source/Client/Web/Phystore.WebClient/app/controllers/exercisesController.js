@@ -59,7 +59,9 @@
 
     $scope.edit = function (id) {
         $location.path('/exercise').search({ id: id });
+    };
 
-        //$location.path('/exercise');
+    $scope.add = function () {
+        $location.path('/exercise');
     };
 });

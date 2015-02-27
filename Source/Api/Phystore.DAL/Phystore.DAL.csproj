@@ -94,10 +94,6 @@
     <Compile Include="Migrations\201502262223163_Added_Exercise.Designer.cs">
       <DependentUpon>201502262223163_Added_Exercise.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201502262227462_Added_Base_Entity.cs" />
-    <Compile Include="Migrations\201502262227462_Added_Base_Entity.Designer.cs">
-      <DependentUpon>201502262227462_Added_Base_Entity.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\ExerciseRepository.cs" />
@@ -121,9 +117,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201502262223163_Added_Exercise.resx">
       <DependentUpon>201502262223163_Added_Exercise.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201502262227462_Added_Base_Entity.resx">
-      <DependentUpon>201502262227462_Added_Base_Entity.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

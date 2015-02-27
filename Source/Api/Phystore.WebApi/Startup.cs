@@ -29,7 +29,7 @@ namespace Phystore.WebApi
 
       var diContainer = Bootstrapper.Instance.GetContainer(Assembly.GetExecutingAssembly());
 
-      config.DependencyResolver = new AutofacWebApiDependencyResolver(diContainer);
+      //config.DependencyResolver = new AutofacWebApiDependencyResolver(diContainer);
 
       ConfigureAuth(app);
 
@@ -64,8 +64,7 @@ namespace Phystore.WebApi
       app.UseExternalSignInCookie(Microsoft.AspNet.Identity.DefaultAuthenticationTypes.ExternalCookie);
       OAuthBearerOptions = new OAuthBearerAuthenticationOptions();
 
-      //Configure Google External Login
-      GoogleAuthOptions = new GoogleOAuth2AuthenticationOptions()
+      GoogleAuthOptions = new GoogleOAuth2AuthenticationOptions
       {
         ClientId = "762577690085-8q5b7s18bmdfjel6h8ihcc14tmongbd2.apps.googleusercontent.com",
         ClientSecret = "MuYGSdOcr5suTwYiUjOrh_52",
@@ -73,7 +72,6 @@ namespace Phystore.WebApi
       };
       app.UseGoogleAuthentication(GoogleAuthOptions);
 
-      //Configure Facebook External Login
       FacebookAuthOptions = new FacebookAuthenticationOptions
       {
         AppId = "1540544966219959",
@@ -91,6 +89,7 @@ namespace Phystore.WebApi
 
     private void ConfigureWebApi(HttpConfiguration config)
     {
+      // Attribute-based routing (visit for more info: http://www.asp.net/web-api/overview/web-api-routing-and-actions/attribute-routing-in-web-api-2)
       config.MapHttpAttributeRoutes();
 
       var jsonFormatter = config.Formatters.OfType<JsonMediaTypeFormatter>().First();
