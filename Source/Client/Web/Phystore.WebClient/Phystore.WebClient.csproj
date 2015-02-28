@@ -15,7 +15,7 @@
     <AssemblyName>Phystore.WebClient</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
-    <IISExpressSSLPort />
+    <IISExpressSSLPort>44301</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
     <IISExpressWindowsAuthentication>disabled</IISExpressWindowsAuthentication>
     <IISExpressUseClassicPipelineMode>false</IISExpressUseClassicPipelineMode>
@@ -176,6 +176,7 @@
   <ItemGroup>
     <Content Include="Web.config" />
     <Content Include="scripts\angular-resource.min.js.map" />
+    <None Include="Properties\PublishProfiles\thekeepfit.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

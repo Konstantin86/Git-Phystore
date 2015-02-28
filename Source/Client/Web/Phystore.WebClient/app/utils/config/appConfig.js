@@ -4,9 +4,11 @@
 
     function init() {
 
-        //var serviceHostUri = 'http://jiraplexapi.azurewebsites.net/'
-        var serviceHostUri = 'http://localhost:62749/';
-        var hostUri = 'http://localhost:62891/';
+        var serviceHostUri = 'https://keep-fit.azurewebsites.net/';
+        //var serviceHostUri = 'http://localhost:62749/';
+
+        var hostUri = 'https://thekeepfit.azurewebsites.net/';
+        //var hostUri = 'http://localhost:62891/';
 
         var getServiceHostUri = function () {
             return serviceHostUri;

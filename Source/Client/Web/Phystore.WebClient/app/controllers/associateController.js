@@ -1,5 +1,5 @@
 ﻿'use strict';
-app.controller('associateController', ['$scope', '$location', '$timeout', 'authService', function ($scope, $location, $timeout, authService, statusService) {
+app.controller('associateController', ['$scope', '$location', '$timeout', 'authService', 'statusService', function ($scope, $location, $timeout, authService, statusService) {
 
     statusService.clear();
     $scope.submitted = false;

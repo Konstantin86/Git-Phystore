@@ -13,6 +13,7 @@ using Microsoft.Owin.Security.OAuth;
 using Newtonsoft.Json.Linq;
 using Phystore.DAL.Entities;
 using Phystore.WebApi.Controllers.Base;
+using Phystore.WebApi.Filters;
 using Phystore.WebApi.Models;
 using Phystore.WebApi.Models.Logins;
 using Phystore.WebApi.Models.Request;
@@ -21,6 +22,7 @@ using Phystore.WebApi.OAuth.Results;
 namespace Phystore.WebApi.Controllers
 {
   [RoutePrefix("api/account")]
+  //[RequireHttps]
   public class AccountController : BaseApiController
   {
     private IAuthenticationManager Authentication
