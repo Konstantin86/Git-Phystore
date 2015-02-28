@@ -16,9 +16,9 @@
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
-    <IISExpressAnonymousAuthentication />
-    <IISExpressWindowsAuthentication />
-    <IISExpressUseClassicPipelineMode />
+    <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
+    <IISExpressWindowsAuthentication>disabled</IISExpressWindowsAuthentication>
+    <IISExpressUseClassicPipelineMode>false</IISExpressUseClassicPipelineMode>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -203,6 +203,7 @@
     <Compile Include="Controllers\SecurityController.cs" />
     <Compile Include="Controllers\WorkoutController.cs" />
     <Compile Include="Blob\FlowModels.cs" />
+    <Compile Include="Filters\RequireHttpsAttribute.cs" />
     <Compile Include="Models\Logins\ExternalLoginData.cs" />
     <Compile Include="Models\Logins\ExternalLoginViewModel.cs" />
     <Compile Include="Models\ParsedExternalAccessToken.cs" />

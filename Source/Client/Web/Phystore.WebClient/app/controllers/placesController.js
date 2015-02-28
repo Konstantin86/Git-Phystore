@@ -93,8 +93,9 @@
     };
 
     $scope.buildVenueThumbnail = function (photo) {
-
-        return photo.items[0].prefix + '128x128' + photo.items[0].suffix;
+        return photo && photo.items && photo.items.length > 0
+            ? photo.items[0].prefix + '128x128' + photo.items[0].suffix
+            : "";
     };
 
     $scope.showVenuePhotos = function (venueId, venueName) {
