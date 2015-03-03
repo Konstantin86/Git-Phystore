@@ -30,7 +30,7 @@ namespace Phystore.WebApi.Controllers
     public IHttpActionResult Get([FromUri]QueryExerciseRequest request)
     {
       var exercises = _unitOfWork.ExerciseRepository.GetAll().Skip(request.Skip.GetValueOrDefault()).ToList();
-      return exercises.Any() ? Ok(request.Take.HasValue ? exercises.Take(request.Take.Value) : exercises) : (IHttpActionResult)NotFound();
+      return Ok(exercises.Any() ? (request.Take.HasValue ? exercises.Take(request.Take.Value) : exercises) : null);
     }
 
     [Route("")]

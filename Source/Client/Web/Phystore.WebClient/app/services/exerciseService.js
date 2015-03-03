@@ -1,6 +1,6 @@
-﻿app.service('exerciseService', function ($resource) {
+﻿app.service('exerciseService', function ($resource, appConst) {
 
-    var serviceBaseUri = appConfig.getInstance().getServiceUri();
+    var serviceBaseUri = appConst.serviceBase;
 
     var resource = $resource(serviceBaseUri + 'api/exercise',
     {

@@ -49,8 +49,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\app.js" />
-    <Content Include="app\const\appConstants.js" />
-    <Content Include="app\const\constMessage.js" />
+    <Content Include="app\config.js" />
+    <Content Include="app\const\appConst.js" />
+    <Content Include="app\const\msgConst.js" />
     <Content Include="app\controllers\accountController.js" />
     <Content Include="app\controllers\associateController.js" />
     <Content Include="app\controllers\confirmController.js" />
@@ -73,7 +74,6 @@
     <Content Include="app\services\placeService.js" />
     <Content Include="app\services\statusService.js" />
     <Content Include="app\services\workoutService.js" />
-    <Content Include="app\utils\config\appConfig.js" />
     <Content Include="app\utils\system\system-format.js" />
     <Content Include="app\utils\system\system-json.js" />
     <Content Include="app\utils\system\system-ns.js" />

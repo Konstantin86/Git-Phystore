@@ -1,4 +1,4 @@
-﻿app.controller('signupController', function ($scope, $location, $timeout, constMessage, authService, statusService) {
+﻿app.controller('signupController', function ($scope, $location, $timeout, msgConst, authService, statusService) {
 
     statusService.clear();
 
@@ -18,7 +18,7 @@
 
         authService.register($scope.formData).then(function (response) {
             $scope.success = true;
-            statusService.success(system.string.format(constMessage.SIGNUP_SUCCESS_FORMAT, $scope.formData.userName, $scope.formData.email));
+            statusService.success(system.string.format(msgConst.SIGNUP_SUCCESS_FORMAT, $scope.formData.userName, $scope.formData.email));
         },
          function (response) {
 

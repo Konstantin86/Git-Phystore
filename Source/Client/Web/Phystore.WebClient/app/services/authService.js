@@ -1,6 +1,4 @@
-﻿app.service('authService', ['$http', '$q', 'localStorageService', 'appConstants', function ($http, $q, localStorageService, appConstants) {
-
-    var serviceBaseUri = appConfig.getInstance().getServiceUri();
+﻿app.service('authService', ['$http', '$q', 'localStorageService', 'appConst', function ($http, $q, localStorageService, appConst) {
 
     var authData = {
             isAuth: false,
@@ -31,7 +29,7 @@
     var register = function (registration) {
         logOut();
 
-        return $http.post(serviceBaseUri + 'api/account/create', registration).then(function (response) {
+        return $http.post(appConst.serviceBase + 'api/account/create', registration).then(function (response) {
             return response;
         });
     };
@@ -42,7 +40,7 @@
 
         var deferred = $q.defer();
 
-        $http.post(serviceBaseUri + 'token', data, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }).success(function (response) {
+        $http.post(appConst.serviceBase + 'token', data, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }).success(function (response) {
             localStorageService.set('authorizationData',
                 {
                     token: response.access_token,
@@ -52,7 +50,7 @@
             authData.isAuth = true;
             authData.userName = loginData.userName;
 
-            $http.get(serviceBaseUri + 'api/account/user').success(function (response) {
+            $http.get(appConst.serviceBase + 'api/account/user').success(function (response) {
                 authData.firstName = response.firstName;
                 authData.lastName = response.lastName;
                 authData.sex = response.sex;
@@ -60,7 +58,7 @@
                 authData.joinDate = response.joinDate;
                 authData.country = response.country;
                 authData.city = response.city;
-                authData.photoPath = appConstants.cdnMediaBase + response.photoPath + "?width=" + appConstants.userAvatarWidth;
+                authData.photoPath = appConst.cdnMediaBase + response.photoPath + "?width=" + appConst.userAvatarWidth;
             });
 
             deferred.resolve(response);
@@ -85,7 +83,7 @@
             authData.isAuth = true;
             authData.userName = authorizationData.userName;
 
-            $http.get(serviceBaseUri + 'api/account/user').success(function (response) {
+            $http.get(appConst.serviceBase + 'api/account/user').success(function (response) {
                 authData.firstName = response.firstName;
                 authData.lastName = response.lastName;
                 authData.sex = response.sex;
@@ -93,7 +91,7 @@
                 authData.joinDate = response.joinDate;
                 authData.country = response.country;
                 authData.city = response.city;
-                authData.photoPath = appConstants.cdnMediaBase + response.photoPath + "?width=" + appConstants.userAvatarWidth;
+                authData.photoPath = appConst.cdnMediaBase + response.photoPath + "?width=" + appConst.userAvatarWidth;
             });
         }
     };
@@ -101,7 +99,7 @@
     var update = function () {
         var deferred = $q.defer();
 
-        $http.post(serviceBaseUri + 'api/account/update', authData).success(function (response) {
+        $http.post(appConst.serviceBase + 'api/account/update', authData).success(function (response) {
             deferred.resolve(response);
         }).error(function (err) {
             deferred.reject(err);
@@ -113,7 +111,7 @@
     var changePassword = function () {
         var deferred = $q.defer();
 
-        $http.post(serviceBaseUri + 'api/account/changepassword', securityData).success(function (response) {
+        $http.post(appConst.serviceBase + 'api/account/changepassword', securityData).success(function (response) {
             deferred.resolve(response);
         }).error(function (err) {
             deferred.reject(err);
@@ -125,7 +123,7 @@
     var deleteUser = function () {
         var deferred = $q.defer();
 
-        $http.delete(serviceBaseUri + 'api/account/user').success(function (response) {
+        $http.delete(appConst.serviceBase + 'api/account/user').success(function (response) {
             logOut();
             deferred.resolve(response);
         }).error(function (err) {
@@ -139,7 +137,7 @@
 
         var deferred = $q.defer();
 
-        $http.post(serviceBaseUri + 'api/account/registerexternal', registerExternalData).success(function (response) {
+        $http.post(appConst.serviceBase + 'api/account/registerexternal', registerExternalData).success(function (response) {
 
             localStorageService.set('authorizationData', { token: response.access_token, userName: response.userName });
 
@@ -160,7 +158,7 @@
 
         var deferred = $q.defer();
 
-        $http.get(serviceBaseUri + 'api/account/ObtainLocalAccessToken', { params: { provider: externalData.provider, externalAccessToken: externalData.externalAccessToken } }).success(function (response) {
+        $http.get(appConst.serviceBase + 'api/account/ObtainLocalAccessToken', { params: { provider: externalData.provider, externalAccessToken: externalData.externalAccessToken } }).success(function (response) {
 
             localStorageService.set('authorizationData', { token: response.access_token, userName: response.userName });
 
@@ -187,7 +185,7 @@
     };
 
     var setPhotoPath = function(photoPath) {
-        authData.photoPath = appConstants.cdnMediaBase + photoPath + "?width=" + appConstants.userAvatarWidth;
+        authData.photoPath = appConst.cdnMediaBase + photoPath + "?width=" + appConst.userAvatarWidth;
     };
 
     var getPhotoPath = function() {
@@ -197,7 +195,7 @@
     var sendPassword = function (email) {
         var deferred = $q.defer();
 
-        $http.get(serviceBaseUri + 'api/account/recoverPassword', { params: { email: email } }).success(function (response) {
+        $http.get(appConst.serviceBase + 'api/account/recoverPassword', { params: { email: email } }).success(function (response) {
             deferred.resolve(response);
         }).error(function (err, status) {
             deferred.reject(err);

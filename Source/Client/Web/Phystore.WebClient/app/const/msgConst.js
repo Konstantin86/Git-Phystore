@@ -2,7 +2,7 @@
 
 /// <reference path="~/app/app.js"/>
 
-app.constant("constMessage", {
+app.constant("msgConst", {
     "HOME_WELCOME": "Yet another fitness results tracker...",
     "HOME_WELCOME_HEADER": "Phystore",
     "SIGNUP_SUCCESS_FORMAT":  "User {0} has been registered in the system. In order to complete a registration you need to confirm your e-mail account. Verification message has been just sent to {1}.",

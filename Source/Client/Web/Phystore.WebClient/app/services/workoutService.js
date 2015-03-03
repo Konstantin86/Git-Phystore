@@ -1,6 +1,6 @@
-﻿app.service('workoutService', function ($http, $q) {
+﻿app.service('workoutService', function ($http, $q, appConst) {
 
-    var serviceBaseUri = appConfig.getInstance().getServiceUri();
+    var serviceBaseUri = appConst.serviceBase;
     var getWorkouts = function() {
 
         var deferred = $q.defer();

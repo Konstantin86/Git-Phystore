@@ -54,7 +54,7 @@ namespace Phystore.WebApi
       OAuthAuthorizationServerOptions oAuthServerOptions = new OAuthAuthorizationServerOptions()
       {
         // Should be turned off in production:
-        //AllowInsecureHttp = true,
+        AllowInsecureHttp = true,
         TokenEndpointPath = new PathString("/token"),
         AccessTokenExpireTimeSpan = TimeSpan.FromDays(1),
         Provider = new AppAuthorizationServerProvider()

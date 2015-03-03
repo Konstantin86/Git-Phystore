@@ -1,6 +1,6 @@
-﻿app.controller('confirmController', function ($scope, $location, $timeout, constMessage, statusService) {
+﻿app.controller('confirmController', function ($scope, $location, $timeout, msgConst, statusService) {
 
-    statusService.success(constMessage.SIGNUP_SUCCESS_CONFIRM);
+    statusService.success(msgConst.SIGNUP_SUCCESS_CONFIRM);
 
     var timer = $timeout(function () {
         $timeout.cancel(timer);

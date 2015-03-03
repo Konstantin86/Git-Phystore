@@ -1,11 +1,11 @@
-﻿app.controller('homeController', function ($scope, constMessage, statusService) {
+﻿app.controller('homeController', function ($scope, msgConst, statusService, appConst) {
 
     statusService.clear();
 
-    $scope.welcomeText = constMessage.HOME_WELCOME;
-    $scope.welcomeHeader = constMessage.HOME_WELCOME_HEADER;
+    $scope.welcomeText = msgConst.HOME_WELCOME;
+    $scope.welcomeHeader = msgConst.HOME_WELCOME_HEADER;
 
-    var hostUri = appConfig.getInstance().getHostUri();
+    var hostUri = appConst.hostBase;
 
     var slides = $scope.slides = [];
 

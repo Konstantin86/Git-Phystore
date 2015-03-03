@@ -1,4 +1,4 @@
-﻿app.controller('loginController', function ($scope, $location, authService, statusService) {
+﻿app.controller('loginController', function ($scope, $location, authService, statusService, appConst) {
 
     statusService.clear();
 
@@ -39,7 +39,7 @@
 
         var redirectUri = location.protocol + '//' + location.host + '/authcomplete.html';
 
-        var serviceBaseUri = appConfig.getInstance().getServiceUri();
+        var serviceBaseUri = appConst.serviceBase;
 
         var externalProviderUrl = serviceBaseUri + "api/account/externalLogin?provider=" + provider
                                                                     + "&response_type=token&client_id=" + 'Keepfit'
