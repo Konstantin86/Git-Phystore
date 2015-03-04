@@ -32,7 +32,7 @@ namespace Phystore.WebApi.Controllers
 
       [HttpGet]
       [Route("Upload")]
-      public async Task<IHttpActionResult> PictureUploadGet()
+      public IHttpActionResult PictureUploadGet()
       {
         var request = HttpContext.Current.Request;
 

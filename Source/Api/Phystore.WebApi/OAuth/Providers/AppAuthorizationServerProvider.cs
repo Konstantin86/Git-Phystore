@@ -3,8 +3,6 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
-using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
 using Phystore.DAL.Managers;
 
@@ -12,9 +10,9 @@ namespace Phystore.WebApi.OAuth.Providers
 {
   public class AppAuthorizationServerProvider : OAuthAuthorizationServerProvider
   {
-    public override async Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context)
+    public override Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context)
     {
-      context.Validated();
+      return Task.FromResult(context.Validated());
     }
 
     public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
