@@ -1,4 +1,4 @@
-﻿/// <reference path="~/app/shared/system/system-ns.js"/>
+﻿/// <reference path="~/app/utils/system/system-ns.js"/>
 
 system.time = (function () {
 

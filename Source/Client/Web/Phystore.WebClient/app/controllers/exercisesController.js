@@ -1,4 +1,11 @@
-﻿app.controller('exercisesController', function ($scope, $filter, $location, exerciseService) {
+﻿/// <reference path="~/scripts/angular.min.js"/>
+
+/// <reference path="~/app/app.js"/>
+/// <reference path="~/app/services/exerciseService.js"/>
+
+"use strict";
+
+app.controller("exercisesController", function ($scope, $filter, $location, exerciseService) {
 
     $scope.filter = "";
 
@@ -35,7 +42,7 @@
         exerciseService.resource.query({ take: $scope.pageSize, skip: offset }, function (result) {
             if (result) {
                 $scope.exercises = $scope.exercises.concat(result);
-                filterData('');
+                filterData("");
             }
             else {
                 $scope.exercises = [];
@@ -58,10 +65,10 @@
     };
 
     $scope.edit = function (id) {
-        $location.path('/exercise').search({ id: id });
+        $location.path("/exercise").search({ id: id });
     };
 
     $scope.add = function () {
-        $location.path('/exercise');
+        $location.path("/exercise");
     };
 });

@@ -1,4 +1,11 @@
-﻿app.config(function ($routeProvider) {
+﻿/// <reference path="~/scripts/angular.min.js"/>
+
+/// <reference path="~/app/app.js"/>
+/// <reference path="~/app/const/appConst.js"/>
+
+"use strict";
+
+app.config(function ($routeProvider) {
     $routeProvider.when("/home", {
         controller: "homeController",
         templateUrl: "/app/views/home.html"

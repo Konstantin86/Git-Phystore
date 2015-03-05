@@ -1,4 +1,13 @@
-﻿app.controller('placesController', function ($scope, placeService, placePhotosService, $uimodal, $filter) {
+﻿/// <reference path="~/scripts/angular.min.js"/>
+
+/// <reference path="~/app/app.js"/>
+/// <reference path="~/app/const/appConst.js"/>
+/// <reference path="~/app/services/placeService.js"/>
+/// <reference path="~/app/services/placePhotoService.js"/>
+
+"use strict";
+
+app.controller('placesController', function ($scope, placeService, placePhotosService, $uimodal, $filter) {
 
     $scope.exploreNearby = "Харьков";
     $scope.exploreQuery = "";
@@ -8,22 +17,10 @@
     $scope.filteredPlaces = [];
     $scope.filteredPlacesCount = 0;
 
-    //paging
     $scope.totalRecordsCount = 0;
     $scope.pageSize = 10;
     $scope.page = 0;
 
-
-    //placeService.catResource.get({ }, function (placesResult) {
-    //    // go over all placesResult.response.categories and subcategories to get actual ids
-    //});
-
-    // Up-to-date categories id's are obtained from https://developer.foursquare.com/categorytree
-
-    // Main sports-related categories are:
-    // - Athletics & Sports
-    // - Sporting Goods Shop
-    // - Sport Bars
 
     $scope.busy = false;
 
@@ -42,7 +39,6 @@
 
     function init() {
         createWatche();
-        //getPlaces();
     }
 
     function getPlaces() {

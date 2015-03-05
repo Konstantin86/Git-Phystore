@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
@@ -19,9 +18,7 @@ namespace Phystore.DAL.Managers
     public static AppUserManager Create(IdentityFactoryOptions<AppUserManager> options, IOwinContext context)
     {
       var appDbContext = context.Get<AppDbContext>();
-      var appUserManager = new AppUserManager(new UserStore<User>(appDbContext));
-      
-      appUserManager.EmailService = new EmailService();
+      var appUserManager = new AppUserManager(new UserStore<User>(appDbContext)) { EmailService = new EmailService() };
 
       if (options.DataProtectionProvider != null)
       {
@@ -47,7 +44,6 @@ namespace Phystore.DAL.Managers
       appUserManager.PasswordValidator = new PasswordValidator
       {
         RequiredLength = 6,
-        // RequireNonLetterOrDigit = true,
         RequireDigit = false,
         RequireLowercase = true,
         RequireUppercase = true,

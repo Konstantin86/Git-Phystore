@@ -1,6 +1,12 @@
-﻿app.controller('exerciseController', function ($scope, $location, $routeParams, exerciseService) {
+﻿/// <reference path="~/scripts/angular.min.js"/>
 
-    //http://stackoverflow.com/questions/21256947/passing-id-into-url-for-individual-view-in-angular-js
+/// <reference path="~/app/app.js"/>
+/// <reference path="~/app/services/exerciseService.js"/>
+
+"use strict";
+
+app.controller("exerciseController", function ($scope, $location, $routeParams, exerciseService) {
+
     var id = $routeParams.id;
 
     $scope.exercise = {
@@ -21,7 +27,7 @@
     $scope.ok = function() {
         exerciseService.resource.save($scope.exercise, function(response) {
             if (response) {
-                $location.path('/exercises');
+                $location.path("/exercises");
                 // TODO if everything is ok redirect to exercises view $location.path('/exercises');
             } else {
             }

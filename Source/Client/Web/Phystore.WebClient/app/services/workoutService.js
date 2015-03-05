@@ -1,4 +1,11 @@
-﻿app.service('workoutService', function ($http, $q, appConst) {
+﻿/// <reference path="~/scripts/angular.min.js"/>
+
+/// <reference path="~/app/app.js"/>
+/// <reference path="~/app/const/appConst.js"/>
+
+"use strict";
+
+app.service('workoutService', function ($http, $q, appConst) {
 
     var serviceBaseUri = appConst.serviceBase;
     var getWorkouts = function() {

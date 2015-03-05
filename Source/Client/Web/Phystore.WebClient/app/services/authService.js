@@ -1,4 +1,12 @@
-﻿app.service('authService', ['$http', '$q', 'localStorageService', 'appConst', function ($http, $q, localStorageService, appConst) {
+﻿/// <reference path="~/scripts/angular.min.js"/>
+/// <reference path="~/scripts/angular-local-storage.js"/>
+
+/// <reference path="~/app/app.js"/>
+/// <reference path="~/app/const/appConst.js"/>
+
+"use strict";
+
+app.service("authService", ["$http", "$q", "localStorageService", "appConst", function ($http, $q, localStorageService, appConst) {
 
     var authData = {
             isAuth: false,
@@ -26,6 +34,12 @@
         confirmPassword: ""
     }
 
+    var logOut = function () {
+        localStorageService.remove("authorizationData");
+        authData.isAuth = false;
+        authData.userName = "";
+    };
+
     var register = function (registration) {
         logOut();
 
@@ -35,7 +49,6 @@
     };
 
     var login = function (loginData) {
-
         var data = "grant_type=password&username=" + loginData.userName + "&password=" + loginData.password;
 
         var deferred = $q.defer();
@@ -68,13 +81,6 @@
         });
 
         return deferred.promise;
-    };
-
-    var logOut = function () {
-        localStorageService.remove('authorizationData');
-
-        authData.isAuth = false;
-        authData.userName = "";
     };
 
     var init = function () {
@@ -146,7 +152,7 @@
 
             deferred.resolve(response);
 
-        }).error(function (err, status) {
+        }).error(function (err) {
             logOut();
             deferred.reject(err);
         });
@@ -167,7 +173,7 @@
 
             deferred.resolve(response);
 
-        }).error(function (err, status) {
+        }).error(function (err) {
             logOut();
             deferred.reject(err);
         });
@@ -197,7 +203,7 @@
 
         $http.get(appConst.serviceBase + 'api/account/recoverPassword', { params: { email: email } }).success(function (response) {
             deferred.resolve(response);
-        }).error(function (err, status) {
+        }).error(function (err) {
             deferred.reject(err);
         });
 

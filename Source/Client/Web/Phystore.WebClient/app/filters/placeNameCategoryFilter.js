@@ -1,4 +1,10 @@
-﻿app.filter("placeNameCategoryFilter", function () {
+﻿/// <reference path="~/scripts/angular.min.js"/>
+
+/// <reference path="~/app/app.js"/>
+
+"use strict";
+
+app.filter("placeNameCategoryFilter", function () {
     return function (places, filterValue) {
         if (!filterValue) return places;
 

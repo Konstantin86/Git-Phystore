@@ -1,4 +1,10 @@
-﻿app.constant("appConst", {
+﻿/// <reference path="~/scripts/angular.min.js"/>
+
+/// <reference path="~/app/app.js"/>
+
+"use strict";
+
+app.constant("appConst", {
 
     //serviceBase: "https://keep-fit.azurewebsites.net/",
     //hostBase: "https://thekeepfit.azurewebsites.net/",

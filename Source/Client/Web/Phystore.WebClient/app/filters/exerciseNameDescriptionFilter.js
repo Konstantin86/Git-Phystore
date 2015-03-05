@@ -1,4 +1,10 @@
-﻿app.filter("exerciseNameDescriptionFilter", function () {
+﻿/// <reference path="~/scripts/angular.min.js"/>
+
+/// <reference path="~/app/app.js"/>
+
+"use strict";
+
+app.filter("exerciseNameDescriptionFilter", function () {
     return function (exercises, value) {
         if (!value) return exercises;
 

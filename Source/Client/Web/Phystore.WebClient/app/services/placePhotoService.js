@@ -1,7 +1,14 @@
-﻿//Get your client ID and secrent by visiting https://developer.foursquare.com
+﻿/// <reference path="~/scripts/angular.min.js"/>
+/// <reference path="~/scripts/angular-resource.js"/>
+
+/// <reference path="~/app/app.js"/>
+
+"use strict";
+
+//Get your client ID and secrent by visiting https://developer.foursquare.com
 //Thise are demo client Id & secret.
 
-app.service('placePhotosService', function ($resource) {
+app.service("placePhotosService", function ($resource) {
 
     var requestParms = {
         clientId: "OV5CAPBY3QJF251J0TAOOWOBSNLDHWRYP04YB5ABYDJI1SAS",
@@ -12,15 +19,15 @@ app.service('placePhotosService', function ($resource) {
     var requestUri = 'https://api.foursquare.com/v2/venues/:venueId/:action';
     var resource = $resource(requestUri,
     {
-        action: 'photos',
+        action: "photos",
         client_id: requestParms.clientId,
         client_secret: requestParms.clientSecret,
         v: requestParms.version,
-        limit: '9',
-        callback: 'JSON_CALLBACK'
+        limit: "9",
+        callback: "JSON_CALLBACK"
     },
     {
-        get: { method: 'JSONP' }
+        get: { method: "JSONP" }
     });
 
     this.resource = resource;

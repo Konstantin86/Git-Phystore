@@ -1,4 +1,11 @@
-﻿app.service('authInterceptorService', ['$q', '$location', 'localStorageService', function ($q, $location, localStorageService) {
+﻿/// <reference path="~/scripts/angular.min.js"/>
+/// <reference path="~/scripts/angular-local-storage.js"/>
+
+/// <reference path="~/app/app.js"/>
+
+"use strict";
+
+app.service("authInterceptorService", ["$q", "$location", "localStorageService", function ($q, $location, localStorageService) {
 
     var request = function (config) {
         config.headers = config.headers || {};
@@ -7,9 +14,9 @@
             config.headers["Content-Type"] = "multipart/form-data";
         }
 
-        var authData = localStorageService.get('authorizationData');
+        var authData = localStorageService.get("authorizationData");
         if (authData) {
-            config.headers.Authorization = 'Bearer ' + authData.token;
+            config.headers.Authorization = "Bearer " + authData.token;
         }
 
         return config;
@@ -17,7 +24,7 @@
 
     var responseError = function (rejection) {
         if (rejection.status === 401) {
-            $location.path('/login');
+            $location.path("/login");
         }
         return $q.reject(rejection);
     }

@@ -1,4 +1,11 @@
-﻿app.service('placeService', function ($resource) {
+﻿/// <reference path="~/scripts/angular.min.js"/>
+/// <reference path="~/scripts/angular-resource.js"/>
+
+/// <reference path="~/app/app.js"/>
+
+"use strict";
+
+app.service('placeService', function ($resource) {
 
     var requestParms = {
         clientId: "OV5CAPBY3QJF251J0TAOOWOBSNLDHWRYP04YB5ABYDJI1SAS",
@@ -19,15 +26,15 @@
 
     var resource = $resource(apiUri,
     {
-        action: 'explore',
+        action: "explore",
         client_id: requestParms.clientId,
         client_secret: requestParms.clientSecret,
         v: requestParms.version,
-        venuePhotos: '1',
-        callback: 'JSON_CALLBACK'
+        venuePhotos: "1",
+        callback: "JSON_CALLBACK"
     },
     {
-        get: { method: 'JSONP' }
+        get: { method: "JSONP" }
     });
 
     this.resource = resource;

@@ -1,14 +1,21 @@
-﻿app.controller('loginController', function ($scope, $location, authService, statusService, appConst) {
+﻿/// <reference path="~/scripts/angular.min.js"/>
+/// <reference path="~/app/app.js"/>
+/// <reference path="~/app/const/appConst.js"/>
+/// <reference path="~/app/const/msgConst.js"/>
+/// <reference path="~/app/services/authService.js"/>
+/// <reference path="~/app/services/statusService.js"/>
+/// <reference path="~/app/utils/system/system-ns.js" />
+/// <reference path="~/app/utils/system/system-string.js" />
+"use strict";
+
+app.controller("loginController", function ($scope, $location, authService, statusService, appConst, msgConst) {
 
     statusService.clear();
 
-    $scope.formData = {
-        userName: "",
-        password: ""
-    };
+    $scope.formData = { userName: "", password: "" };
 
     $scope.login = function () {
-        authService.login($scope.formData).then(function (response) {
+        authService.login($scope.formData).then(function () {
             $location.path('/workouts');
         }, function (err) {
             var error = err ? err.error_description : "";
@@ -21,40 +28,32 @@
         title: "Password recovery",
         editable: true,
         input: "",
-        content: "Provide your e-mail address below and click 'Yes'",
+        content: msgConst.LOGIN_PWD_RECOVERY_INSTRUCTIONS,
         yes: function () {
             var modal = this;
-            authService.sendPassword(modal.input).then(function (response) {
+            authService.sendPassword(modal.input).then(function () {
                 modal.$hide();
-                statusService.success(system.string.format("Password recovery link has been just sent to {0}.", modal.input));
+                statusService.success(system.string.format(msgConst.LOGIN_PWD_RECOVERY_LINK_SENT_FORMAT, modal.input));
             }, function (err) {
                 modal.$hide();
-             statusService.error(err);
-         });
+                statusService.error(err);
+            });
 
         }
     };
 
     $scope.authExternalProvider = function (provider) {
-
-        var redirectUri = location.protocol + '//' + location.host + '/authcomplete.html';
-
+        var redirectUri = location.protocol + "//" + location.host + "/authcomplete.html";
         var serviceBaseUri = appConst.serviceBase;
+        var externalProviderUrl = serviceBaseUri + "api/account/externalLogin?provider=" + provider + "&response_type=token&client_id=" + "Keepfit" + "&redirect_uri=" + redirectUri;
 
-        var externalProviderUrl = serviceBaseUri + "api/account/externalLogin?provider=" + provider
-                                                                    + "&response_type=token&client_id=" + 'Keepfit'
-                                                                    + "&redirect_uri=" + redirectUri;
         window.$windowScope = $scope;
-
-        var oauthWindow = window.open(externalProviderUrl, "Authenticate Account", "location=0,status=0,width=600,height=750");
+        window.open(externalProviderUrl, "Authenticate Account", "location=0,status=0,width=600,height=750");
     };
 
     $scope.authCompletedCB = function (fragment) {
-
         $scope.$apply(function () {
-
-            if (fragment.haslocalaccount == 'False') {
-
+            if (fragment.haslocalaccount === "False") {
                 authService.logOut();
 
                 authService.externalAuthData = {
@@ -64,19 +63,16 @@
                     externalAccessToken: fragment.external_access_token
                 };
 
-                $location.path('/associate');
-
+                $location.path("/associate");
             }
             else {
-                //Obtain access token and redirect to orders
                 var externalData = { provider: fragment.provider, externalAccessToken: fragment.external_access_token };
-                authService.obtainAccessToken(externalData).then(function (response) {
-                    $location.path('/workouts');
+                authService.obtainAccessToken(externalData).then(function () {
+                    $location.path("/workouts");
                 }, function (err) {
                     statusService.error(err.error_description);
                 });
             }
-
         });
     }
 });

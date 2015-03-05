@@ -1,4 +1,10 @@
-﻿app.service('statusService', function() {
+﻿/// <reference path="~/scripts/angular.min.js"/>
+
+/// <reference path="~/app/app.js"/>
+
+"use strict";
+
+app.service("statusService", function () {
 
     // statuses valid values: success, warning, danger
 
