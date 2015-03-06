@@ -211,7 +211,7 @@
     <Compile Include="Models\Request\QueryExerciseRequest.cs" />
     <Compile Include="Models\Request\QueryRequestBase.cs" />
     <Compile Include="Models\Request\RegisterExternalModel.cs" />
-    <Compile Include="Models\Request\UserAddRequestModel.cs" />
+    <Compile Include="Models\Request\UserAddRequest.cs" />
     <Compile Include="Models\Factory\ModelFactory.cs" />
     <Compile Include="Models\Request\UserUpdateRequestModel.cs" />
     <Compile Include="Models\UserModel.cs" />

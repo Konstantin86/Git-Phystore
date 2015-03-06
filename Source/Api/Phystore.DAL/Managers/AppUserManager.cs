@@ -8,9 +8,9 @@ using Phystore.DAL.Services;
 
 namespace Phystore.DAL.Managers
 {
-  public class AppUserManager : UserManager<User>
+  public class AppUserManager : UserManager<AppUser>
   {
-    public AppUserManager(IUserStore<User> store)
+    public AppUserManager(IUserStore<AppUser> store)
       : base(store)
     {
     }
@@ -18,11 +18,11 @@ namespace Phystore.DAL.Managers
     public static AppUserManager Create(IdentityFactoryOptions<AppUserManager> options, IOwinContext context)
     {
       var appDbContext = context.Get<AppDbContext>();
-      var appUserManager = new AppUserManager(new UserStore<User>(appDbContext)) { EmailService = new EmailService() };
+      var appUserManager = new AppUserManager(new UserStore<AppUser>(appDbContext)) { EmailService = new EmailService() };
 
       if (options.DataProtectionProvider != null)
       {
-        appUserManager.UserTokenProvider = new DataProtectorTokenProvider<User>(options.DataProtectionProvider.Create("ASP.NET Identity"))
+        appUserManager.UserTokenProvider = new DataProtectorTokenProvider<AppUser>(options.DataProtectionProvider.Create("ASP.NET Identity"))
         {
           TokenLifespan = TimeSpan.FromHours(6)
         };
@@ -35,7 +35,7 @@ namespace Phystore.DAL.Managers
 
     private static void ConfigureUserPolicies(AppUserManager appUserManager)
     {
-      appUserManager.UserValidator = new UserValidator<User>(appUserManager)
+      appUserManager.UserValidator = new UserValidator<AppUser>(appUserManager)
       {
         AllowOnlyAlphanumericUserNames = true,
         RequireUniqueEmail = true

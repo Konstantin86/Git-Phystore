@@ -7,4 +7,3 @@ var app = angular.module("PhystoreApp", ["ngRoute", "ngResource", "ngAnimate", "
 app.run(["authService", function (authService) {
     authService.init();
 }]);
-

@@ -58,27 +58,29 @@ namespace Phystore.WebApi.Controllers
       return user != null ? (IHttpActionResult)Ok(TheModelFactory.Create(user)) : NotFound();
     }
 
-    [Route("create")]
-    public async Task<IHttpActionResult> CreateUser(UserAddRequestModel requestModel)
+    // Endpoint: Http Post to *api/account
+    [Route("")]
+    [HttpPost]
+    public async Task<IHttpActionResult> Create(UserAddRequest request)
     {
       if (!ModelState.IsValid) return BadRequest(ModelState);
 
-      var user = new User
+      var user = new AppUser
       {
-        UserName = requestModel.Username,
-        Email = requestModel.Email,
-        FirstName = requestModel.FirstName,
-        LastName = requestModel.LastName,
+        UserName = request.Username,
+        Email = request.Email,
+        FirstName = request.FirstName,
+        LastName = request.LastName,
         JoinDate = DateTime.Now.Date,
       };
 
-      IdentityResult result = await AppUserManager.CreateAsync(user, requestModel.Password);
+      IdentityResult createUserResult = await AppUserManager.CreateAsync(user, request.Password);
 
-      if (!result.Succeeded) return GetErrorResult(result);
+      if (!createUserResult.Succeeded) return GetErrorResult(createUserResult);
 
-      result = await AppUserManager.AddToRoleAsync(user.Id, requestModel.RoleName);
+      IdentityResult addUserToRoleResult = await AppUserManager.AddToRoleAsync(user.Id, request.RoleName);
 
-      if (!result.Succeeded) return GetErrorResult(result);
+      if (!addUserToRoleResult.Succeeded) return GetErrorResult(addUserToRoleResult);
 
       string code = await this.AppUserManager.GenerateEmailConfirmationTokenAsync(user.Id);
 
@@ -288,21 +290,21 @@ namespace Phystore.WebApi.Controllers
         return BadRequest("Invalid Provider or External Access Token");
       }
 
-      User user = await AppUserManager.FindAsync(new UserLoginInfo(model.Provider, verifiedAccessToken.user_id));
+      AppUser appUser = await AppUserManager.FindAsync(new UserLoginInfo(model.Provider, verifiedAccessToken.user_id));
 
-      bool hasRegistered = user != null;
+      bool hasRegistered = appUser != null;
 
       if (hasRegistered)
       {
         return BadRequest("External user is already registered");
       }
 
-      user = new User { UserName = model.UserName, Email = model.Email, EmailConfirmed = true, JoinDate = DateTime.Now };
+      appUser = new AppUser { UserName = model.UserName, Email = model.Email, EmailConfirmed = true, JoinDate = DateTime.Now };
 
-      IdentityResult result = await AppUserManager.CreateAsync(user);
+      IdentityResult result = await AppUserManager.CreateAsync(appUser);
       if (!result.Succeeded) return GetErrorResult(result);
 
-      IdentityResult addUserToRoleResult = await AppUserManager.AddToRoleAsync(user.Id, "user");
+      IdentityResult addUserToRoleResult = await AppUserManager.AddToRoleAsync(appUser.Id, "user");
 
       if (!addUserToRoleResult.Succeeded) return GetErrorResult(addUserToRoleResult);
 
@@ -312,7 +314,7 @@ namespace Phystore.WebApi.Controllers
         Login = new UserLoginInfo(model.Provider, verifiedAccessToken.user_id)
       };
 
-      result = await AppUserManager.AddLoginAsync(user.Id, info.Login);
+      result = await AppUserManager.AddLoginAsync(appUser.Id, info.Login);
       if (!result.Succeeded)
       {
         return GetErrorResult(result);

@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Phystore.WebApi.Models.Request
 {
-  public class UserAddRequestModel
+  public class UserAddRequest
   {
     [Required]
     [EmailAddress]

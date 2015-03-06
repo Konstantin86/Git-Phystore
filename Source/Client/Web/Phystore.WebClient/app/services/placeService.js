@@ -5,7 +5,7 @@
 
 "use strict";
 
-app.service('placeService', function ($resource) {
+app.service("placeService", function ($resource) {
 
     var requestParms = {
         clientId: "OV5CAPBY3QJF251J0TAOOWOBSNLDHWRYP04YB5ABYDJI1SAS",
@@ -13,9 +13,9 @@ app.service('placeService', function ($resource) {
         version: "20150122"
     }
 
-    var apiUri = 'https://api.foursquare.com/v2/venues/:action';
+    var apiUri = "https://api.foursquare.com/v2/venues/:action";
 
-    var catApi = 'https://api.foursquare.com/v2/venues/categories';
+    var catApi = "https://api.foursquare.com/v2/venues/categories";
 
     var catResource = $resource(catApi,
     {

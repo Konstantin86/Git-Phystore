@@ -17,10 +17,6 @@ app.controller("accountController", function ($scope, $http, $location, authServ
     $scope.securityFormData = authService.securityData;
     $scope.photoWidth = appConst.userAvatarWidth;
 
-    // TODO kb - ng-flow upload file by a click http://stackoverflow.com/questions/25740110/flow-js-upload-file-on-click (not automatically)
-    // TODO kb - angular $http customize headers
-    // TODO kb - js string contains var s = "foo"; alert(s.indexOf("oo") > -1);
-
     $scope.onFilesAdded = function (files) {
         var flow = this.$flow;
         $scope.testImg = files[0];

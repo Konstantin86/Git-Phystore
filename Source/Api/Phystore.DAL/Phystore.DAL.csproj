@@ -66,7 +66,7 @@
     <Compile Include="AppDbContext.cs" />
     <Compile Include="Entities\Base\EntityBase.cs" />
     <Compile Include="Entities\Exercise.cs" />
-    <Compile Include="Entities\User.cs" />
+    <Compile Include="Entities\AppUser.cs" />
     <Compile Include="IUnitOfWork.cs" />
     <Compile Include="Managers\AppRoleManager.cs" />
     <Compile Include="Managers\AppUserManager.cs" />

@@ -23,10 +23,10 @@ namespace Phystore.DAL.Migrations
       //  This method will be called after migrating to the latest version.
 
       var appDbContext = new AppDbContext();
-      var userManager = new UserManager<User>(new UserStore<User>(appDbContext));
+      var userManager = new UserManager<AppUser>(new UserStore<AppUser>(appDbContext));
       var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(appDbContext));
 
-      List<User> existingUsers = userManager.Users.ToList();
+      List<AppUser> existingUsers = userManager.Users.ToList();
 
       foreach (var usr in existingUsers)
       {
@@ -54,7 +54,7 @@ namespace Phystore.DAL.Migrations
       roleManager.Create(userRole);
       roleManager.Create(adminRole);
 
-      var user = new User
+      var user = new AppUser
       {
         UserName = "PowerUser",
         Email = "test@gmail.com",

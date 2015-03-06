@@ -25,26 +25,30 @@ app.controller("signupController", function ($scope, $location, $timeout, msgCon
     $scope.signUp = function () {
         $scope.submitted = true;
 
-        authService.register($scope.formData).then(function () {
-            $scope.success = true;
-            statusService.success(system.string.format(msgConst.SIGNUP_SUCCESS_FORMAT, $scope.formData.userName, $scope.formData.email));
-        }, function (response) {
-             var error = "";
-
-             if (response.data && response.data.modelState) {
-                 var errors = [];
-                 for (var key in response.data.modelState) {
-                     if (response.data.modelState.hasOwnProperty(key)) {
-                         for (var i = 0; i < response.data.modelState[key].length; i++) {
-                             errors.push(response.data.modelState[key][i]);
-                         }
-                     }
-                 }
-
-                 error = system.string.format(msgConst.SIGNUP_FAIL_FORMAT, errors.join(" "));
-             }
-
-             statusService.error(error);
-         });
+        authService.account.save($scope.formData, onSignupSucceed, onSignupFailed);
     };
+
+    function onSignupSucceed(user, responseHeaders) {
+        $scope.success = true;
+        statusService.success(system.string.format(msgConst.SIGNUP_SUCCESS_FORMAT, $scope.formData.userName, $scope.formData.email));
+    }
+
+    function onSignupFailed(response) {
+        var error = "";
+
+        if (response.data && response.data.modelState) {
+            var errors = [];
+            for (var key in response.data.modelState) {
+                if (response.data.modelState.hasOwnProperty(key)) {
+                    for (var i = 0; i < response.data.modelState[key].length; i++) {
+                        errors.push(response.data.modelState[key][i]);
+                    }
+                }
+            }
+
+            error = system.string.format(msgConst.SIGNUP_FAIL_FORMAT, errors.join(" "));
+        }
+
+        statusService.error(error);
+    }
 });

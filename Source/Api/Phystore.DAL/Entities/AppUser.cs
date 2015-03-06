@@ -4,9 +4,9 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Phystore.DAL.Entities
 {
-    public class User : IdentityUser
+    public class AppUser : IdentityUser
     {
-        public User()
+        public AppUser()
         {
             PhotoPath = "default_avatar.png";
         }

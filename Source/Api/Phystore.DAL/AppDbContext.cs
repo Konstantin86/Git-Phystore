@@ -4,7 +4,7 @@ using Phystore.DAL.Entities;
 
 namespace Phystore.DAL
 {
-  public class AppDbContext : IdentityDbContext<User>
+  public class AppDbContext : IdentityDbContext<AppUser>
   {
     public DbSet<Exercise> Exercises { get; set; }
 

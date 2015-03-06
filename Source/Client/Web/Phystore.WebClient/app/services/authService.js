@@ -6,7 +6,9 @@
 
 "use strict";
 
-app.service("authService", ["$http", "$q", "localStorageService", "appConst", function ($http, $q, localStorageService, appConst) {
+app.service("authService", function ($http, $resource, $q, localStorageService, appConst) {
+
+    var resource = $resource(appConst.serviceBase + "api/account:action");
 
     var authData = {
             isAuth: false,
@@ -40,13 +42,13 @@ app.service("authService", ["$http", "$q", "localStorageService", "appConst", fu
         authData.userName = "";
     };
 
-    var register = function (registration) {
-        logOut();
+    //var register = function (registration) {
+    //    logOut();
 
-        return $http.post(appConst.serviceBase + 'api/account/create', registration).then(function (response) {
-            return response;
-        });
-    };
+    //    return $http.post(appConst.serviceBase + 'api/account/create', registration).then(function (response) {
+    //        return response;
+    //    });
+    //};
 
     var login = function (loginData) {
         var data = "grant_type=password&username=" + loginData.userName + "&password=" + loginData.password;
@@ -210,7 +212,7 @@ app.service("authService", ["$http", "$q", "localStorageService", "appConst", fu
         return deferred.promise;
     };
 
-    this.register = register;
+    //this.register = register;
     this.update = update;
     this.registerExternal = registerExternal;
     this.deleteUser = deleteUser;
@@ -226,4 +228,5 @@ app.service("authService", ["$http", "$q", "localStorageService", "appConst", fu
     this.externalAuthData = externalAuthData;
     this.obtainAccessToken = obtainAccessToken;
     this.sendPassword = sendPassword;
-}]);
+    this.account = resource;
+});
