@@ -10,8 +10,8 @@ app.controller("indexController", function ($scope, $location, authService, stat
 
     $scope.state = statusService.state;
 
-    $scope.logOut = function () {
-        authService.logOut();
+    $scope.logout = function () {
+        authService.logout();
         $location.path("/home");
     }
 

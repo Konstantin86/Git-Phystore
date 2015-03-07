@@ -3,7 +3,6 @@ using System.Linq;
 using System.Net.Http.Formatting;
 using System.Reflection;
 using System.Web.Http;
-using Autofac.Integration.WebApi;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Facebook;
 using Microsoft.Owin.Security.Google;
@@ -29,8 +28,6 @@ namespace Phystore.WebApi
 
       var diContainer = Bootstrapper.Instance.GetContainer(Assembly.GetExecutingAssembly());
 
-      //config.DependencyResolver = new AutofacWebApiDependencyResolver(diContainer);
-
       ConfigureAuth(app);
 
       ConfigureWebApi(config);
@@ -46,21 +43,18 @@ namespace Phystore.WebApi
 
     private void ConfigureAuth(IAppBuilder app)
     {
-      // Configure the db context and user manager to use a single instance per request
       app.CreatePerOwinContext(AppDbContext.Create);
       app.CreatePerOwinContext<AppUserManager>(AppUserManager.Create);
       app.CreatePerOwinContext<AppRoleManager>(AppRoleManager.Create);
 
       OAuthAuthorizationServerOptions oAuthServerOptions = new OAuthAuthorizationServerOptions()
       {
-        // Should be turned off in production:
         AllowInsecureHttp = true,
         TokenEndpointPath = new PathString("/token"),
         AccessTokenExpireTimeSpan = TimeSpan.FromDays(1),
         Provider = new AppAuthorizationServerProvider()
       };
 
-      //use a cookie to temporarily store information about a user logging in with a third party login provider
       app.UseExternalSignInCookie(Microsoft.AspNet.Identity.DefaultAuthenticationTypes.ExternalCookie);
       OAuthBearerOptions = new OAuthBearerAuthenticationOptions();
 
@@ -80,18 +74,13 @@ namespace Phystore.WebApi
       };
       app.UseFacebookAuthentication(FacebookAuthOptions);
 
-      // Token Generation
       app.UseOAuthAuthorizationServer(oAuthServerOptions);
       app.UseOAuthBearerAuthentication(OAuthBearerOptions);
-
-      // Plugin the OAuth bearer tokens generation and Consumption will be here
     }
 
     private void ConfigureWebApi(HttpConfiguration config)
     {
-      // Attribute-based routing (visit for more info: http://www.asp.net/web-api/overview/web-api-routing-and-actions/attribute-routing-in-web-api-2)
       config.MapHttpAttributeRoutes();
-
       var jsonFormatter = config.Formatters.OfType<JsonMediaTypeFormatter>().First();
       jsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
     }

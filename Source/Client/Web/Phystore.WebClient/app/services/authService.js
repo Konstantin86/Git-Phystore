@@ -1,6 +1,5 @@
 ﻿/// <reference path="~/scripts/angular.min.js"/>
 /// <reference path="~/scripts/angular-local-storage.js"/>
-
 /// <reference path="~/app/app.js"/>
 /// <reference path="~/app/const/appConst.js"/>
 
@@ -8,79 +7,62 @@
 
 app.service("authService", function ($http, $resource, $q, localStorageService, appConst) {
 
-    var resource = $resource(appConst.serviceBase + "api/account:action");
+    var resource = $resource(appConst.serviceBase + "/:action", { action: "api/account" },
+    {
+        token: {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            params: { action: "token" }
+        }
+    });
 
-    var authData = {
-            isAuth: false,
-            userName: "",
-            firstName: "",
-            lastName: "",
-            sex: "",
-            joinDate: null,
-            birthDate: null,
-            country: "",
-            city: "",
-            photoPath: ""
-    };
+    var userData = { isAuth: false, userName: "", firstName: "", lastName: "", sex: "", joinDate: null, birthDate: null, country: "", city: "", photoPath: "" };
+    var externalAuthData = { provider: "", userName: "", email: "", externalAccessToken: "" };
+    var securityData = { oldPassword: "", password: "", confirmPassword: "" };
 
-    var externalAuthData = {
-        provider: "",
-        userName: "",
-        email: "",
-        externalAccessToken: ""
-    };
-
-    var securityData = {
-        oldPassword: "",
-        password: "",
-        confirmPassword: ""
-    }
-
-    var logOut = function () {
+    var logout = function () {
         localStorageService.remove("authorizationData");
-        authData.isAuth = false;
-        authData.userName = "";
+        userData.isAuth = false;
+        userData.userName = "";
     };
 
-    //var register = function (registration) {
-    //    logOut();
+    var saveAuthData = function(accessToken, userName) {
+        localStorageService.set("authorizationData",
+        {
+            token: accessToken,
+            userName: userName
+        });
 
-    //    return $http.post(appConst.serviceBase + 'api/account/create', registration).then(function (response) {
-    //        return response;
-    //    });
-    //};
+        userData.isAuth = true;
+        userData.userName = userName;
+    };
 
-    var login = function (loginData) {
-        var data = "grant_type=password&username=" + loginData.userName + "&password=" + loginData.password;
-
+    var login = function (credentials) {
         var deferred = $q.defer();
 
-        $http.post(appConst.serviceBase + 'token', data, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }).success(function (response) {
-            localStorageService.set('authorizationData',
-                {
-                    token: response.access_token,
-                    userName: loginData.userName
-                });
+        var onLoginSucceed = function (response) {
+            saveAuthData(response.access_token, credentials.userName);
 
-            authData.isAuth = true;
-            authData.userName = loginData.userName;
-
-            $http.get(appConst.serviceBase + 'api/account/user').success(function (response) {
-                authData.firstName = response.firstName;
-                authData.lastName = response.lastName;
-                authData.sex = response.sex;
-                authData.birthDate = response.birthDate;
-                authData.joinDate = response.joinDate;
-                authData.country = response.country;
-                authData.city = response.city;
-                authData.photoPath = appConst.cdnMediaBase + response.photoPath + "?width=" + appConst.userAvatarWidth;
+            $http.get(appConst.serviceBase + "api/account/user").success(function (response) {
+                userData.firstName = response.firstName;
+                userData.lastName = response.lastName;
+                userData.sex = response.sex;
+                userData.birthDate = response.birthDate;
+                userData.joinDate = response.joinDate;
+                userData.country = response.country;
+                userData.city = response.city;
+                userData.photoPath = appConst.cdnMediaBase + response.photoPath + "?width=" + appConst.userAvatarWidth;
             });
 
             deferred.resolve(response);
-        }).error(function (err) {
-            logOut();
-            deferred.reject(err);
-        });
+        };
+
+        var onLoginFailed = function (response) {
+            logout();
+            deferred.reject(response);
+        };
+
+        resource.token("grant_type=password&username=" + credentials.userName + "&password=" + credentials.password, onLoginSucceed, onLoginFailed);
 
         return deferred.promise;
     };
@@ -88,18 +70,18 @@ app.service("authService", function ($http, $resource, $q, localStorageService, 
     var init = function () {
         var authorizationData = localStorageService.get('authorizationData');
         if (authorizationData) {
-            authData.isAuth = true;
-            authData.userName = authorizationData.userName;
+            userData.isAuth = true;
+            userData.userName = authorizationData.userName;
 
             $http.get(appConst.serviceBase + 'api/account/user').success(function (response) {
-                authData.firstName = response.firstName;
-                authData.lastName = response.lastName;
-                authData.sex = response.sex;
-                authData.birthDate = response.birthDate;
-                authData.joinDate = response.joinDate;
-                authData.country = response.country;
-                authData.city = response.city;
-                authData.photoPath = appConst.cdnMediaBase + response.photoPath + "?width=" + appConst.userAvatarWidth;
+                userData.firstName = response.firstName;
+                userData.lastName = response.lastName;
+                userData.sex = response.sex;
+                userData.birthDate = response.birthDate;
+                userData.joinDate = response.joinDate;
+                userData.country = response.country;
+                userData.city = response.city;
+                userData.photoPath = appConst.cdnMediaBase + response.photoPath + "?width=" + appConst.userAvatarWidth;
             });
         }
     };
@@ -107,7 +89,7 @@ app.service("authService", function ($http, $resource, $q, localStorageService, 
     var update = function () {
         var deferred = $q.defer();
 
-        $http.post(appConst.serviceBase + 'api/account/update', authData).success(function (response) {
+        $http.post(appConst.serviceBase + 'api/account/update', userData).success(function (response) {
             deferred.resolve(response);
         }).error(function (err) {
             deferred.reject(err);
@@ -132,7 +114,7 @@ app.service("authService", function ($http, $resource, $q, localStorageService, 
         var deferred = $q.defer();
 
         $http.delete(appConst.serviceBase + 'api/account/user').success(function (response) {
-            logOut();
+            logout();
             deferred.resolve(response);
         }).error(function (err) {
             deferred.reject(err);
@@ -142,20 +124,13 @@ app.service("authService", function ($http, $resource, $q, localStorageService, 
     };
 
     var registerExternal = function (registerExternalData) {
-
         var deferred = $q.defer();
 
         $http.post(appConst.serviceBase + 'api/account/registerexternal', registerExternalData).success(function (response) {
-
-            localStorageService.set('authorizationData', { token: response.access_token, userName: response.userName });
-
-            authData.isAuth = true;
-            authData.userName = response.userName;
-
+            saveAuthData(response.access_token, response.userName);
             deferred.resolve(response);
-
         }).error(function (err) {
-            logOut();
+            logout();
             deferred.reject(err);
         });
 
@@ -163,20 +138,13 @@ app.service("authService", function ($http, $resource, $q, localStorageService, 
     };
 
     var obtainAccessToken = function (externalData) {
-
         var deferred = $q.defer();
 
         $http.get(appConst.serviceBase + 'api/account/ObtainLocalAccessToken', { params: { provider: externalData.provider, externalAccessToken: externalData.externalAccessToken } }).success(function (response) {
-
-            localStorageService.set('authorizationData', { token: response.access_token, userName: response.userName });
-
-            authData.isAuth = true;
-            authData.userName = response.userName;
-
+            saveAuthData(response.access_token, response.userName);
             deferred.resolve(response);
-
         }).error(function (err) {
-            logOut();
+            logout();
             deferred.reject(err);
         });
 
@@ -184,26 +152,21 @@ app.service("authService", function ($http, $resource, $q, localStorageService, 
     };
 
     var getAuthHeader = function () {
-        var authHeaderData = localStorageService.get('authorizationData');
-        if (authHeaderData) {
-            return 'Bearer ' + authHeaderData.token;
-        }
-
-        return null;
+        return "Bearer " + localStorageService.get("authorizationData").token;
     };
 
-    var setPhotoPath = function(photoPath) {
-        authData.photoPath = appConst.cdnMediaBase + photoPath + "?width=" + appConst.userAvatarWidth;
+    var setPhotoPath = function (photoPath) {
+        userData.photoPath = appConst.cdnMediaBase + photoPath + "?width=" + appConst.userAvatarWidth;
     };
 
-    var getPhotoPath = function() {
-        return authData.photoPath;
+    var getPhotoPath = function () {
+        return userData.photoPath;
     };
 
     var sendPassword = function (email) {
         var deferred = $q.defer();
 
-        $http.get(appConst.serviceBase + 'api/account/recoverPassword', { params: { email: email } }).success(function (response) {
+        $http.get(appConst.serviceBase + "api/account/recoverPassword", { params: { email: email } }).success(function (response) {
             deferred.resolve(response);
         }).error(function (err) {
             deferred.reject(err);
@@ -212,15 +175,14 @@ app.service("authService", function ($http, $resource, $q, localStorageService, 
         return deferred.promise;
     };
 
-    //this.register = register;
     this.update = update;
     this.registerExternal = registerExternal;
     this.deleteUser = deleteUser;
     this.changePassword = changePassword;
     this.login = login;
-    this.logOut = logOut;
+    this.logout = logout;
     this.init = init;
-    this.authData = authData;
+    this.authData = userData;
     this.setPhotoPath = setPhotoPath;
     this.getPhotoPath = getPhotoPath;
     this.getAuthHeader = getAuthHeader;

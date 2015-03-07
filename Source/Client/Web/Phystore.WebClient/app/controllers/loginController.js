@@ -15,11 +15,10 @@ app.controller("loginController", function ($scope, $location, authService, stat
     $scope.formData = { userName: "", password: "" };
 
     $scope.login = function () {
-        authService.login($scope.formData).then(function () {
-            $location.path('/workouts');
-        }, function (err) {
-            var error = err ? err.error_description : "";
-            statusService.error(error);
+        authService.login($scope.formData).then(function (response) {
+            $location.path("/account");
+        }, function (response) {
+            statusService.error(response ? response.error_description : "");
         });
     };
 
@@ -54,7 +53,7 @@ app.controller("loginController", function ($scope, $location, authService, stat
     $scope.authCompletedCB = function (fragment) {
         $scope.$apply(function () {
             if (fragment.haslocalaccount === "False") {
-                authService.logOut();
+                authService.logout();
 
                 authService.externalAuthData = {
                     provider: fragment.provider,
