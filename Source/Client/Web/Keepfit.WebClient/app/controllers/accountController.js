@@ -24,9 +24,9 @@ app.controller("accountController", function ($scope, $location, authService, ap
         flow.opts.headers.Authorization = authHeaderData;
     };
 
-    $scope.onUploadSuccess = function (file, message) {
-        authService.setPhotoPath(message.split('"').join(''));
-    }
+    $scope.onUploadSuccess = function(file, message) {
+        authService.setPhoto(message.split('"').join(''));
+    };
 
     $scope.deleteUserModal =
     {

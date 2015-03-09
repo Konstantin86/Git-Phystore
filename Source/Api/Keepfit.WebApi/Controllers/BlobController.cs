@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
+using ImageResizer;
 using Keepfit.WebApi.Blob;
 using Keepfit.WebApi.Controllers.Base;
 using Microsoft.AspNet.Identity;
@@ -57,7 +58,20 @@ namespace Keepfit.WebApi.Controllers
           {
             var filePath = Path.Combine(_folder, status.FileName);
 
+            string basePath = ImageResizer.Util.PathUtils.RemoveExtension(filePath);
+
+            Dictionary<string, string> versions = new Dictionary<string, string>();
+            //Define the versions to generate and their filename suffixes.
+            versions.Add("_thumb", "width=100&height=100&crop=auto&format=jpg"); //Crop to square thumbnail
+            versions.Add("_medium", "maxwidth=400&maxheight=400format=jpg"); //Fit inside 400x400 area, jpeg
+            versions.Add("_large", "maxwidth=1900&maxheight=1900&format=jpg"); //Fit inside 1900x1200 area
+
             string fileName = Guid.NewGuid() + "." + status.FileName.Split('.').Last();
+
+            foreach (string suffix in versions.Keys)
+            {
+              ImageBuilder.Current.Build(filePath, basePath + suffix, new ResizeSettings(versions[suffix]));
+            }
 
             using (var fileStream = File.OpenRead(filePath))
             {

@@ -28,8 +28,8 @@ namespace Keepfit.WebApi.Blob
     private FlowJsPostChunkResponse PostChunkBase(HttpRequest request, string folder, FlowValidationRules validationRules)
     {
       var chunk = new FlowChunk();
-      var requestIsSane = chunk.ParseForm(request.Form);
-      if (!requestIsSane)
+
+      if (!chunk.ParseForm(request.Form))
       {
         var errResponse = new FlowJsPostChunkResponse();
         errResponse.Status = PostChunkStatus.Error;
@@ -55,27 +55,15 @@ namespace Keepfit.WebApi.Blob
       string root = HttpContext.Current.Server.MapPath("~/Images");
 
       var chunkFullPathName = GetChunkFilename(chunk.Number, chunk.Identifier, root);
-      
-      try
-      {
-        // create folder if it does not exist
 
-        if (!Directory.Exists(root)) Directory.CreateDirectory(root);
-        // save file
-        file.SaveAs(chunkFullPathName);
-      }
-      catch (Exception)
-      {
-        throw;
-      }
+      if (!Directory.Exists(root)) Directory.CreateDirectory(root);
+      file.SaveAs(chunkFullPathName);
 
-      // see if we have more chunks to upload. If so, return here
       for (int i = 1, l = chunk.TotalChunks; i <= l; i++)
       {
         var chunkNameToTest = GetChunkFilename(i, chunk.Identifier, root);
-        //var chunkNameToTest = GetChunkFilename(i, chunk.Identifier, folder);
-        var exists = File.Exists(chunkNameToTest);
-        if (!exists)
+        
+        if (!File.Exists(chunkNameToTest))
         {
           response.Status = PostChunkStatus.PartlyDone;
           return response;
@@ -89,7 +77,6 @@ namespace Keepfit.WebApi.Blob
         fileAry.Add("flow-" + chunk.Identifier + "." + i);
       }
 
-      //MultipleFilesToSingleFile(folder, fileAry, chunk.FileName);
       MultipleFilesToSingleFile(root, fileAry, chunk.FileName);
 
       for (int i = 0, l = fileAry.Count; i < l; i++)
@@ -97,7 +84,6 @@ namespace Keepfit.WebApi.Blob
         try
         {
           File.Delete(Path.Combine(root, fileAry[i]));
-          //File.Delete(Path.Combine(folder, fileAry[i]));
         }
         catch (Exception)
         {
@@ -106,10 +92,7 @@ namespace Keepfit.WebApi.Blob
 
       response.Status = PostChunkStatus.Done;
       return response;
-
     }
-
-
 
     private static void MultipleFilesToSingleFile(string dirPath, IEnumerable<string> fileAry, string destFile)
     {
