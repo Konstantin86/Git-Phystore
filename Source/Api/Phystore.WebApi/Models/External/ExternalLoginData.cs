@@ -2,7 +2,7 @@
 using System.Security.Claims;
 using Microsoft.AspNet.Identity;
 
-namespace Phystore.WebApi.Models.Logins
+namespace Phystore.WebApi.Models.External
 {
   public class ExternalLoginData
   {

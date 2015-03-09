@@ -204,9 +204,9 @@
     <Compile Include="Controllers\WorkoutController.cs" />
     <Compile Include="Blob\FlowModels.cs" />
     <Compile Include="Filters\RequireHttpsAttribute.cs" />
-    <Compile Include="Models\Logins\ExternalLoginData.cs" />
-    <Compile Include="Models\Logins\ExternalLoginViewModel.cs" />
-    <Compile Include="Models\ParsedExternalAccessToken.cs" />
+    <Compile Include="Models\External\ExternalLoginData.cs" />
+    <Compile Include="Models\External\ExternalLoginViewModel.cs" />
+    <Compile Include="Models\External\ExternalAccessToken.cs" />
     <Compile Include="Models\Request\ChangePasswordRequestModel.cs" />
     <Compile Include="Models\Request\QueryExerciseRequest.cs" />
     <Compile Include="Models\Request\QueryRequestBase.cs" />

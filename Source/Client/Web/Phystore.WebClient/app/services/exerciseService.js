@@ -7,11 +7,8 @@
 
 app.service("exerciseService", function ($resource, appConst) {
 
-    var serviceBaseUri = appConst.serviceBase;
-
-    var resource = $resource(serviceBaseUri + 'api/exercise',
+    var resource = $resource(appConst.serviceBase + "/:action", { action: "api/exercise" },
     {
-        //action: 'get'
     });
 
     this.resource = resource;

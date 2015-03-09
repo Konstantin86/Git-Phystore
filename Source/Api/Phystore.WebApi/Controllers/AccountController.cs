@@ -14,7 +14,7 @@ using Newtonsoft.Json.Linq;
 using Phystore.DAL.Entities;
 using Phystore.WebApi.Controllers.Base;
 using Phystore.WebApi.Models;
-using Phystore.WebApi.Models.Logins;
+using Phystore.WebApi.Models.External;
 using Phystore.WebApi.Models.Request;
 using Phystore.WebApi.OAuth.Results;
 
@@ -123,13 +123,11 @@ namespace Phystore.WebApi.Controllers
     }
 
     [Authorize]
-    [Route("ChangePassword")]
+    [Route("password")]
+    [HttpPut]
     public async Task<IHttpActionResult> ChangePassword(ChangePasswordRequestModel model)
     {
-      if (!ModelState.IsValid)
-      {
-        return BadRequest(ModelState);
-      }
+      if (!ModelState.IsValid) return BadRequest(ModelState);
 
       var user = await AppUserManager.FindByNameAsync(User.Identity.Name);
 
@@ -140,85 +138,56 @@ namespace Phystore.WebApi.Controllers
 
       IdentityResult result = await AppUserManager.ChangePasswordAsync(user.Id, model.OldPassword, model.Password);
 
-      if (!result.Succeeded)
-      {
-        return GetErrorResult(result);
-      }
-
-      return Ok();
+      return result.Succeeded ? Ok() : GetErrorResult(result);
     }
 
     [HttpGet]
-    [Route("RecoverPassword")]
+    [Route("password")]
     public async Task<IHttpActionResult> RecoverPassword(string email)
     {
       var user = await AppUserManager.FindByEmailAsync(email);
 
-      if (user == null)
-      {
-        return BadRequest("E-mail is not registered");
-      }
+      if (user == null) return BadRequest("E-mail is not registered");
 
       string password = GetAutoGenPwd();
 
-      string code = await this.AppUserManager.GeneratePasswordResetTokenAsync(user.Id);
+      string code = await AppUserManager.GeneratePasswordResetTokenAsync(user.Id);
 
       var callbackUrl = new Uri(Url.Link("ResetPasswordRoute", new { userId = user.Id, code, password }));
 
-      await this.AppUserManager.SendEmailAsync(user.Id, "KeetFit Password Recovery", "Please follow <a href=\"" + callbackUrl + "\">this</a> link to reset your password. Then you'll be able to use new generated password: '" + password + "' for login.");
+      await AppUserManager.SendEmailAsync(user.Id, "KeetFit Password Recovery", "Please follow <a href=\"" + callbackUrl + "\">this</a> link to reset your password. Then you'll be able to use new generated password: '" + password + "' for login.");
 
       return Ok();
     }
 
     [Authorize]
-    [Route("update")]
+    [Route("")]
+    [HttpPut]
     public async Task<IHttpActionResult> Update(UserUpdateRequestModel model)
     {
-      if (!ModelState.IsValid)
-      {
-        return BadRequest(ModelState);
-      }
+      if (!ModelState.IsValid) return BadRequest(ModelState);
 
-      var currentUser = await AppUserManager.FindByNameAsync(User.Identity.Name);
+      var user = await AppUserManager.FindByNameAsync(User.Identity.Name);
+      user.FirstName = model.FirstName;
+      user.LastName = model.LastName;
+      user.Sex = model.Sex;
+      user.BirthDate = model.BirthDate;
+      user.Country = model.Country;
+      user.City = model.City;
 
-      currentUser.FirstName = model.FirstName;
-      currentUser.LastName = model.LastName;
-      currentUser.Sex = model.Sex;
-      currentUser.BirthDate = model.BirthDate;
-      currentUser.Country = model.Country;
-      currentUser.City = model.City;
+      IdentityResult result = await AppUserManager.UpdateAsync(user);
 
-      IdentityResult result = await AppUserManager.UpdateAsync(currentUser);
-
-      if (!result.Succeeded)
-      {
-        return GetErrorResult(result);
-      }
-
-      return Ok();
+      return result.Succeeded ? Ok() : GetErrorResult(result);
     }
 
-    // To test this method we need to issue HTTP DELETE request to the end point “api/accounts/user/{id}”.
     [Authorize]
-    [Route("user")]
-    public async Task<IHttpActionResult> DeleteUser()
+    [Route("")]
+    public async Task<IHttpActionResult> DeleteCurrentUser()
     {
       var user = await AppUserManager.FindByNameAsync(User.Identity.Name);
-
-      if (user != null)
-      {
-        IdentityResult result = await AppUserManager.DeleteAsync(user);
-
-        if (!result.Succeeded)
-        {
-          return GetErrorResult(result);
-        }
-
-        return Ok();
-
-      }
-
-      return NotFound();
+      if (user == null) return NotFound();
+      IdentityResult result = await AppUserManager.DeleteAsync(user);
+      return result.Succeeded ? Ok() : GetErrorResult(result);
     }
 
     [OverrideAuthentication]
@@ -274,27 +243,20 @@ namespace Phystore.WebApi.Controllers
     }
 
     [Route("RegisterExternal")]
+    [HttpPost]
     public async Task<IHttpActionResult> RegisterExternal(RegisterExternalModel model)
     {
-      if (!ModelState.IsValid)
-      {
-        return BadRequest(ModelState);
-      }
+      if (!ModelState.IsValid) return BadRequest(ModelState);
 
-      var verifiedAccessToken = await VerifyExternalAccessToken(model.Provider, model.ExternalAccessToken);
-      if (verifiedAccessToken == null)
+      var externalAccessToken = await VerifyExternalAccessToken(model.Provider, model.ExternalAccessToken);
+      if (externalAccessToken == null)
       {
         return BadRequest("Invalid Provider or External Access Token");
       }
 
-      AppUser appUser = await AppUserManager.FindAsync(new UserLoginInfo(model.Provider, verifiedAccessToken.user_id));
+      AppUser appUser = await AppUserManager.FindAsync(new UserLoginInfo(model.Provider, externalAccessToken.user_id));
 
-      bool hasRegistered = appUser != null;
-
-      if (hasRegistered)
-      {
-        return BadRequest("External user is already registered");
-      }
+      if (appUser != null) return BadRequest("External user is already registered");
 
       appUser = new AppUser { UserName = model.UserName, Email = model.Email, EmailConfirmed = true, JoinDate = DateTime.Now };
 
@@ -308,18 +270,12 @@ namespace Phystore.WebApi.Controllers
       var info = new ExternalLoginInfo
       {
         DefaultUserName = model.UserName,
-        Login = new UserLoginInfo(model.Provider, verifiedAccessToken.user_id)
+        Login = new UserLoginInfo(model.Provider, externalAccessToken.user_id)
       };
 
       result = await AppUserManager.AddLoginAsync(appUser.Id, info.Login);
-      if (!result.Succeeded)
-      {
-        return GetErrorResult(result);
-      }
 
-      var accessTokenResponse = GenerateLocalAccessTokenResponse(model.UserName);
-
-      return Ok(accessTokenResponse);
+      return result.Succeeded ? Ok(GenerateLocalAccessTokenResponse(model.UserName)) : GetErrorResult(result);
     }
 
     private string ValidateClientAndRedirectUri(HttpRequestMessage request, ref string redirectUriOutput)
@@ -359,9 +315,9 @@ namespace Phystore.WebApi.Controllers
       return match.Value;
     }
 
-    private async Task<ParsedExternalAccessToken> VerifyExternalAccessToken(string provider, string accessToken)
+    private static async Task<ExternalAccessToken> VerifyExternalAccessToken(string provider, string accessToken)
     {
-      ParsedExternalAccessToken parsedToken = null;
+      ExternalAccessToken externalAccessToken = null;
 
       string verifyTokenEndPoint;
 
@@ -389,31 +345,31 @@ namespace Phystore.WebApi.Controllers
 
         dynamic jObj = (JObject)Newtonsoft.Json.JsonConvert.DeserializeObject(content);
 
-        parsedToken = new ParsedExternalAccessToken();
+        externalAccessToken = new ExternalAccessToken();
 
         if (provider == "Facebook")
         {
-          parsedToken.user_id = jObj["data"]["user_id"];
-          parsedToken.app_id = jObj["data"]["app_id"];
+          externalAccessToken.user_id = jObj["data"]["user_id"];
+          externalAccessToken.app_id = jObj["data"]["app_id"];
 
-          if (!string.Equals(Startup.FacebookAuthOptions.AppId, parsedToken.app_id, StringComparison.OrdinalIgnoreCase))
+          if (!string.Equals(Startup.FacebookAuthOptions.AppId, externalAccessToken.app_id, StringComparison.OrdinalIgnoreCase))
           {
             return null;
           }
         }
         else if (provider == "Google")
         {
-          parsedToken.user_id = jObj["user_id"];
-          parsedToken.app_id = jObj["audience"];
+          externalAccessToken.user_id = jObj["user_id"];
+          externalAccessToken.app_id = jObj["audience"];
 
-          if (!string.Equals(Startup.GoogleAuthOptions.ClientId, parsedToken.app_id, StringComparison.OrdinalIgnoreCase))
+          if (!string.Equals(Startup.GoogleAuthOptions.ClientId, externalAccessToken.app_id, StringComparison.OrdinalIgnoreCase))
           {
             return null;
           }
         }
       }
 
-      return parsedToken;
+      return externalAccessToken;
     }
 
     private JObject GenerateLocalAccessTokenResponse(string userName)
@@ -448,8 +404,8 @@ namespace Phystore.WebApi.Controllers
 
     [AllowAnonymous]
     [HttpGet]
-    [Route("ObtainLocalAccessToken")]
-    public async Task<IHttpActionResult> ObtainLocalAccessToken(string provider, string externalAccessToken)
+    [Route("LocalAccessToken")]
+    public async Task<IHttpActionResult> GetLocalAccessToken(string provider, string externalAccessToken)
     {
       if (string.IsNullOrWhiteSpace(provider) || string.IsNullOrWhiteSpace(externalAccessToken))
       {

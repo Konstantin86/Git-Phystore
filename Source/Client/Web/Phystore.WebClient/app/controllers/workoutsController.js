@@ -14,7 +14,7 @@ app.controller("workoutsController", function ($scope, $location, authService, w
     $scope.userName = "testName";
     $scope.message = "This is gonna be your workouts list...";
 
-    workoutService.getWorkouts().then(function (response) {
+    workoutService.workout.get({}, function (response) {
         $scope.message = response.data;
     }, function (err) {
         $scope.message = err.error_description;

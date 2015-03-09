@@ -1,5 +1,4 @@
 ﻿/// <reference path="~/scripts/angular.min.js"/>
-
 /// <reference path="~/app/app.js"/>
 /// <reference path="~/app/const/appConst.js"/>
 /// <reference path="~/app/const/msgConst.js"/>
@@ -9,7 +8,7 @@
 
 "use strict";
 
-app.controller("accountController", function ($scope, $http, $location, authService, appConst, msgConst, workoutService, statusService) {
+app.controller("accountController", function ($scope, $location, authService, appConst, msgConst, workoutService, statusService) {
 
     statusService.clear();
 
@@ -26,8 +25,7 @@ app.controller("accountController", function ($scope, $http, $location, authServ
     };
 
     $scope.onUploadSuccess = function (file, message) {
-        var path = message.split('"').join('');
-        authService.setPhotoPath(path);
+        authService.setPhotoPath(message.split('"').join(''));
     }
 
     $scope.deleteUserModal =
@@ -36,20 +34,19 @@ app.controller("accountController", function ($scope, $http, $location, authServ
         content: msgConst.ACCOUNT_DELETE,
         yes: function () {
             var modal = this;
-            authService.deleteUser().then(function () {
+            authService.account.delete({}, function () {
                 modal.$hide();
-                $location.path('/home');
-            },
-         function (err) {
+                $location.path("/home");
+                authService.logout();
+            }, function (err) {
              this.$hide();
              statusService.error(err);
          });
-
         }
     };
 
     $scope.update = function () {
-        authService.update().then(function () {
+        authService.account.update($scope.formData, function () {
             statusService.success(msgConst.ACCOUNT_UPDATE_SUCCESS);
         }, function (err) {
              statusService.error(err);
@@ -57,7 +54,7 @@ app.controller("accountController", function ($scope, $http, $location, authServ
     };
 
     $scope.changePassword = function () {
-        authService.changePassword().then(function () {
+        authService.account.updatePassword($scope.securityFormData, function () {
             statusService.success(msgConst.ACCOUNT_PWD_CHANGE_SUCCESS);
         }, function (err) {
             statusService.error(err);

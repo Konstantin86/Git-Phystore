@@ -30,7 +30,7 @@ app.controller("loginController", function ($scope, $location, authService, stat
         content: msgConst.LOGIN_PWD_RECOVERY_INSTRUCTIONS,
         yes: function () {
             var modal = this;
-            authService.sendPassword(modal.input).then(function () {
+            authService.account.resetPassword({ email: modal.input }, function () {
                 modal.$hide();
                 statusService.success(system.string.format(msgConst.LOGIN_PWD_RECOVERY_LINK_SENT_FORMAT, modal.input));
             }, function (err) {
