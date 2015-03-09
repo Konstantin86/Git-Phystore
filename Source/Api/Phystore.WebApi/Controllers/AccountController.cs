@@ -13,7 +13,6 @@ using Microsoft.Owin.Security.OAuth;
 using Newtonsoft.Json.Linq;
 using Phystore.DAL.Entities;
 using Phystore.WebApi.Controllers.Base;
-using Phystore.WebApi.Filters;
 using Phystore.WebApi.Models;
 using Phystore.WebApi.Models.Logins;
 using Phystore.WebApi.Models.Request;
@@ -43,14 +42,6 @@ namespace Phystore.WebApi.Controllers
       return user != null ? (IHttpActionResult)Ok(TheModelFactory.Create(user)) : NotFound();
     }
 
-    [Authorize]
-    [Route("user")]
-    public async Task<IHttpActionResult> GetCurrentUser()
-    {
-      var user = await AppUserManager.FindByNameAsync(User.Identity.Name);
-      return user != null ? (IHttpActionResult)Ok(TheModelFactory.Create(user)) : NotFound();
-    }
-
     [Route("user/{username}")]
     public async Task<IHttpActionResult> GetUserByName(string username)
     {
@@ -58,7 +49,13 @@ namespace Phystore.WebApi.Controllers
       return user != null ? (IHttpActionResult)Ok(TheModelFactory.Create(user)) : NotFound();
     }
 
-    // Endpoint: Http Post to *api/account
+    [Authorize]
+    [Route("")]
+    public async Task<IHttpActionResult> GetCurrentUser()
+    {
+      return await GetUserByName(User.Identity.Name);
+    }
+
     [Route("")]
     [HttpPost]
     public async Task<IHttpActionResult> Create(UserAddRequest request)

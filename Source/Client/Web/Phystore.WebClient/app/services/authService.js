@@ -16,7 +16,8 @@ app.service("authService", function ($http, $resource, $q, localStorageService, 
         }
     });
 
-    var userData = { isAuth: false, userName: "", firstName: "", lastName: "", sex: "", joinDate: null, birthDate: null, country: "", city: "", photoPath: "" };
+    //var userData = { isAuth: false, userName: "", firstName: "", lastName: "", sex: "", joinDate: null, birthDate: null, country: "", city: "", photoPath: "" };
+    var userData = {};
     var externalAuthData = { provider: "", userName: "", email: "", externalAccessToken: "" };
     var securityData = { oldPassword: "", password: "", confirmPassword: "" };
 
@@ -37,23 +38,25 @@ app.service("authService", function ($http, $resource, $q, localStorageService, 
         userData.userName = userName;
     };
 
+    var getUserData = function() {
+        resource.get({}, function (user) {
+            userData.firstName = user.firstName;
+            userData.lastName = user.lastName;
+            userData.sex = user.sex;
+            userData.birthDate = user.birthDate;
+            userData.joinDate = user.joinDate;
+            userData.country = user.country;
+            userData.city = user.city;
+            userData.photoPath = appConst.cdnMediaBase + user.photoPath + "?width=" + appConst.userAvatarWidth;
+        });
+    };
+
     var login = function (credentials) {
         var deferred = $q.defer();
 
         var onLoginSucceed = function (response) {
             saveAuthData(response.access_token, credentials.userName);
-
-            $http.get(appConst.serviceBase + "api/account/user").success(function (response) {
-                userData.firstName = response.firstName;
-                userData.lastName = response.lastName;
-                userData.sex = response.sex;
-                userData.birthDate = response.birthDate;
-                userData.joinDate = response.joinDate;
-                userData.country = response.country;
-                userData.city = response.city;
-                userData.photoPath = appConst.cdnMediaBase + response.photoPath + "?width=" + appConst.userAvatarWidth;
-            });
-
+            getUserData();
             deferred.resolve(response);
         };
 
@@ -72,17 +75,7 @@ app.service("authService", function ($http, $resource, $q, localStorageService, 
         if (authorizationData) {
             userData.isAuth = true;
             userData.userName = authorizationData.userName;
-
-            $http.get(appConst.serviceBase + 'api/account/user').success(function (response) {
-                userData.firstName = response.firstName;
-                userData.lastName = response.lastName;
-                userData.sex = response.sex;
-                userData.birthDate = response.birthDate;
-                userData.joinDate = response.joinDate;
-                userData.country = response.country;
-                userData.city = response.city;
-                userData.photoPath = appConst.cdnMediaBase + response.photoPath + "?width=" + appConst.userAvatarWidth;
-            });
+            getUserData();
         }
     };
 
