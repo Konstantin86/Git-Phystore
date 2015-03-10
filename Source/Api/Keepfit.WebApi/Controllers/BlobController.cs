@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -58,27 +59,34 @@ namespace Keepfit.WebApi.Controllers
           {
             var filePath = Path.Combine(_folder, status.FileName);
 
+            string extension = ImageResizer.Util.PathUtils.GetExtension(filePath);
             string basePath = ImageResizer.Util.PathUtils.RemoveExtension(filePath);
 
             Dictionary<string, string> versions = new Dictionary<string, string>();
             //Define the versions to generate and their filename suffixes.
-            versions.Add("_thumb", "width=100&height=100&crop=auto&format=jpg"); //Crop to square thumbnail
-            versions.Add("_medium", "maxwidth=400&maxheight=400format=jpg"); //Fit inside 400x400 area, jpeg
-            versions.Add("_large", "maxwidth=1900&maxheight=1900&format=jpg"); //Fit inside 1900x1200 area
+            //versions.Add("_thumb", "width=100&height=100&crop=auto&format=jpg"); //Crop to square thumbnail
+            //versions.Add("_medium", "maxwidth=400&maxheight=400format=jpg"); //Fit inside 400x400 area, jpeg
+            //versions.Add("_large", "maxwidth=1900&maxheight=1900&format=jpg"); //Fit inside 1900x1200 area
+            
+            versions.Add("_ava", "maxwidth=" + ConfigurationManager.AppSettings["userPhotoMaxWidth"] + "&format=jpg"); //Fit inside 360 pixels by width (method is supposed for uploading user profile photos (avatars)
 
             string fileName = Guid.NewGuid() + "." + status.FileName.Split('.').Last();
 
             foreach (string suffix in versions.Keys)
             {
-              ImageBuilder.Current.Build(filePath, basePath + suffix, new ResizeSettings(versions[suffix]));
+              ImageBuilder.Current.Build(filePath, basePath + suffix + extension, new ResizeSettings(versions[suffix]));
             }
 
-            using (var fileStream = File.OpenRead(filePath))
+            string userPhotoPath = basePath + "_ava" + extension;
+            //string userPhotoPath = filePath;
+
+            using (var fileStream = File.OpenRead(userPhotoPath))
             {
               _blobRepository.UploadPhotoFromStream(fileStream, fileName);
             }
 
             File.Delete(filePath);
+            File.Delete(userPhotoPath);
 
             var user = await AppUserManager.FindByNameAsync(User.Identity.Name);
 
