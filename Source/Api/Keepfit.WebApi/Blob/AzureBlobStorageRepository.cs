@@ -8,12 +8,20 @@ namespace Keepfit.WebApi.Blob
 {
   public class AzureBlobStorageRepository : IBlobStorageRepository
   {
-    public void UploadPhotoFromStream(Stream stream, string fileName)
+    private CloudStorageAccount _storageAccount;
+    private CloudBlobClient _blobClient;
+    private CloudBlobContainer _container;
+
+    public AzureBlobStorageRepository()
     {
-      CloudStorageAccount storageAccount = CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting("StorageConnectionString"));
-      CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
-      CloudBlobContainer container = blobClient.GetContainerReference("media");
-      CloudBlockBlob blockBlob = container.GetBlockBlobReference(fileName);
+      _storageAccount = CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting("StorageConnectionString"));
+      _blobClient = _storageAccount.CreateCloudBlobClient();
+      _container = _blobClient.GetContainerReference("media");
+    }
+
+    public void UploadImageFromStream(Stream stream, string fileName)
+    {
+      CloudBlockBlob blockBlob = _container.GetBlockBlobReference(fileName);
 
       // TODO ugly code - should be changed with real content media type obtained from http request of multi-part data: smt like this - file.Headers.ContentType.MediaType
       string format = fileName.Split('.').Last();
@@ -26,6 +34,12 @@ namespace Keepfit.WebApi.Blob
       blockBlob.Properties.ContentType = "image/" + format;
 
       blockBlob.UploadFromStream(stream);
+    }
+
+    public void RemoveImage(string fileName)
+    {
+      CloudBlockBlob blockBlob = _container.GetBlockBlobReference(fileName);
+      blockBlob.DeleteIfExists(DeleteSnapshotsOption.IncludeSnapshots);
     }
   }
 }

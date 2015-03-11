@@ -4,6 +4,8 @@ namespace Keepfit.WebApi.Blob
 {
   public interface IBlobStorageRepository
   {
-    void UploadPhotoFromStream(Stream stream, string fileName);
+    void UploadImageFromStream(Stream stream, string fileName);
+
+    void RemoveImage(string fileName);
   }
 }

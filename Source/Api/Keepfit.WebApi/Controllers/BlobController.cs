@@ -62,33 +62,27 @@ namespace Keepfit.WebApi.Controllers
             string extension = ImageResizer.Util.PathUtils.GetExtension(filePath);
             string basePath = ImageResizer.Util.PathUtils.RemoveExtension(filePath);
 
-            Dictionary<string, string> versions = new Dictionary<string, string>();
-            //Define the versions to generate and their filename suffixes.
-            //versions.Add("_thumb", "width=100&height=100&crop=auto&format=jpg"); //Crop to square thumbnail
-            //versions.Add("_medium", "maxwidth=400&maxheight=400format=jpg"); //Fit inside 400x400 area, jpeg
-            //versions.Add("_large", "maxwidth=1900&maxheight=1900&format=jpg"); //Fit inside 1900x1200 area
-            
-            versions.Add("_ava", "maxwidth=" + ConfigurationManager.AppSettings["userPhotoMaxWidth"] + "&format=jpg"); //Fit inside 360 pixels by width (method is supposed for uploading user profile photos (avatars)
-
             string fileName = Guid.NewGuid() + "." + status.FileName.Split('.').Last();
 
-            foreach (string suffix in versions.Keys)
-            {
-              ImageBuilder.Current.Build(filePath, basePath + suffix + extension, new ResizeSettings(versions[suffix]));
-            }
+            string userPhotoPath = basePath + "_user_photo" + extension;
 
-            string userPhotoPath = basePath + "_ava" + extension;
-            //string userPhotoPath = filePath;
+            ImageBuilder.Current.Build(filePath, userPhotoPath, new ResizeSettings("maxwidth=" + ConfigurationManager.AppSettings["userPhotoMaxWidth"] + "&format=jpg"));
 
             using (var fileStream = File.OpenRead(userPhotoPath))
             {
-              _blobRepository.UploadPhotoFromStream(fileStream, fileName);
+              _blobRepository.UploadImageFromStream(fileStream, fileName);
             }
 
             File.Delete(filePath);
             File.Delete(userPhotoPath);
 
             var user = await AppUserManager.FindByNameAsync(User.Identity.Name);
+
+            // Remove old user photo from storage (but not the default one):
+            if (user.PhotoPath != ConfigurationManager.AppSettings["userDefaultImageName"])
+            {
+              _blobRepository.RemoveImage(user.PhotoPath);
+            }
 
             user.PhotoPath = fileName;
 
