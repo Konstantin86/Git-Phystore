@@ -10,10 +10,11 @@
                  flow-file-added="onFileAdded($file, $event)"
                  flow-files-added="onFilesAdded($files, $event)"
                  flow-files-submitted="$flow.upload()"
-                 flow-file-success="onUploadSuccess($file, $message)">
+                 flow-file-success="onUploadSuccess($file, $message)"
+                 flow-file-progress="onUploadProgress($file)">
                 <!--flow-file-progress=" ... property '$file' can be accessed ... "-->
 
-                <div class="form-group">
+                <div class="form-group" style="margin: 10px auto 10px auto">
                     <img width="{{photoWidth}}" src="{{formData.photoPath}}" />
                 </div>
 

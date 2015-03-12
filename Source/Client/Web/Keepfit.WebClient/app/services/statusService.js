@@ -38,6 +38,7 @@ app.service("statusService", function () {
         state.message = "";
     };
 
+    this.set = set;
     this.state = state;
     this.success = success;
     this.warning = warning;

@@ -8,7 +8,7 @@
 
 "use strict";
 
-app.controller("accountController", function ($scope, $location, authService, appConst, msgConst, workoutService, statusService) {
+app.controller("accountController", function ($scope, $location, cfpLoadingBar, authService, appConst, msgConst, workoutService, statusService) {
 
     statusService.clear();
 
@@ -24,7 +24,14 @@ app.controller("accountController", function ($scope, $location, authService, ap
         flow.opts.headers.Authorization = authHeaderData;
     };
 
-    $scope.onUploadSuccess = function(file, message) {
+    $scope.onUploadProgress = function (file) {
+        statusService.set("Uploading photo...", "info");
+        cfpLoadingBar.start();
+    };
+
+    $scope.onUploadSuccess = function (file, message) {
+        statusService.success("User photo is updated successfully");
+        cfpLoadingBar.complete();
         authService.setPhoto(message.split('"').join(''));
     };
 

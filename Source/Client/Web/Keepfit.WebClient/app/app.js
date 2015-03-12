@@ -2,7 +2,7 @@
 
 "use strict";
 
-var app = angular.module("KeepfitApp", ["ngRoute", "ngResource", "ngAnimate", "ngSanitize", "ui.bootstrap", "ui.bootstrap.tpls", "flow", "LocalStorageModule", "mgcrea.ngStrap", "mgcrea.ngStrap.helpers.dateParser", "angular-loading-bar", "infinite-scroll"]);
+var app = angular.module("KeepfitApp", ["ngRoute", "ngResource", "ngAnimate", "ngSanitize", "ui.bootstrap", "ui.bootstrap.tpls", "flow", "LocalStorageModule", "mgcrea.ngStrap", "mgcrea.ngStrap.helpers.dateParser", "angular-loading-bar", "cfp.loadingBar", "infinite-scroll"]);
 
 app.run(["authService", function (authService) {
     authService.init();
