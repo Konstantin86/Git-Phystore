@@ -7,7 +7,7 @@
 /// <reference path="~/app/utils/system/system-string.js" />
 "use strict";
 
-app.controller("associateController", function ($scope, $location, $timeout, msgConst, authService, statusService) {
+app.controller("associateController", function ($scope, $location, $timeout, msgConst, errorService, authService, statusService) {
     statusService.clear();
     $scope.submitted = false;
     $scope.registerData = authService.externalAuthData;
@@ -15,7 +15,7 @@ app.controller("associateController", function ($scope, $location, $timeout, msg
     var startTimer = function () {
         var timer = $timeout(function () {
             $timeout.cancel(timer);
-            $location.path("/workouts");
+            $location.path("/account");
         }, 2000);
     }
 
@@ -26,14 +26,7 @@ app.controller("associateController", function ($scope, $location, $timeout, msg
             statusService.success(msgConst.ACCOUNT_ASSOCIATE_SUCCESS);
             startTimer();
         }, function (response) {
-            var errors = [];
-            for (var key in response.modelState) {
-                if (response.modelState.hasOwnProperty(key)) {
-                    errors.push(response.modelState[key]);
-                }
-            }
-
-            statusService.error(system.string.format(msgConst.ACCOUNT_ASSOCIATE_FAIL_FORMAT, +errors.join(" ")));
+            statusService.error(errorService.parseFormResponse(response));
         });
     };
 });

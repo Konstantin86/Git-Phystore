@@ -8,19 +8,12 @@
 "use strict";
 
 app.controller("signupController", function ($scope, $location, $timeout, msgConst, errorService, authService, statusService) {
-
     statusService.clear();
 
     $scope.success = false;
     $scope.submitted = false;
 
-    $scope.formData = {
-        userName: "",
-        email: "",
-        password: "",
-        roleName: "user",
-        confirmPassword: ""
-    };
+    $scope.formData = { userName: "", email: "", password: "", confirmPassword: "" };
 
     $scope.signUp = function () {
         $scope.submitted = true;

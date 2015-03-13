@@ -1,4 +1,4 @@
-﻿namespace Keepfit.WebApi.Models.Request
+﻿namespace Keepfit.WebApi.Models.Request.Base
 {
   public class QueryRequestBase
   {

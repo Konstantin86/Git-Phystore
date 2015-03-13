@@ -2,6 +2,7 @@
 using System.Web.Http.Routing;
 using Keepfit.DAL.Entities;
 using Keepfit.DAL.Managers;
+using Keepfit.WebApi.Models.Response;
 
 namespace Keepfit.WebApi.Models.Factory
 {
@@ -16,9 +17,9 @@ namespace Keepfit.WebApi.Models.Factory
       _appUserManager = appUserManager;
     }
 
-    public UserModel Create(AppUser appUser)
+    public UserResponse Create(AppUser appUser)
     {
-      return new UserModel
+      return new UserResponse
       {
         Url = _urlHelper.Link("GetUserById", new { id = appUser.Id }),
         Id = appUser.Id,

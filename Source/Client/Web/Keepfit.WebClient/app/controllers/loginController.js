@@ -43,9 +43,7 @@ app.controller("loginController", function ($scope, $location, authService, erro
 
     $scope.authExternalProvider = function (provider) {
         var redirectUri = location.protocol + "//" + location.host + "/authcomplete.html";
-        var serviceBaseUri = appConst.serviceBase;
-        var externalProviderUrl = serviceBaseUri + "api/account/externalLogin?provider=" + provider + "&response_type=token&client_id=" + "Keepfit" + "&redirect_uri=" + redirectUri;
-
+        var externalProviderUrl = appConst.serviceBase + "api/account/externalLogin?provider=" + provider + "&response_type=token&client_id=" + "Keepfit" + "&redirect_uri=" + redirectUri;
         window.$windowScope = $scope;
         window.open(externalProviderUrl, "Authenticate Account", "location=0,status=0,width=600,height=750");
     };
@@ -65,11 +63,10 @@ app.controller("loginController", function ($scope, $location, authService, erro
                 $location.path("/associate");
             }
             else {
-                var externalData = { provider: fragment.provider, externalAccessToken: fragment.external_access_token };
-                authService.obtainAccessToken(externalData).then(function () {
+                authService.obtainAccessToken({ provider: fragment.provider, externalAccessToken: fragment.external_access_token }).then(function () {
                     $location.path("/workouts");
-                }, function (err) {
-                    statusService.error(err.error_description);
+                }, function (response) {
+                    statusService.error(errorService.parseDataResponse(response));
                 });
             }
         });

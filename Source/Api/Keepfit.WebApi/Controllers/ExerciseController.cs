@@ -27,7 +27,7 @@ namespace Keepfit.WebApi.Controllers
 
     [Route("")]
     [HttpGet]
-    public IHttpActionResult Get([FromUri]QueryExerciseRequest request)
+    public IHttpActionResult Get([FromUri]ExerciseQueryRequest request)
     {
       var exercises = _unitOfWork.ExerciseRepository.GetAll().Skip(request.Skip.GetValueOrDefault()).ToList();
       return Ok(exercises.Any() ? (request.Take.HasValue ? exercises.Take(request.Take.Value) : exercises) : null);

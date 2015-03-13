@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Keepfit.WebApi.Models
+namespace Keepfit.WebApi.Models.Response
 {
-  public class UserModel
+  public class UserResponse
   {
     public string Url { get; set; }
     public string Id { get; set; }

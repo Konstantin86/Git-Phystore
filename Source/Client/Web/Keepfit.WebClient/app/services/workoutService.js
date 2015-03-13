@@ -4,7 +4,7 @@
 
 "use strict";
 
-app.service("workoutService", function ($resource, $http, $q, appConst) {
+app.service("workoutService", function ($resource, $q, appConst) {
     var resource = $resource(appConst.serviceBase + "/:action", { action: "api/workout" },
     {
     });

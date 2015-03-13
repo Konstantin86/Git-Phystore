@@ -1,5 +1,4 @@
 ﻿/// <reference path="~/scripts/angular.min.js"/>
-
 /// <reference path="~/app/app.js"/>
 /// <reference path="~/app/const/msgConst.js"/>
 /// <reference path="~/app/services/statusService.js"/>
