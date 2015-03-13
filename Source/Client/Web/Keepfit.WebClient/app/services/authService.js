@@ -41,7 +41,7 @@ app.service("authService", function ($resource, $q, localStorageService, appCons
             userData.joinDate = user.joinDate;
             userData.country = user.country;
             userData.city = user.city;
-            userData.photoPath = appConst.cdnMediaBase + user.photoPath + "?width=" + appConst.userAvatarWidth;
+            userData.photoPath = appConst.cdnMediaBase + user.photoPath + "?width=" + appConst.userPhotoWidth;
         });
     };
 
@@ -100,13 +100,13 @@ app.service("authService", function ($resource, $q, localStorageService, appCons
     };
 
     var getAuthHeader = function () { return "Bearer " + localStorageService.get("authorizationData").token; };
-    var setPhoto = function (fileName) { userData.photoPath = appConst.cdnMediaBase + fileName + "?width=" + appConst.userAvatarWidth; };
+    var setPhoto = function (fileName) { userData.photoPath = appConst.cdnMediaBase + fileName + "?width=" + appConst.userPhotoWidth; };
 
     this.registerExternal = registerExternal;
     this.login = login;
     this.logout = logout;
     this.init = init;
-    this.authData = userData;
+    this.userData = userData;
     this.externalAuthData = externalAuthData;
     this.setPhoto = setPhoto;
     this.getAuthHeader = getAuthHeader;

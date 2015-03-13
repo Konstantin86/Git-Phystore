@@ -8,10 +8,8 @@
 "use strict";
 
 app.controller("associateController", function ($scope, $location, $timeout, msgConst, authService, statusService) {
-
     statusService.clear();
     $scope.submitted = false;
-
     $scope.registerData = authService.externalAuthData;
 
     var startTimer = function () {

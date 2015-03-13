@@ -68,6 +68,7 @@
     <Content Include="app\filters\exerciseNameDescriptionFilter.js" />
     <Content Include="app\filters\placeNameCategoryFilter.js" />
     <Content Include="app\services\authService.js" />
+    <Content Include="app\services\errorService.js" />
     <Content Include="app\services\exerciseService.js" />
     <Content Include="app\services\interceptors\authInterceptorService.js" />
     <Content Include="app\services\placePhotoService.js" />

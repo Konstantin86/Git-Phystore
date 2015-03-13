@@ -7,17 +7,14 @@
 "use strict";
 
 app.controller("indexController", function ($scope, $location, authService, statusService) {
-
     $scope.state = statusService.state;
+
+    $scope.closeAlert = function () { statusService.clear(); };
 
     $scope.logout = function () {
         authService.logout();
         $location.path("/home");
     }
 
-    $scope.authData = authService.authData;
-
-    $scope.closeAlert = function () {
-        statusService.clear();
-    };
+    $scope.userData = authService.userData;
 });

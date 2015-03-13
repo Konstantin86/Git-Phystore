@@ -20,13 +20,10 @@ namespace Keepfit.WebApi.OAuth.Providers
       var userManager = context.OwinContext.GetUserManager<AppUserManager>();
       context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { "*" });
 
-      // TODO FindByEmailAsync use for logging by e-mail
-
       IdentityUser user = await userManager.FindAsync(context.UserName, context.Password);
 
       if (user == null)
       {
-        // Try to find by e-mail:
         user = await userManager.FindByEmailAsync(context.UserName);
 
                 if (user != null)

@@ -8,7 +8,7 @@
 /// <reference path="~/app/utils/system/system-string.js" />
 "use strict";
 
-app.controller("loginController", function ($scope, $location, authService, statusService, appConst, msgConst) {
+app.controller("loginController", function ($scope, $location, authService, errorService, statusService, appConst, msgConst) {
 
     statusService.clear();
 
@@ -18,7 +18,7 @@ app.controller("loginController", function ($scope, $location, authService, stat
         authService.login($scope.formData).then(function (response) {
             $location.path("/account");
         }, function (response) {
-            statusService.error(response ? response.error_description : "");
+            statusService.error(errorService.parseAuthResponse(response));
         });
     };
 
@@ -33,9 +33,9 @@ app.controller("loginController", function ($scope, $location, authService, stat
             authService.account.resetPassword({ email: modal.input }, function () {
                 modal.$hide();
                 statusService.success(system.string.format(msgConst.LOGIN_PWD_RECOVERY_LINK_SENT_FORMAT, modal.input));
-            }, function (err) {
+            }, function (response) {
                 modal.$hide();
-                statusService.error(err);
+                statusService.error(errorService.parseDataResponse(response));
             });
 
         }

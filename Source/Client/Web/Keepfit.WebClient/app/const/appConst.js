@@ -13,5 +13,5 @@ app.constant("appConst", {
     hostBase: "http://localhost:62891/",
     cdnBase: "http://az725561.vo.msecnd.net/",
     cdnMediaBase: "http://az725561.vo.msecnd.net/media/",
-    userAvatarWidth: "360"
+    userPhotoWidth: "360"
 });

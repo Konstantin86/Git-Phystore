@@ -7,7 +7,7 @@
 /// <reference path="~/app/utils/system/system-string.js" />
 "use strict";
 
-app.controller("signupController", function ($scope, $location, $timeout, msgConst, authService, statusService) {
+app.controller("signupController", function ($scope, $location, $timeout, msgConst, errorService, authService, statusService) {
 
     statusService.clear();
 
@@ -33,22 +33,7 @@ app.controller("signupController", function ($scope, $location, $timeout, msgCon
         }
 
         function onSignupFailed(response) {
-            var error = "";
-
-            if (response.data && response.data.modelState) {
-                var errors = [];
-                for (var key in response.data.modelState) {
-                    if (response.data.modelState.hasOwnProperty(key)) {
-                        for (var i = 0; i < response.data.modelState[key].length; i++) {
-                            errors.push(response.data.modelState[key][i]);
-                        }
-                    }
-                }
-
-                error = system.string.format(msgConst.SIGNUP_FAIL_FORMAT, errors.join(" "));
-            }
-
-            statusService.error(error);
+            statusService.error(errorService.parseFormResponse(response));
         }
     };
 });

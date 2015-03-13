@@ -36,13 +36,13 @@
                 </div>
                 <div class="collapse navbar-collapse" data-collapse="!navbarExpanded">
                     <ul class="nav navbar-nav navbar-right">
-                        <li data-ng-hide="!authData.isAuth"><a href="#/account">Welcome {{authData.userName}}</a></li>
-                        <li data-ng-hide="!authData.isAuth"><a href="#/workouts">Workouts</a></li>
+                        <li data-ng-hide="!userData.isAuth"><a href="#/account">Welcome {{authData.userName}}</a></li>
+                        <li data-ng-hide="!userData.isAuth"><a href="#/workouts">Workouts</a></li>
                         <li><a href="#/places">Places</a></li>
                         <li><a href="#/exercises">Exercises</a></li>
-                        <li data-ng-hide="!authData.isAuth"><a href="" data-ng-click="logout()">Logout</a></li>
-                        <li data-ng-hide="authData.isAuth"> <a href="#/login">Login</a></li>
-                        <li data-ng-hide="authData.isAuth"> <a href="#/signup">Sign Up</a></li>
+                        <li data-ng-hide="!userData.isAuth"><a href="" data-ng-click="logout()">Logout</a></li>
+                        <li data-ng-hide="userData.isAuth"> <a href="#/login">Login</a></li>
+                        <li data-ng-hide="userData.isAuth"> <a href="#/signup">Sign Up</a></li>
                     </ul>
                 </div>
             </div>
@@ -143,6 +143,7 @@
 
 <!--Services-->
 <script type="text/javascript" src="app/services/interceptors/authInterceptorService.js"></script>
+<script type="text/javascript" src="app/services/errorService.js"></script>
 <script type="text/javascript" src="app/services/statusService.js"></script>
 <script type="text/javascript" src="app/services/authService.js"></script>
 <script type="text/javascript" src="app/services/workoutService.js"></script>

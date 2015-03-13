@@ -8,30 +8,18 @@
 
 "use strict";
 
-app.controller("accountController", function ($scope, $location, cfpLoadingBar, authService, appConst, msgConst, workoutService, statusService) {
-
+app.controller("accountController", function ($scope, $location, authService, errorService, appConst, msgConst, workoutService, statusService) {
     statusService.clear();
-
-    $scope.formData = authService.authData;
+    $scope.selectedDate = "";
+    $scope.formData = authService.userData;
     $scope.securityFormData = authService.securityData;
-    $scope.photoWidth = appConst.userAvatarWidth;
+    $scope.photoWidth = appConst.userPhotoWidth;
 
-    $scope.onFilesAdded = function (files) {
-        var flow = this.$flow;
-        $scope.testImg = files[0];
-        var authHeaderData = authService.getAuthHeader();
-        flow.defaults.headers.Authorization = authHeaderData;
-        flow.opts.headers.Authorization = authHeaderData;
-    };
-
-    $scope.onUploadProgress = function (file) {
-        statusService.set("Uploading photo...", "info");
-        cfpLoadingBar.start();
-    };
+    $scope.onFilesAdded = function (files) { this.$flow.defaults.headers.Authorization = authService.getAuthHeader(); };
+    $scope.onUploadProgress = function (file) { statusService.loading("Uploading photo..."); };
 
     $scope.onUploadSuccess = function (file, message) {
         statusService.success("User photo is updated successfully");
-        cfpLoadingBar.complete();
         authService.setPhoto(message.split('"').join(''));
     };
 
@@ -45,26 +33,26 @@ app.controller("accountController", function ($scope, $location, cfpLoadingBar, 
                 modal.$hide();
                 $location.path("/home");
                 authService.logout();
-            }, function (err) {
-             this.$hide();
-             statusService.error(err);
-         });
+            }, function (response) {
+                this.$hide();
+                statusService.error(errorService.parseDataError(response));
+            });
         }
     };
 
     $scope.update = function () {
         authService.account.update($scope.formData, function () {
             statusService.success(msgConst.ACCOUNT_UPDATE_SUCCESS);
-        }, function (err) {
-             statusService.error(err);
-         });
+        }, function (response) {
+            statusService.error(errorService.parseFormResponse(response));
+        });
     };
 
     $scope.changePassword = function () {
         authService.account.updatePassword($scope.securityFormData, function () {
             statusService.success(msgConst.ACCOUNT_PWD_CHANGE_SUCCESS);
-        }, function (err) {
-            statusService.error(err);
+        }, function (response) {
+            statusService.error(errorService.parseFormResponse(response));
         });
     };
 });

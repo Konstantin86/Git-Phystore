@@ -4,9 +4,9 @@
 
 "use strict";
 
-app.service("statusService", function () {
+app.service("statusService", function (cfpLoadingBar) {
 
-    // statuses valid values: success, warning, danger
+    // statuses valid values: success, warning, danger, info
 
     var state = {
         message: "",
@@ -14,6 +14,7 @@ app.service("statusService", function () {
     };
 
     var set = function (msg, stat) {
+        cfpLoadingBar.complete();
         state.message = msg;
         state.status = stat;
     };
@@ -27,20 +28,22 @@ app.service("statusService", function () {
     };
 
     var error = function (msg) {
-        if (!msg) {
-            msg = "Unable to connect to service";
-        }
+        set(msg || "Unable to connect to service", "danger");
+    };
 
-        set(msg, "danger");
+    var loading = function (msg) {
+        set(msg, "info");
+        cfpLoadingBar.start();
     };
 
     var clear = function () {
         state.message = "";
     };
-
+    
     this.set = set;
     this.state = state;
     this.success = success;
+    this.loading = loading;
     this.warning = warning;
     this.error = error;
     this.clear = clear;

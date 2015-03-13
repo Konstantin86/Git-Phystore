@@ -12,7 +12,6 @@
                  flow-files-submitted="$flow.upload()"
                  flow-file-success="onUploadSuccess($file, $message)"
                  flow-file-progress="onUploadProgress($file)">
-                <!--flow-file-progress=" ... property '$file' can be accessed ... "-->
 
                 <div class="form-group" style="margin: 10px auto 10px auto">
                     <img width="{{photoWidth}}" src="{{formData.photoPath}}" />
@@ -27,7 +26,7 @@
             </div>
         </div>
         <div class="col-md-4">
-            <form class="form-signin" name="form">
+            <form class="form-signin" name="accountForm">
                 <h2 class="form-signin-heading">{{formData.userName}}</h2>
 
                 <div class="form-group">
@@ -39,9 +38,8 @@
                 <div class="form-group">
                     <input type="text" class="form-control" name="sex" placeholder="Gender" ng-model="formData.sex">
                 </div>
-                <div class="form-group" ng-class="{'has-error': form.birthDate.$invalid}">
-                    <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
-                    <label class="control-label">Birth Date</label>
+                <div class="form-group" ng-class="{'has-error': accountForm.birthDate.$invalid}">
+                    <label class="control-label"><i class="fa fa-calendar"></i> Birth Date</label>
                     <input type="text" class="form-control" ng-model="formData.birthDate" data-date-format="yyyy-MM-dd" name="birthDate" data-autoclose="1" bs-datepicker>
                 </div>
                 <div class="form-group">
@@ -50,7 +48,7 @@
                 <div class="form-group">
                     <input type="text" class="form-control" name="city" placeholder="City" ng-model="formData.city">
                 </div>
-                <button class="btn btn-lg btn-primary btn-block" type="submit" ng-click="update()">Update</button>
+                <button class="btn btn-lg btn-primary btn-block" type="submit" ng-disabled="accountForm.birthDate.$invalid" ng-click="update()">Update</button>
             </form>
 
             <div class="panel panel-default" style="margin: 10px 30px">

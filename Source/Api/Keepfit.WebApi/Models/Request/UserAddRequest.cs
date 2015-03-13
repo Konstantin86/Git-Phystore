@@ -20,6 +20,7 @@ namespace Keepfit.WebApi.Models.Request
     [Display(Name = "Last Name")]
     public string LastName { get; set; }
 
+    [DataType(DataType.DateTime)]
     public DateTime? BirthDate { get; set; }
 
     public string Sex { get; set; }
