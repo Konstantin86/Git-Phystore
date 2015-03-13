@@ -1,5 +1,4 @@
 ﻿/// <reference path="~/scripts/angular.min.js"/>
-
 /// <reference path="~/app/app.js"/>
 /// <reference path="~/app/services/authService.js"/>
 /// <reference path="~/app/services/workoutService.js"/>
@@ -8,7 +7,6 @@
 "use strict";
 
 app.controller("workoutsController", function ($scope, $location, authService, workoutService, statusService) {
-
     statusService.clear();
 
     $scope.userName = "testName";

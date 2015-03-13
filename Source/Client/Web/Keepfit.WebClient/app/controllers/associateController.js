@@ -9,6 +9,7 @@
 
 app.controller("associateController", function ($scope, $location, $timeout, msgConst, errorService, authService, statusService) {
     statusService.clear();
+
     $scope.submitted = false;
     $scope.registerData = authService.externalAuthData;
 

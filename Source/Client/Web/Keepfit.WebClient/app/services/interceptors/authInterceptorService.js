@@ -1,6 +1,5 @@
 ﻿/// <reference path="~/scripts/angular.min.js"/>
 /// <reference path="~/scripts/angular-local-storage.js"/>
-
 /// <reference path="~/app/app.js"/>
 
 "use strict";

@@ -7,7 +7,7 @@
 
 "use strict";
 
-app.controller('placesController', function ($scope, placeService, placePhotosService, $uimodal, $filter) {
+app.controller("placesController", function ($scope, placeService, placePhotosService, $uimodal, $filter) {
 
     $scope.exploreNearby = "Харьков";
     $scope.exploreQuery = "";
@@ -99,8 +99,8 @@ app.controller('placesController', function ($scope, placeService, placePhotosSe
         placePhotosService.resource.get({ venueId: venueId }, function (photosResult) {
 
             var modalInstance = $uimodal.open({
-                templateUrl: 'app/views/modal/placePhotos.html',
-                controller: 'placePhotosController',
+                templateUrl: "app/views/modal/placePhotos.html",
+                controller: "placePhotosController",
                 resolve: {
                     venueName: function () {
                         return venueName;

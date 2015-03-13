@@ -1,15 +1,10 @@
 ﻿/// <reference path="~/scripts/angular.min.js"/>
 /// <reference path="~/scripts/angular-resource.js"/>
-
 /// <reference path="~/app/app.js"/>
 
 "use strict";
 
-//Get your client ID and secrent by visiting https://developer.foursquare.com
-//Thise are demo client Id & secret.
-
 app.service("placePhotosService", function ($resource) {
-
     var requestParms = {
         clientId: "OV5CAPBY3QJF251J0TAOOWOBSNLDHWRYP04YB5ABYDJI1SAS",
         clientSecret: "2F0DJR0NJKCC3HD1XJVRJBBWH0AV5JKFAPJ5GIAMI3GLBEIF",

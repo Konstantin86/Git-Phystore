@@ -15,7 +15,7 @@ app.controller("loginController", function ($scope, $location, authService, erro
     $scope.formData = { userName: "", password: "" };
 
     $scope.login = function () {
-        authService.login($scope.formData).then(function (response) {
+        authService.login($scope.formData).then(function () {
             $location.path("/account");
         }, function (response) {
             statusService.error(errorService.parseAuthResponse(response));

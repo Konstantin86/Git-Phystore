@@ -10,13 +10,14 @@
 
 app.controller("accountController", function ($scope, $location, authService, errorService, appConst, msgConst, workoutService, statusService) {
     statusService.clear();
+
     $scope.selectedDate = "";
     $scope.formData = authService.userData;
     $scope.securityFormData = authService.securityData;
     $scope.photoWidth = appConst.userPhotoWidth;
 
-    $scope.onFilesAdded = function (files) { this.$flow.defaults.headers.Authorization = authService.getAuthHeader(); };
-    $scope.onUploadProgress = function (file) { statusService.loading("Uploading photo..."); };
+    $scope.onFilesAdded = function () { this.$flow.defaults.headers.Authorization = authService.getAuthHeader(); };
+    $scope.onUploadProgress = function () { statusService.loading("Uploading photo..."); };
 
     $scope.onUploadSuccess = function (file, message) {
         statusService.success("User photo is updated successfully");

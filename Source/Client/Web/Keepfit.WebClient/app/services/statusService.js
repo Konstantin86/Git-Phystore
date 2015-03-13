@@ -1,17 +1,11 @@
 ﻿/// <reference path="~/scripts/angular.min.js"/>
-
 /// <reference path="~/app/app.js"/>
 
 "use strict";
 
 app.service("statusService", function (cfpLoadingBar) {
-
     // statuses valid values: success, warning, danger, info
-
-    var state = {
-        message: "",
-        status: "success"
-    };
+    var state = { message: "", status: "success" };
 
     var set = function (msg, stat) {
         cfpLoadingBar.complete();
