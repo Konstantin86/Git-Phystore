@@ -49,7 +49,7 @@ namespace Keepfit.WebApi
 
       OAuthAuthorizationServerOptions oAuthServerOptions = new OAuthAuthorizationServerOptions()
       {
-        //AllowInsecureHttp = true,
+        AllowInsecureHttp = true,
         TokenEndpointPath = new PathString("/token"),
         AccessTokenExpireTimeSpan = TimeSpan.FromDays(1),
         Provider = new AppAuthorizationServerProvider()
